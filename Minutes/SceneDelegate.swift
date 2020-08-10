@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  Minutes
+//  Minutes beta
 //
 //  Created by Jack Murphy on 8/9/20.
 //  Copyright © 2020 Jack Murphy. All rights reserved.
@@ -12,6 +12,8 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var userInfo = UserInfo()
+    var audioFile = AudioFile()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -21,6 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView()
+            .environmentObject(userInfo)
+            .environmentObject(audioFile)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
