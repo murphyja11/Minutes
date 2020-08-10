@@ -12,7 +12,7 @@ import AVFoundation
 struct PlayBar: View {
     @EnvironmentObject var audioFile: AudioFile
     
-    @State private var currentTime: Float64 = 0
+    @State var currentTime: Double = 0.0
     
     var body: some View {
         VStack {
@@ -20,6 +20,7 @@ struct PlayBar: View {
                 Text("Time: ")
                 Text("\(self.currentTime)")
             }
+            Slider(value: self.$currentTime, in: 0...5)
         }
     }
 }

@@ -14,6 +14,9 @@ class AudioFile: ObservableObject {
     private var player: AVPlayer?
     @Published var status: AudioStatus = .undefined
 
+    //let sliderTime = PassthroughSubject<Double, Never>()
+    
+    @Published var currentTime: Double = 0.0
     var duration: Double = 0.0
     
     init() {
@@ -119,6 +122,5 @@ class AudioFile: ObservableObject {
             newTime = self.duration
         }
         player!.seek(to: CMTime(value: CMTimeValue(newTime * 1000), timescale: 1000))
-    
     }
 }
