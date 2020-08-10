@@ -11,11 +11,9 @@ import FirebaseStorage
 import AVFoundation
 
 class AudioFile: ObservableObject {
-    var player: AVPlayer?
+    private var player: AVPlayer?
     @Published var status: AudioStatus = .undefined
-    
-    let timeObserver: PlayerTimeObserver
-    @Published var currentTime: TimeInterval = 0
+
     var duration: Double = 0.0
     
     init() {
@@ -122,34 +120,5 @@ class AudioFile: ObservableObject {
         }
         player!.seek(to: CMTime(value: CMTimeValue(newTime * 1000), timescale: 1000))
     
-    }
-}
-
-import Combine
-
-class PlayerTimeObserver {
-    @EnvironmentObject var audioFile: AudioFile
-    
-    let publisher = PassthroughSubject<TimeInterval, Never>()
-    private weak var player: AVPlayer?
-    var timeObserverToken: Any?
-    private var paused = false    
-    
-    init() {
-        self.player = audioFile.player
-        let time = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        
-        timeObserverToken = player!.addPeriodicTimeObserver(forInterval: time,
-                                                           queue: .main) { [weak self] time in
-            guard let self = self else { return }
-            self.publisher.send(time.seconds)
-        }
-    }
-    
-    deinit {
-        if let timeObserverToken = timeObserverToken {
-            self.player!.removeTimeObserver(timeObserverToken)
-            self.timeObserverToken = nil
-        }
     }
 }

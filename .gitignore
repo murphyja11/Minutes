@@ -1,0 +1,18 @@
+# Mac OS X Finder
+.DS_Store
+*.swp
+*~.nib
+
+*.pbxuser
+*.perspective
+*.perspectivev3
+
+# CocoaPods
+Pods/
+
+DerivedData/
+build/
+xcuserdata/
+
+*.moved-aside
+
