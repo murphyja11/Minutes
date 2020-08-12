@@ -26,7 +26,7 @@ enum FBKeys {
     enum Metrics {
         static let minutesMeditated = "minutesMeditated"
         static let topGenres = "topGenres"
-        static let meditationsPerDay = "meditationsPerDay"
+        static let numberOfMeditations = "numberOfMeditations"
     }
     
     enum AudioMetadata {

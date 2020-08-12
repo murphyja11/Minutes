@@ -18,7 +18,21 @@ class UserInfo: ObservableObject {
     // auth state is undefined when the user first launches the app
     // Published to monitor changes
     @Published var isUserAuthenticated: FBAuthState = .undefined
-    @Published var user: FBUser = .init(uid: "", name: "", email: "", metrics: FBUserMetrics(minutesMeditated: 0.0, topGenres: [], meditationsPerDay: 0.0), recommendations: [])
+    @Published var user: FBUser = .init(uid: "", name: "", email: "", metrics: FBUserMetrics(minutesMeditated: 0.0, topGenres: [], numberOfMeditations: 0), recommendations: [])
+    @Published var reloading: Bool = false {
+        didSet {
+            if !oldValue && reloading {
+                self.reloadUser { result in
+                    switch result {
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    case .success(let user):
+                        self.user = user
+                    }
+                }
+            }
+        }
+    }
 
     
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
@@ -39,5 +53,24 @@ class UserInfo: ObservableObject {
             print("User is not nil.  Marking user to signed in")
             self.isUserAuthenticated = .signedIn
         })
+    }
+    
+    
+    func reloadUser(completion: @escaping (Result<FBUser, Error>) -> ()) {
+        if self.user == nil {
+            completion(.failure(FireStoreError.noUser))
+            self.reloading = false
+            return
+        }
+        FBFirestore.retrieveFBUser(uid: self.user.uid) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+                self.reloading = false
+            case .success(let user):
+                completion(.success(user))
+                self.reloading = false
+            }
+        }
     }
 }

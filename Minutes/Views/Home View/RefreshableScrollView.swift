@@ -14,11 +14,11 @@ struct RefreshableScrollView<Content: View>: View {
     @State private var frozen: Bool = false
     @State private var rotation: Angle = .degrees(0)
     
-    var threshold: CGFloat = 80
+    var threshold: CGFloat = 10
     @Binding var refreshing: Bool
     let content: Content
 
-    init(height: CGFloat = 80, refreshing: Binding<Bool>, @ViewBuilder content: () -> Content) {
+    init(height: CGFloat = 10, refreshing: Binding<Bool>, @ViewBuilder content: () -> Content) {
         self.threshold = height
         self._refreshing = refreshing
         self.content = content()
@@ -26,8 +26,8 @@ struct RefreshableScrollView<Content: View>: View {
     }
     
     var body: some View {
-        return VStack {
-            ScrollView {
+        return GeometryReader { geometry in
+            ScrollView(.vertical, showsIndicators: false) {
                 ZStack(alignment: .top) {
                     MovingView()
                     
@@ -35,6 +35,7 @@ struct RefreshableScrollView<Content: View>: View {
                     
                     SymbolView(height: self.threshold, loading: self.refreshing, frozen: self.frozen, rotation: self.rotation)
                 }
+                .frame(width: geometry.size.width)
             }
             .background(FixedView())
             .onPreferenceChange(RefreshableKeyTypes.PrefKey.self) { values in
@@ -62,10 +63,9 @@ struct RefreshableScrollView<Content: View>: View {
                 // Crossing the threshold on the way up, we add a space at the top of the scrollview
                 if self.previousScrollOffset > self.threshold && self.scrollOffset <= self.threshold {
                     self.frozen = true
-
                 }
             } else {
-                // remove the sapce at the top of the scroll view
+                // remove the space at the top of the scroll view
                 self.frozen = false
             }
             
@@ -109,13 +109,15 @@ struct RefreshableScrollView<Content: View>: View {
                     Image(systemName: "arrow.down") // If not loading, show the arrow
                         .resizable()
                         .aspectRatio(contentMode: .fit)
+                        .foregroundColor(self.colorScheme == .light ? Color(red: 0.5, green: 0.5, blue: 0.5) : Color.white)
                         .frame(width: height * 0.25, height: height * 0.25).fixedSize()
-                        .padding(height * 0.375)
+                        .padding(height * 0.25)
                         .rotationEffect(rotation)
                         .offset(y: -height + (loading && frozen ? +height : 0.0))
                 }
             }
         }
+        @Environment(\.colorScheme) var colorScheme
     }
     
     struct MovingView: View {

@@ -23,7 +23,7 @@ struct HomeView: View {
                     .padding(0)
                 Divider()
                     .padding(0)
-                ScrollView {
+                RefreshableScrollView(height: 100, refreshing: self.$userInfo.reloading) {
                     ForEach(self.userInfo.user.recommendations, id: \.self) { rec in
                         AudioItemView(uid: rec, show: self.$showAudioView)
                             .frame(width: geometry.size.width * 0.9, height: 100)

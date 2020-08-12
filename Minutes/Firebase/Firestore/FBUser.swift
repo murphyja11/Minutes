@@ -75,13 +75,13 @@ extension FBUser {
 struct FBUserMetrics {
     let minutesMeditated: Double
     let topGenres: [String]
-    let meditationsPerDay: Double
+    let numberOfMeditations: Int
     
-    init(minutesMeditated: Double, topGenres: [String], meditationsPerDay: Double) {
+    init(minutesMeditated: Double, topGenres: [String], numberOfMeditations: Int) {
         print("initializing FBUserMetrics : FBUser")
         self.minutesMeditated = minutesMeditated
         self.topGenres = topGenres
-        self.meditationsPerDay = meditationsPerDay
+        self.numberOfMeditations = numberOfMeditations
     }
 }
 
@@ -90,13 +90,13 @@ extension FBUserMetrics {
         print("initializing FBUserMetrics using failable initializer : FBUser")
         let minutesMeditated = documentData[FBKeys.Metrics.minutesMeditated] as? Double ?? 0.0
         let topGenres = documentData[FBKeys.Metrics.topGenres] as? [String] ?? ["none"]
-        let meditationsPerDay = documentData[FBKeys.Metrics.meditationsPerDay] as? Double ?? 0.0
+        let numberOfMeditations = documentData[FBKeys.Metrics.numberOfMeditations] as? Int ?? 0
         
         // Make sure you also initialize any app specific properties if you have them
 
         self.init(minutesMeditated: minutesMeditated,
                   topGenres: topGenres,
-                  meditationsPerDay: meditationsPerDay
+                  numberOfMeditations: numberOfMeditations
                   // Dont forget any app specific ones here too
         )
     }
