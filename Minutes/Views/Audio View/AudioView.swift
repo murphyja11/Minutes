@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AudioView: View {
     @EnvironmentObject var audioFile: AudioFile
+    @EnvironmentObject var userInfo: UserInfo
     
     @State var errorString: String = ""
     @State var showAlert: Bool = false
@@ -18,6 +19,13 @@ struct AudioView: View {
         Group {
             if audioFile.status == .undefined {
                 Text("")
+            } else if audioFile.status == .completed {
+                Text("").onAppear {
+                    print("AudioFile Status is Completed \n\n\n\n\n")
+                    self.sendAudioEvent()
+                    self.presentationMode.wrappedValue.dismiss()
+                    self.audioFile.end()
+                }
             } else {
                 VStack {
                     AudioEscapeButton()
@@ -37,6 +45,26 @@ struct AudioView: View {
             }
         }
     }
+    
+    private func sendAudioEvent () {
+        if let player = self.audioFile.player {
+            let secondsListened = player.currentTime().seconds
+            let percListened = secondsListened / self.audioFile.duration
+            print("sending audio Event")
+            print("\(self.audioFile.uid) \n\n\n\n\n")
+            FBFirestore.sendAudioEvent(user: self.userInfo.user.uid, audio: self.audioFile.uid, secondsListened: secondsListened, percListened: percListened) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success( _):
+                    print("Audio Event successfully recorded")
+                }
+                
+            }
+        }
+    }
+    
+    @Environment(\.presentationMode) var presentationMode
 }
 
 struct FastForwardView: View {
@@ -65,11 +93,20 @@ struct RewindView: View {
 }
 
 
+
+
+
+
+
+
+
 struct AudioEscapeButton: View {
+    @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
     
     var body: some View {
         Button(action: {
+            self.sendAudioEvent()
             self.audioFile.end()
             self.presentationMode.wrappedValue.dismiss()
         }) {
@@ -80,6 +117,24 @@ struct AudioEscapeButton: View {
         }
             .position(x: 23, y: 35)
             .frame(height: 30)
+    }
+    
+    private func sendAudioEvent () {
+        if let player = self.audioFile.player {
+            let secondsListened = player.currentTime().seconds
+            let percListened = secondsListened / self.audioFile.duration
+            print("sending audio Event")
+            print("\(self.audioFile.uid) \n\n\n\n\n")
+            FBFirestore.sendAudioEvent(user: self.userInfo.user.uid, audio: self.audioFile.uid, secondsListened: secondsListened, percListened: percListened) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success( _):
+                    print("Audio Event successfully recorded")
+                }
+                
+            }
+        }
     }
     
     @Environment(\.presentationMode) var presentationMode

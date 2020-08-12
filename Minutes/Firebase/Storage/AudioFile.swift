@@ -13,7 +13,8 @@ import AVFoundation
 class AudioFile: ObservableObject {
     //@EnvironmentObject var userInfo: UserInfo
     
-    private var player: AVPlayer?
+    private(set) var uid: String = ""
+    private(set) var player: AVPlayer?
     @Published var status: AudioStatus = .undefined
     
     private var timeObserverToken: Any?
@@ -31,10 +32,12 @@ class AudioFile: ObservableObject {
     }
     
     enum AudioStatus {
-        case undefined, playing, paused
+        case undefined, playing, paused, completed
     }
     
-    func startPlaying(filename: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+    func startPlaying(uid: String, filename: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        self.uid = uid
+        print("AudioFile UID: \(uid) \n\n\n\n\n\n\n")
         let audioRef  = Storage.storage().reference().child(filename)
         audioRef.downloadURL { url, error in
             if let error = error {
@@ -48,8 +51,9 @@ class AudioFile: ObservableObject {
             let asset = AVAsset(url: url) //, options: [AVURLAssetAllowsCellularAccessKey: false])
             //self.duration = asset.duration.seconds
             let playerItem = AVPlayerItem(asset: asset)
-            NotificationCenter.default.addObserver(self, selector: Selector(("playerDidFinishPlaying")), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
             self.player = AVPlayer(playerItem: playerItem)
+            self.player?.actionAtItemEnd = .pause
             self.setDuration(asset: asset) { result in
                 switch result {
                 case .failure(let error):
@@ -122,7 +126,7 @@ class AudioFile: ObservableObject {
         completion(.success(true))
     }
     
-    func playerDidFinishPlaying(sender: Notification) {
+    @objc func playerDidFinishPlaying(sender: Notification) {
         if self.player == nil {
             return
         }
@@ -135,8 +139,9 @@ class AudioFile: ObservableObject {
                 break
             }
         }*/
-        self.player = nil
-        self.status = .undefined
+        print("File Finished Playing \n\n\n\n\n")
+        self.status = .completed
+        // This should trigger the UI to dismiss the sheet and call the end function below
     }
     
     func end () {
@@ -146,6 +151,7 @@ class AudioFile: ObservableObject {
         //removePeriodicTimeObserver()
         //self.player!.removeTimeObserver(self.timeObserverToken)
         //self.timeObserverToken = nil
+
         self.player = nil
         self.status = .undefined
     }

@@ -18,7 +18,7 @@ class UserInfo: ObservableObject {
     // auth state is undefined when the user first launches the app
     // Published to monitor changes
     @Published var isUserAuthenticated: FBAuthState = .undefined
-    @Published var user: FBUser = .init(uid: "", name: "", email: "", metrics: FBUserMetrics(minutesMeditated: 0.0, topGenres: [], numberOfMeditations: 0), recommendations: [])
+    @Published var user: FBUser = .init(uid: "", name: "", email: "", metrics: FBUserMetrics(secondsMeditated: 0.0, topGenres: [], numberOfMeditations: 0), recommendations: [])
     @Published var reloading: Bool = false {
         didSet {
             if !oldValue && reloading {

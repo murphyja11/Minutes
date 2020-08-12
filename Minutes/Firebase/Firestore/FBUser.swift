@@ -56,7 +56,7 @@ extension FBUser {
                 FBKeys.User.uid: uid,
                 FBKeys.User.name: name,
                 FBKeys.User.email: email,
-                FBKeys.User.metrics: ["minutesMeditated": 0.0, "topGenres": [], "meditationsPerDay": 0.0],
+                FBKeys.User.metrics: ["secondsMeditated": 0.0, "topGenres": [], "meditationsPerDay": 0.0],
                 FBKeys.User.recommendations: [],
                 // Again, include any app specific properties that you want stored on creation
             ]
@@ -73,13 +73,13 @@ extension FBUser {
 }
 
 struct FBUserMetrics {
-    let minutesMeditated: Double
+    let secondsMeditated: Double
     let topGenres: [String]
     let numberOfMeditations: Int
     
-    init(minutesMeditated: Double, topGenres: [String], numberOfMeditations: Int) {
+    init(secondsMeditated: Double, topGenres: [String], numberOfMeditations: Int) {
         print("initializing FBUserMetrics : FBUser")
-        self.minutesMeditated = minutesMeditated
+        self.secondsMeditated = secondsMeditated
         self.topGenres = topGenres
         self.numberOfMeditations = numberOfMeditations
     }
@@ -88,13 +88,13 @@ struct FBUserMetrics {
 extension FBUserMetrics {
     init?(documentData: [String : Any]) {
         print("initializing FBUserMetrics using failable initializer : FBUser")
-        let minutesMeditated = documentData[FBKeys.Metrics.minutesMeditated] as? Double ?? 0.0
+        let secondsMeditated = documentData[FBKeys.Metrics.secondsMeditated] as? Double ?? 0.0
         let topGenres = documentData[FBKeys.Metrics.topGenres] as? [String] ?? ["none"]
         let numberOfMeditations = documentData[FBKeys.Metrics.numberOfMeditations] as? Int ?? 0
         
         // Make sure you also initialize any app specific properties if you have them
 
-        self.init(minutesMeditated: minutesMeditated,
+        self.init(secondsMeditated: secondsMeditated,
                   topGenres: topGenres,
                   numberOfMeditations: numberOfMeditations
                   // Dont forget any app specific ones here too

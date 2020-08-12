@@ -30,7 +30,7 @@ struct MeView: View {
             Divider()
                 .padding(0)
             Spacer()
-            Text("Minutes Meditated: \(self.userInfo.user.metrics.minutesMeditated, specifier: "%.1f")")
+            Text("Minutes Meditated: \(self.userInfo.user.metrics.secondsMeditated, specifier: "%.1f")")
                 .font(.system(size: 20))
             Text("Number of Meditations: \(self.userInfo.user.metrics.numberOfMeditations)")
                 .font(.system(size: 20))

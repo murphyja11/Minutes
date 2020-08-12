@@ -35,6 +35,7 @@ struct AudioItemView: View {
 
 struct AudioItemViewButton: View {
     @EnvironmentObject var audioFile: AudioFile
+    @EnvironmentObject var userInfo: UserInfo
     
     @ObservedObject var metadata: AudioMetadata
     @Binding var show: Bool
@@ -92,7 +93,8 @@ struct AudioItemViewButton: View {
     private func startPlaying () {
         self.show = true
         print("calling startPlaying function")
-        self.audioFile.startPlaying(filename: self.metadata.data.filename) { result in
+        print("\(self.metadata.data.uid) \n\n\n\n\n")
+        self.audioFile.startPlaying(uid: self.metadata.data.uid, filename: self.metadata.data.filename) { result in
             switch result {
             case .failure(let error):
                 self.errorString = error.localizedDescription

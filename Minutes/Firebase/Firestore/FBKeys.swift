@@ -12,6 +12,7 @@ enum FBKeys {
     enum CollectionPath {
         static let users = "users"
         static let audioMetadata = "audio_metadata"
+        static let events = "events"
     }
     
     enum User {
@@ -24,7 +25,7 @@ enum FBKeys {
     }
     
     enum Metrics {
-        static let minutesMeditated = "minutesMeditated"
+        static let secondsMeditated = "secondsMeditated"
         static let topGenres = "topGenres"
         static let numberOfMeditations = "numberOfMeditations"
     }
@@ -37,5 +38,14 @@ enum FBKeys {
         static let length = "length"
         static let filename = "filename"
         static let tags = "tags"
+    }
+    
+    enum Event {
+        static let type = "type"
+        static let user = "user"
+        static let audio = "audio"
+        static let secondsListened = "secondsListened"
+        static let percListened = "percListened"
+        static let time = "time"
     }
 }

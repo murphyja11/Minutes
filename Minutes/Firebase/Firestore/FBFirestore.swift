@@ -67,16 +67,38 @@ enum FBFirestore {
         }
     }
     
-    static func updateFBUserMetrics(uid: String, minutes: Double) { //}, completion: @escaping (Result<Bool, Error>) -> ()) {
+    static func updateFBUserMetrics(uid: String, seconds: Double) { //}, completion: @escaping (Result<Bool, Error>) -> ()) {
           let reference = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.users)
             .document(uid)
         reference.updateData([
             "metrics": [
-                "minutesMeditated": FieldValue.increment(minutes)
+                "secondsMeditated": FieldValue.increment(seconds)
             ]
         ])
+    }
+    
+    static func sendAudioEvent(user: String, audio: String, secondsListened: Double, percListened: Double, completion: @escaping (Result<Bool, Error>) -> ()) {
+        print("Sending Audio Event")
+        var ref: DocumentReference? = nil
+        ref = Firestore
+            .firestore()
+            .collection(FBKeys.CollectionPath.events)
+            .addDocument(data: [
+                    "type": "audio_event",
+                    "user_uid": user,
+                    "audio_uid": audio,
+                    "secondsListened": secondsListened,
+                    "percListened": percListened,
+                    "time": Date()
+            ]) { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(true))
+                }
+        }
     }
     
     /*static func updateFBUserLikes(uid: String, data: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
