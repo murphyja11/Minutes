@@ -11,13 +11,15 @@ import FirebaseStorage
 import AVFoundation
 
 class AudioFile: ObservableObject {
+    //@EnvironmentObject var userInfo: UserInfo
+    
     private var player: AVPlayer?
     @Published var status: AudioStatus = .undefined
-
-    //let sliderTime = PassthroughSubject<Double, Never>()
     
+    private var timeObserverToken: Any?
     @Published var currentTime: Double = 0.0
-    var duration: Double = 0.0
+    @Published var duration: Double = 1.0
+    private var timeScale: Int32?
     
     init() {
        do {
@@ -43,11 +45,28 @@ class AudioFile: ObservableObject {
                 completion(.failure(AudioFileError.urlIsNil))
                 return
             }
-            let playerItem = AVPlayerItem(url: url)
-            self.duration = playerItem.duration.seconds
+            let asset = AVAsset(url: url) //, options: [AVURLAssetAllowsCellularAccessKey: false])
+            //self.duration = asset.duration.seconds
+            let playerItem = AVPlayerItem(asset: asset)
+            NotificationCenter.default.addObserver(self, selector: Selector(("playerDidFinishPlaying")), name: .AVPlayerItemDidPlayToEndTime, object: nil)
             self.player = AVPlayer(playerItem: playerItem)
-            //self.addPeriodicTimeObserver(player: self.player)
-            self.playImmediately { result in
+            self.setDuration(asset: asset) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success( _):
+                    break
+                }
+            }
+            /*self.addTimeObserver(player: self.player) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success( _):
+                    break
+                }
+            }*/
+            self.play { result in
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -55,25 +74,32 @@ class AudioFile: ObservableObject {
                     print("Audio File initialized and playing")
                 }
             }
-            /*self.play { result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success( _):
-                    print("Audio File initialized and playing")
-                }
-            }*/
         }
     }
     
-    private func playImmediately(completion: @escaping (Result<Bool, AudioFileError>) -> Void) {
-        if self.player == nil {
+    private func addTimeObserver (player: AVPlayer?, completion: @escaping (Result<Bool, Error>) -> Void) {
+        guard let player = player  else {
             completion(.failure(AudioFileError.playerIsNil))
             return
         }
-        self.player!.playImmediately(atRate: 1.0)
-        self.status = .playing
-        completion(.success(true))
+        let timeScale = CMTimeScale(NSEC_PER_SEC)
+        print("\(NSEC_PER_SEC) \n\n\n\n")
+        let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
+
+        self.timeObserverToken = player.addPeriodicTimeObserver(forInterval: time,
+                                                          queue: .main)
+        { [weak self] time in
+            self!.currentTime = time.seconds
+            completion(.success(true))
+        }
+        //completion(.failure(AudioFileError.cantAddObserver))
+    }
+    
+    private func setDuration (asset: AVAsset, completion: @escaping (Result<Bool, Error>) -> Void) {
+        if asset.duration == nil {
+            completion(.failure(AudioFileError.DurationIsNil))
+        }
+        self.duration = asset.duration.seconds
     }
     
     func play(completion: @escaping (Result<Bool, AudioFileError>) -> Void) {
@@ -96,11 +122,30 @@ class AudioFile: ObservableObject {
         completion(.success(true))
     }
     
+    func playerDidFinishPlaying(sender: Notification) {
+        if self.player == nil {
+            return
+        }
+        //FBFirestore.updateFBUserMetrics(uid: self.userInfo.user.uid, minutes: self.duration)
+        /*{ result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success( _):
+                break
+            }
+        }*/
+        self.player = nil
+        self.status = .undefined
+    }
+    
     func end () {
         if self.player == nil {
             return
         }
         //removePeriodicTimeObserver()
+        //self.player!.removeTimeObserver(self.timeObserverToken)
+        //self.timeObserverToken = nil
         self.player = nil
         self.status = .undefined
     }
@@ -122,5 +167,11 @@ class AudioFile: ObservableObject {
             newTime = self.duration
         }
         player!.seek(to: CMTime(value: CMTimeValue(newTime * 1000), timescale: 1000))
+    }
+    
+    func seek (to time: Float64) {
+        let cmTime = CMTimeMakeWithSeconds(time, preferredTimescale: 48000)
+        guard let _ = player else { return }
+        self.player!.seek(to: cmTime)
     }
 }

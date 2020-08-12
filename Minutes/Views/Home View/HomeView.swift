@@ -12,7 +12,7 @@ struct HomeView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
     
-    @State var showAudioView: Bool = false
+    @Binding var showAudioView: Bool
     
     var body: some View {
         GeometryReader { geometry in
@@ -23,16 +23,21 @@ struct HomeView: View {
                     .padding(0)
                 Divider()
                     .padding(0)
-                ForEach(0..<self.userInfo.user.recommendations.count, id: \.self) {
-                    AudioItemView(uid: self.userInfo.user.recommendations[$0], show: self.$showAudioView)
-                        .frame(width: geometry.size.width * 0.9, height: 100)
-                        .padding(.horizontal, geometry.size.width * 0.1)
+                ScrollView {
+                    ForEach(self.userInfo.user.recommendations, id: \.self) { rec in
+                        AudioItemView(uid: rec, show: self.$showAudioView)
+                            .frame(width: geometry.size.width * 0.9, height: 100)
+                            .padding(.horizontal, geometry.size.width * 0.1)
+                    }
+                    
+                    // So that the ScrollView doesn't initialize empty
+                    if self.userInfo.user.recommendations.count == 0 {
+                        HStack {
+                            Spacer()
+                        }
+                    }
                 }
-                Spacer()
             }
-        }
-        .onAppear {
-            
         }
         .sheet(isPresented: self.$showAudioView) {
             AudioView()

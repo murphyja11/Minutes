@@ -67,6 +67,18 @@ enum FBFirestore {
         }
     }
     
+    static func updateFBUserMetrics(uid: String, minutes: Double) { //}, completion: @escaping (Result<Bool, Error>) -> ()) {
+          let reference = Firestore
+            .firestore()
+            .collection(FBKeys.CollectionPath.users)
+            .document(uid)
+        reference.updateData([
+            "metrics": [
+                "minutesMeditated": FieldValue.increment(minutes)
+            ]
+        ])
+    }
+    
     /*static func updateFBUserLikes(uid: String, data: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
         let reference = Firestore
             .firestore()

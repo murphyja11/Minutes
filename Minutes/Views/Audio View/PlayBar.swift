@@ -18,9 +18,15 @@ struct PlayBar: View {
         VStack {
             HStack {
                 Text("Time: ")
+                Text("\(audioFile.currentTime)")
                 Text("\(self.currentTime)")
             }
-            Slider(value: self.$currentTime, in: 0...5)
+            Text("Duration: \(self.audioFile.duration)")
+            Slider(value: self.$audioFile.currentTime, in: 0...self.audioFile.duration, onEditingChanged: { _ in
+                let targetTime = self.audioFile.currentTime * self.audioFile.duration
+                self.audioFile.seek(to: targetTime)
+            })
+                .padding(.horizontal, 15)
         }
     }
 }

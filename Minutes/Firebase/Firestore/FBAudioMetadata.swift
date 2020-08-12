@@ -18,7 +18,7 @@ struct FBAudioMetadata {
     let tags: [String]
     
     init(uid: String, title: String, genre: String, description: String, length: String, filename: String, tags: [String]) {
-        print("Initializing AudioMetadata : AudioMetadata")
+        print("Initializing AudioMetadata : FBAudioMetadata")
         self.uid = uid
         self.title = title
         self.genre = genre
@@ -31,7 +31,7 @@ struct FBAudioMetadata {
 
 extension FBAudioMetadata {
     init?(documentData: [String: Any]) {
-        print("Initializing AudioMetadata using failable initializer : AudioMetadata")
+        print("Initializing AudioMetadata using failable initializer : FBAudioMetadata")
         let uid = documentData[FBKeys.AudioMetadata.uid] as? String ?? ""
         let title = documentData[FBKeys.AudioMetadata.title] as? String ?? ""
         let genre = documentData[FBKeys.AudioMetadata.genre] as? String ?? ""

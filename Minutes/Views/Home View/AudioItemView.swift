@@ -19,20 +19,18 @@ struct AudioItemView: View {
         GeometryReader { geometry in
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
-                /*Group {
-                    if self.metadata.state == .undefined {
-                        return Text("loading")
-                    } else if self.metadata.state == .failed {
-                        return Text("")
-                    } else {*/
-                AudioItemViewButton(uid: self.uid, show: self.$show)
-                    //}
-                //}
+                    .foregroundColor(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue:0.1))
+
+                if !self.presentationMode.wrappedValue.isPresented {
+                    AudioItemViewButton(uid: self.uid, show: self.$show)
+                }
             }
             .frame(height: 100)
         }
     }
+    
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
 }
 
 struct AudioItemViewButton: View {
@@ -61,16 +59,28 @@ struct AudioItemViewButton: View {
                 HStack {
                     Button(action: self.startPlaying) {
                         HStack {
-                            Image(systemName: "play.fill")
-                            VStack {
+                            Image(systemName: "play.fill").resizable()
+                                .frame(width: 18, height: 20)
+                                .padding(.horizontal, 25)
+                                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                            VStack(alignment: .leading) {
                                 Text(self.metadata.data.title)
+                                    .font(.system(size: 20))
+                                    .fontWeight(.medium)
+                                    .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                                 Text(self.metadata.data.description)
+                                    .font(.system(size: 12))
+                                    .fontWeight(.light)
+                                    .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                             }
                             Spacer()
+                            Text(self.metadata.data.length)
+                                .font(.system(size: 20))
+                                .fontWeight(.regular)
+                                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                         }
-                        .padding(.horizontal, 30)
+                        .padding(.trailing, 25)
                     }
-                    Spacer()
                 }
                 .alert(isPresented: self.$showAlert) {
                     Alert(title: Text("Error playing audio"), message: Text(self.errorString), dismissButton: .default(Text("Ok")))
@@ -93,4 +103,5 @@ struct AudioItemViewButton: View {
         }
     }
 
+    @Environment(\.colorScheme) var colorScheme
 }

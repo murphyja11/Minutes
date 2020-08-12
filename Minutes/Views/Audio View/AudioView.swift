@@ -11,6 +11,9 @@ import SwiftUI
 struct AudioView: View {
     @EnvironmentObject var audioFile: AudioFile
     
+    @State var errorString: String = ""
+    @State var showAlert: Bool = false
+    
     var body: some View {
         Group {
             if audioFile.status == .undefined {
@@ -29,7 +32,7 @@ struct AudioView: View {
                         Spacer()
                     }
                     Spacer()
-                    PlayBar()
+                    //PlayBar()
                 }
             }
         }

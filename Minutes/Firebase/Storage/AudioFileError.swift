@@ -11,6 +11,8 @@ import Foundation
 enum AudioFileError: Error {
     case urlIsNil
     case playerIsNil
+    case DurationIsNil
+    case cantAddObserver
 }
 
 extension AudioFileError: LocalizedError {
@@ -21,6 +23,10 @@ extension AudioFileError: LocalizedError {
             return NSLocalizedString("URL is Nil", comment: "")
         case .playerIsNil:
             return NSLocalizedString("AVPlayer is Nil", comment: "")
+        case .DurationIsNil:
+            return NSLocalizedString("AVPlayerItem is Nil", comment: "")
+        case .cantAddObserver:
+            return NSLocalizedString("For some reason can't add observer", comment: "")
         }
     }
 }

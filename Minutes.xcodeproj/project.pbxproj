@@ -43,12 +43,13 @@
 		D430C79B24E0D278003F85C6 /* FBAuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79824E0D278003F85C6 /* FBAuthError.swift */; };
 		D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79524E0D277003F85C6 /* FBAuth.swift */; };
 		D430C79E24E0D282003F85C6 /* AudioMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79D24E0D281003F85C6 /* AudioMetadata.swift */; };
+		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		30EE49727114966DBF0DC3C7 /* Pods-Minutes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minutes.debug.xcconfig"; path = "Target Support Files/Pods-Minutes/Pods-Minutes.debug.xcconfig"; sourceTree = "<group>"; };
 		8EEA5E972226C16C5BD701F8 /* Pods-Minutes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minutes.release.xcconfig"; path = "Target Support Files/Pods-Minutes/Pods-Minutes.release.xcconfig"; sourceTree = "<group>"; };
-		D430C73D24E0CFFF003F85C6 /* Minutes-beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Minutes-beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D430C73D24E0CFFF003F85C6 /* Minutes beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Minutes beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D430C74624E0D002003F85C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D430C74924E0D002003F85C6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D430C74C24E0D002003F85C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -85,6 +86,7 @@
 		D430C79724E0D278003F85C6 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		D430C79824E0D278003F85C6 /* FBAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBAuthError.swift; sourceTree = "<group>"; };
 		D430C79D24E0D281003F85C6 /* AudioMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadata.swift; sourceTree = "<group>"; };
+		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 		DA20AC1F924C5407255BB1C5 /* Pods_Minutes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Minutes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -130,7 +132,7 @@
 		D430C73E24E0CFFF003F85C6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D430C73D24E0CFFF003F85C6 /* Minutes-beta.app */,
+				D430C73D24E0CFFF003F85C6 /* Minutes beta.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -252,6 +254,7 @@
 			children = (
 				D430C77B24E0D203003F85C6 /* AudioItemView.swift */,
 				D430C77A24E0D203003F85C6 /* HomeView.swift */,
+				D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */,
 			);
 			path = "Home View";
 			sourceTree = "<group>";
@@ -285,7 +288,7 @@
 			);
 			name = Minutes;
 			productName = Minutes;
-			productReference = D430C73D24E0CFFF003F85C6 /* Minutes-beta.app */;
+			productReference = D430C73D24E0CFFF003F85C6 /* Minutes beta.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -385,6 +388,7 @@
 				D430C77924E0D1F8003F85C6 /* MeView.swift in Sources */,
 				D430C76A24E0D188003F85C6 /* ContinueWithApple.swift in Sources */,
 				D430C75A24E0D142003F85C6 /* AppDelegate.swift in Sources */,
+				D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */,
 				D430C76B24E0D188003F85C6 /* EscapeButton.swift in Sources */,
 				D430C76824E0D188003F85C6 /* EscapeChevron.swift in Sources */,
 				D430C79A24E0D278003F85C6 /* UserViewModel.swift in Sources */,
@@ -557,8 +561,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.organization.Minutes;
-				PRODUCT_NAME = "Minutes-beta";
+				PRODUCT_BUNDLE_IDENTIFIER = "no.organization.Minutes-beta";
+				PRODUCT_NAME = "Minutes beta";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -577,8 +581,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.organization.Minutes;
-				PRODUCT_NAME = "Minutes-beta";
+				PRODUCT_BUNDLE_IDENTIFIER = "no.organization.Minutes-beta";
+				PRODUCT_NAME = "Minutes beta";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
