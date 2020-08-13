@@ -11,7 +11,6 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
-    @EnvironmentObject var recommendations: Recommendations
     
     @Binding var showAudioView: Bool
     
@@ -25,13 +24,13 @@ struct HomeView: View {
                 Divider()
                     .padding(0)
                 RefreshableScrollView(height: 100, refreshing: self.$userInfo.reloading) {
-                    ForEach(self.recommendations.data, id: \.self) { rec in
+                    ForEach(self.userInfo.recommendations, id: \.self) { rec in
                         AudioItemView(metadata: rec, show: self.$showAudioView)
                             .frame(width: geometry.size.width * 0.9, height: 100)
                             .padding(.horizontal, geometry.size.width * 0.1)
                     }
                     
-                    // So that the ScrollView doesn't initialize empty
+                    // So that the ScrollView doesn't initialize empty:
                     if self.userInfo.user.recommendations.count == 0 {
                         HStack {
                             Spacer()

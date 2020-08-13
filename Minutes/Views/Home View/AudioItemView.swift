@@ -51,49 +51,41 @@ struct AudioItemViewButton: View {
     @State var showAlert: Bool = false
     
     var body: some View {
-        Group {
-            /*if metadata.state == .undefined {
-                Text("")
-            } else if metadata.state == .failed {
-                Text("Error retrieving information")
-            } else {*/
+        HStack {
+            Button(action: self.startPlaying) {
                 HStack {
-                    Button(action: self.startPlaying) {
-                        HStack {
-                            Image(systemName: "play.fill").resizable()
-                                .frame(width: 18, height: 20)
-                                .padding(.horizontal, 25)
-                                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                            VStack(alignment: .leading) {
-                                Text(self.metadata.title)
-                                    .font(.system(size: 20))
-                                    .fontWeight(.medium)
-                                    .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                                Text(self.metadata.description)
-                                    .font(.system(size: 12))
-                                    .fontWeight(.light)
-                                    .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                            }
-                            Spacer()
-                            Text(self.metadata.length)
-                                .font(.system(size: 20))
-                                .fontWeight(.regular)
-                                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                        }
-                        .padding(.trailing, 25)
+                    Image(systemName: "play.fill").resizable()
+                        .frame(width: 18, height: 20)
+                        .padding(.horizontal, 25)
+                        .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                    VStack(alignment: .leading) {
+                        Text(self.metadata.title)
+                            .font(.system(size: 20))
+                            .fontWeight(.medium)
+                            .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                        Text(self.metadata.description)
+                            .font(.system(size: 12))
+                            .fontWeight(.light)
+                            .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                     }
+                    Spacer()
+                    Text(self.metadata.length)
+                        .font(.system(size: 20))
+                        .fontWeight(.regular)
+                        .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                 }
-                .alert(isPresented: self.$showAlert) {
-                    Alert(title: Text("Error playing audio"), message: Text(self.errorString), dismissButton: .default(Text("Ok")))
-                }
-            //}
+                .padding(.trailing, 25)
+            }
+        }
+        .alert(isPresented: self.$showAlert) {
+            Alert(title: Text("Error playing audio"), message: Text(self.errorString), dismissButton: .default(Text("Ok")))
         }
     }
     
     private func startPlaying () {
         self.show = true
         print("calling startPlaying function")
-        print("\(self.metadata.uid) \n\n\n\n\n")
+        print("\(self.metadata.uid) \n\n\n")
         self.audioFile.startPlaying(uid: self.metadata.uid, filename: self.metadata.filename) { result in
             switch result {
             case .failure(let error):

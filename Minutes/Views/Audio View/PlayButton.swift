@@ -11,7 +11,7 @@ import SwiftUI
 struct PlayButton: View {
     @EnvironmentObject var audioFile: AudioFile
     
-    @State var errorString: String = ""
+    @State var errorString: String?
     @State var showAlert: Bool = false
     
     var body: some View {

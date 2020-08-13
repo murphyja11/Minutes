@@ -52,6 +52,27 @@ enum FBFirestore {
         
     }
     
+    static func retrieveFBMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
+        let reference = Firestore
+            .firestore()
+            .collection(FBKeys.CollectionPath.metrics)
+            .document(uid)
+        getDocument(for: reference) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let data):
+                do {
+                    let metrics = try FBMetrics(documentData: data)!
+                    completion(.success(metrics))
+                } catch {
+                    completion(.failure(FireStoreError.metricsError))
+                }
+            }
+        }
+        
+    }
+    
     static func mergeFBUser(_ data: [String: Any], uid: String, completion: @escaping (Result<Bool, Error>) -> ()) {
         print("starting merge FBUser : FBFirestore.mergeFBUser")
         let reference = Firestore
@@ -66,18 +87,6 @@ enum FBFirestore {
             print("merged FBUser : FBFirestore.mergeFBUser")
             completion(.success(true))
         }
-    }
-    
-    static func updateFBUserMetrics(uid: String, seconds: Double) { //}, completion: @escaping (Result<Bool, Error>) -> ()) {
-          let reference = Firestore
-            .firestore()
-            .collection(FBKeys.CollectionPath.users)
-            .document(uid)
-        reference.updateData([
-            "metrics": [
-                "secondsListened": FieldValue.increment(seconds)
-            ]
-        ])
     }
     
     static func sendAudioEvent(user: String, audio: String, secondsListened: Double, percListened: Double, completion: @escaping (Result<Bool, Error>) -> ()) {

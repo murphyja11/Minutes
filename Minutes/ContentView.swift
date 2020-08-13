@@ -12,9 +12,11 @@ import FirebaseAuth
 struct ContentView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
-    @ObservedObject var recommendations = Recommendations()
     
     @State private var selection = 0
+    
+    @State var errorString: String?
+    @State var showAlert = false
     
     @State var showAudioView: Bool = false
  
@@ -39,7 +41,6 @@ struct ContentView: View {
                             }
                         }
                         .tag(0)
-                        .environmentObject(self.recommendations)
                     MeView()
                         .font(.title)
                         .tabItem {
@@ -62,13 +63,25 @@ struct ContentView: View {
             FBFirestore.retrieveFBUser(uid: uid) { (result) in
                 switch result {
                     case .failure(let error):
-                        print(error.localizedDescription)
-                        // Display some kind of alert that the users account is corrupted
+                        self.errorString = error.localizedDescription
+                        self.showAlert = true
                     case .success(let user):
                         self.userInfo.user = user
-                        self.recommendations.initialize(user.recommendations)
+                        self.userInfo.getRecommendations { result in
+                            switch result {
+                            case .failure(let error):
+                                self.errorString = error.localizedDescription
+                                self.showAlert = true
+                            case .success( _):
+                                break
+                            }
+                    }
                 }
             }
+            self.userInfo.configureMetricsSnapshotListener()
+        }
+        .alert(isPresented: self.$showAlert) {
+            Alert(title: Text("Retrieval Error"), message: Text(self.errorString ?? ""), dismissButton: .default(Text("Ok")))
         }
     }
 }

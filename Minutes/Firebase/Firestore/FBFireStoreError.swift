@@ -17,6 +17,7 @@ enum FireStoreError: Error {
     case noUser
     case noRecommendations
     case noAudioMetadata
+    case metricsError
 }
 
 extension FireStoreError: LocalizedError {
@@ -37,6 +38,8 @@ extension FireStoreError: LocalizedError {
             return NSLocalizedString("No Recommendations were provided", comment: "")
         case .noAudioMetadata:
             return NSLocalizedString("No Audio Metadata", comment: "")
+        case .metricsError:
+            return NSLocalizedString("Some Metrics Error", comment: "")
         }
     }
 }

@@ -21,7 +21,7 @@ struct AudioView: View {
                 Text("")
             } else if audioFile.status == .completed {
                 Text("").onAppear {
-                    print("AudioFile Status is Completed \n\n\n\n\n")
+                    print("AudioFile Status is Completed \n\n\n")
                     self.sendAudioEvent()
                     self.presentationMode.wrappedValue.dismiss()
                     self.audioFile.end()
@@ -51,7 +51,7 @@ struct AudioView: View {
             let secondsListened = player.currentTime().seconds
             let percListened = secondsListened / self.audioFile.duration
             print("sending audio Event")
-            print("\(self.audioFile.uid) \n\n\n\n\n")
+            print("\(self.audioFile.uid) \n\n\n")
             FBFirestore.sendAudioEvent(user: self.userInfo.user.uid, audio: self.audioFile.uid, secondsListened: secondsListened, percListened: percListened) { result in
                 switch result {
                 case .failure(let error):
@@ -124,7 +124,7 @@ struct AudioEscapeButton: View {
             let secondsListened = player.currentTime().seconds
             let percListened = secondsListened / self.audioFile.duration
             print("sending audio Event")
-            print("\(self.audioFile.uid) \n\n\n\n\n")
+            print("\(self.audioFile.uid) \n\n\n")
             FBFirestore.sendAudioEvent(user: self.userInfo.user.uid, audio: self.audioFile.uid, secondsListened: secondsListened, percListened: percListened) { result in
                 switch result {
                 case .failure(let error):

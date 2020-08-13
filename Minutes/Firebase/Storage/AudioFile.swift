@@ -37,7 +37,7 @@ class AudioFile: ObservableObject {
     
     func startPlaying(uid: String, filename: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         self.uid = uid
-        print("AudioFile UID: \(uid) \n\n\n\n\n\n\n")
+        print("AudioFile UID: \(uid) \n\n\n")
         let audioRef  = Storage.storage().reference().child(filename)
         audioRef.downloadURL { url, error in
             if let error = error {
@@ -87,7 +87,7 @@ class AudioFile: ObservableObject {
             return
         }
         let timeScale = CMTimeScale(NSEC_PER_SEC)
-        print("\(NSEC_PER_SEC) \n\n\n\n")
+        print("\(NSEC_PER_SEC) \n\n\n")
         let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
 
         self.timeObserverToken = player.addPeriodicTimeObserver(forInterval: time,
@@ -130,16 +130,7 @@ class AudioFile: ObservableObject {
         if self.player == nil {
             return
         }
-        //FBFirestore.updateFBUserMetrics(uid: self.userInfo.user.uid, minutes: self.duration)
-        /*{ result in
-            switch result {
-            case .failure(let error):
-                print(error.localizedDescription)
-            case .success( _):
-                break
-            }
-        }*/
-        print("File Finished Playing \n\n\n\n\n")
+        print("File Finished Playing \n\n\n")
         self.status = .completed
         // This should trigger the UI to dismiss the sheet and call the end function below
     }
