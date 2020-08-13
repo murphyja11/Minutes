@@ -25,6 +25,7 @@ enum FBKeys {
     }
     
     enum Metrics {
+        static let uid = "uid"
         static let secondsListened = "secondsListened"
         static let numberOfMeditations = "numberOfMeditations"
     }

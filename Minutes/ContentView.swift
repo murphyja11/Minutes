@@ -79,6 +79,15 @@ struct ContentView: View {
                 }
             }
             self.userInfo.configureMetricsSnapshotListener()
+            FBFirestore.retrieveFBMetrics(uid: uid) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(let metrics):
+                    self.userInfo.metrics.secondsListened = metrics.secondsListened
+                    self.userInfo.metrics.numberOfMeditations = metrics.numberOfMeditations
+                }
+            }
         }
         .alert(isPresented: self.$showAlert) {
             Alert(title: Text("Retrieval Error"), message: Text(self.errorString ?? ""), dismissButton: .default(Text("Ok")))

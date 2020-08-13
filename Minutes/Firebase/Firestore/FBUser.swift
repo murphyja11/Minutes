@@ -67,28 +67,3 @@ extension FBUser {
     }
 }
 
-struct FBMetrics {
-    let secondsListened: Double
-    let numberOfMeditations: Int
-    
-    init(secondsListened: Double, numberOfMeditations: Int) {
-        print("initializing FBUserMetrics : FBUser")
-        self.secondsListened = secondsListened
-        self.numberOfMeditations = numberOfMeditations
-    }
-}
-
-extension FBMetrics {
-    init?(documentData: [String : Any]) {
-        print("initializing FBUserMetrics using failable initializer : FBUser")
-        let secondsListened = documentData[FBKeys.Metrics.secondsListened] as? Double ?? 0.0
-        let numberOfMeditations = documentData[FBKeys.Metrics.numberOfMeditations] as? Int ?? 0
-        
-        // Make sure you also initialize any app specific properties if you have them
-
-        self.init(secondsListened: secondsListened,
-                  numberOfMeditations: numberOfMeditations
-                  // Dont forget any app specific ones here too
-        )
-    }
-}

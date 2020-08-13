@@ -20,9 +20,8 @@ class UserInfo: ObservableObject {
     // Published to monitor changes
     @Published var isUserAuthenticated: FBAuthState = .undefined
     @Published var user: FBUser = .init(uid: "", name: "", email: "", recommendations: [])
-    @Published var metrics: FBMetrics = .init(secondsListened: 0, numberOfMeditations: 0)
+    @Published var metrics = Metrics()
     @Published var recommendations: [FBAudioMetadata] = []
-    
     @Published var reloading: Bool = false {
         didSet {
             if !oldValue && reloading {
@@ -67,25 +66,8 @@ class UserInfo: ObservableObject {
             .firestore()
             .collection(FBKeys.CollectionPath.metrics)
             .document(self.user.uid)
-            .addSnapshotListener { documentSnapshot, error in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                guard let document = documentSnapshot else {
-                    print("Metrics document was empty")
-                    return
-                }
-                guard let data = document.data() else {
-                    print("Metrics document was empty")
-                    return
-                }
-                guard let metrics = FBMetrics(documentData: data) else {
-                    print("Metrics document was empty")
-                    return
-                }
-                self.metrics = metrics
-        }
+            
+        self.metrics.addSnapshotListener(reference: reference)
     }
     
     func getRecommendations (completion: @escaping (Result<Bool, Error>) -> ()) {
