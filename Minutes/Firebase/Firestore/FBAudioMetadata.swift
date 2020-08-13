@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FBAudioMetadata {
+struct FBAudioMetadata: Hashable {
     let uid: String
     let title: String
     let genre: String

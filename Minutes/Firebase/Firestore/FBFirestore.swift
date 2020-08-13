@@ -11,6 +11,7 @@ enum FBFirestore {
     
     static func retrieveAudioMetadata(uid: String, completion: @escaping (Result<FBAudioMetadata, Error>) -> ()) {
         print("retrieving FBAudioMetadata : FBFirestore")
+        print("\(uid) \n")
         let reference = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.audioMetadata)
@@ -74,7 +75,7 @@ enum FBFirestore {
             .document(uid)
         reference.updateData([
             "metrics": [
-                "secondsMeditated": FieldValue.increment(seconds)
+                "secondsListened": FieldValue.increment(seconds)
             ]
         ])
     }
@@ -131,6 +132,7 @@ enum FBFirestore {
                 return
             }
             print("Got Document : FBFirestore.getDocument")
+            print("\(data) \n")
             completion(.success(data))
         }
     }

@@ -12,7 +12,7 @@ struct AudioItemView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
     
-    var uid: String
+    var metadata: FBAudioMetadata
     @Binding var show: Bool
     
     var body: some View {
@@ -22,7 +22,7 @@ struct AudioItemView: View {
                     .foregroundColor(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue:0.1))
 
                 if !self.presentationMode.wrappedValue.isPresented {
-                    AudioItemViewButton(uid: self.uid, show: self.$show)
+                    AudioItemViewButton(metadata: self.metadata, show: self.$show)
                 }
             }
             .frame(height: 100)
@@ -37,13 +37,13 @@ struct AudioItemViewButton: View {
     @EnvironmentObject var audioFile: AudioFile
     @EnvironmentObject var userInfo: UserInfo
     
-    @ObservedObject var metadata: AudioMetadata
+    var metadata: FBAudioMetadata
     @Binding var show: Bool
     
-    init(uid: String, show: Binding<Bool>) {
-         print("audio item view starting")
+    init(metadata: FBAudioMetadata, show: Binding<Bool>) {
+        print("audio item view button starting")
         self._show = show
-        self.metadata = AudioMetadata(uid: uid)
+        self.metadata = metadata
 
     }
     
@@ -52,11 +52,11 @@ struct AudioItemViewButton: View {
     
     var body: some View {
         Group {
-            if metadata.state == .undefined {
+            /*if metadata.state == .undefined {
                 Text("")
             } else if metadata.state == .failed {
                 Text("Error retrieving information")
-            } else {
+            } else {*/
                 HStack {
                     Button(action: self.startPlaying) {
                         HStack {
@@ -65,17 +65,17 @@ struct AudioItemViewButton: View {
                                 .padding(.horizontal, 25)
                                 .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                             VStack(alignment: .leading) {
-                                Text(self.metadata.data.title)
+                                Text(self.metadata.title)
                                     .font(.system(size: 20))
                                     .fontWeight(.medium)
                                     .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                                Text(self.metadata.data.description)
+                                Text(self.metadata.description)
                                     .font(.system(size: 12))
                                     .fontWeight(.light)
                                     .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                             }
                             Spacer()
-                            Text(self.metadata.data.length)
+                            Text(self.metadata.length)
                                 .font(.system(size: 20))
                                 .fontWeight(.regular)
                                 .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
@@ -86,15 +86,15 @@ struct AudioItemViewButton: View {
                 .alert(isPresented: self.$showAlert) {
                     Alert(title: Text("Error playing audio"), message: Text(self.errorString), dismissButton: .default(Text("Ok")))
                 }
-            }
+            //}
         }
     }
     
     private func startPlaying () {
         self.show = true
         print("calling startPlaying function")
-        print("\(self.metadata.data.uid) \n\n\n\n\n")
-        self.audioFile.startPlaying(uid: self.metadata.data.uid, filename: self.metadata.data.filename) { result in
+        print("\(self.metadata.uid) \n\n\n\n\n")
+        self.audioFile.startPlaying(uid: self.metadata.uid, filename: self.metadata.filename) { result in
             switch result {
             case .failure(let error):
                 self.errorString = error.localizedDescription

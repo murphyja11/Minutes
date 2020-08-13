@@ -44,6 +44,7 @@
 		D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79524E0D277003F85C6 /* FBAuth.swift */; };
 		D430C79E24E0D282003F85C6 /* AudioMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79D24E0D281003F85C6 /* AudioMetadata.swift */; };
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
+		D4C5040024E5957E00E1D540 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C503FF24E5957E00E1D540 /* Recommendations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		D430C79824E0D278003F85C6 /* FBAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBAuthError.swift; sourceTree = "<group>"; };
 		D430C79D24E0D281003F85C6 /* AudioMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadata.swift; sourceTree = "<group>"; };
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
+		D4C503FF24E5957E00E1D540 /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				D430C79D24E0D281003F85C6 /* AudioMetadata.swift */,
+				D4C503FF24E5957E00E1D540 /* Recommendations.swift */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				D430C76B24E0D188003F85C6 /* EscapeButton.swift in Sources */,
 				D430C76824E0D188003F85C6 /* EscapeChevron.swift in Sources */,
 				D430C79A24E0D278003F85C6 /* UserViewModel.swift in Sources */,
+				D4C5040024E5957E00E1D540 /* Recommendations.swift in Sources */,
 				D430C75724E0D12C003F85C6 /* ContentView.swift in Sources */,
 				D430C79024E0D245003F85C6 /* FBUser.swift in Sources */,
 				D430C76724E0D188003F85C6 /* ContinueWith.swift in Sources */,

@@ -12,29 +12,21 @@ struct MeView: View {
     @EnvironmentObject var userInfo: UserInfo
     
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
+        GeometryReader { geometry in
+            VStack {
                 Text("Profile")
                     .font(.system(size: 20))
                     .frame(height: 45)
                     .padding(0)
+                Divider()
+                    .padding(0)
                 Spacer()
-                Button(action: {}) {
-                    Image(systemName: "gear").resizable()
-                        .frame(width: 35, height: 35)
-                        .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
-                        .padding(.trailing, 20)
-                }
+                Text("Total Minutes Meditated: \(self.userInfo.user.metrics.secondsListened, specifier: "%.1f")")
+                    .font(.system(size: 20))
+                Text("Number of Meditations: \(self.userInfo.user.metrics.numberOfMeditations)")
+                    .font(.system(size: 20))
+                Spacer()
             }
-            Divider()
-                .padding(0)
-            Spacer()
-            Text("Minutes Meditated: \(self.userInfo.user.metrics.secondsMeditated, specifier: "%.1f")")
-                .font(.system(size: 20))
-            Text("Number of Meditations: \(self.userInfo.user.metrics.numberOfMeditations)")
-                .font(.system(size: 20))
-            Spacer()
         }
     }
     
@@ -42,7 +34,9 @@ struct MeView: View {
 }
 
 struct MeView_Previews: PreviewProvider {
+    
     static var previews: some View {
         MeView()
+            .environmentObject(UserInfo())
     }
 }

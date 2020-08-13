@@ -12,6 +12,8 @@ import FirebaseAuth
 struct ContentView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
+    @ObservedObject var recommendations = Recommendations()
+    
     @State private var selection = 0
     
     @State var showAudioView: Bool = false
@@ -37,6 +39,7 @@ struct ContentView: View {
                             }
                         }
                         .tag(0)
+                        .environmentObject(self.recommendations)
                     MeView()
                         .font(.title)
                         .tabItem {
@@ -63,6 +66,7 @@ struct ContentView: View {
                         // Display some kind of alert that the users account is corrupted
                     case .success(let user):
                         self.userInfo.user = user
+                        self.recommendations.initialize(user.recommendations)
                 }
             }
         }
