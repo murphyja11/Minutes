@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct MeView: View {
     @EnvironmentObject var userInfo: UserInfo
@@ -21,7 +22,7 @@ struct MeView: View {
                 Divider()
                     .padding(0)
                 Spacer()
-                Text("Total Minutes Meditated: \(self.userInfo.metrics.secondsListened, specifier: "%.1f")")
+                Text("Total Minutes Meditated: \(self.userInfo.metrics.secondsListened / 60)")
                     .font(.system(size: 20))
                 Text("Number of Meditations: \(self.userInfo.metrics.numberOfMeditations)")
                     .font(.system(size: 20))

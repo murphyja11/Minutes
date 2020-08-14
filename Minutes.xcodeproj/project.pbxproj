@@ -92,6 +92,7 @@
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040924E6045600E1D540 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
+		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +145,7 @@
 		D430C73F24E0CFFF003F85C6 /* Minutes */ = {
 			isa = PBXGroup;
 			children = (
+				D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */,
 				D430C79F24E0D28A003F85C6 /* Firebase */,
 				D430C78424E0D223003F85C6 /* Views */,
 				D430C75824E0D141003F85C6 /* AppDelegate.swift */,
@@ -561,8 +563,10 @@
 			baseConfigurationReference = AD348AAF274B07BEF9D6A37F /* Pods-Minutes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Minutes/Minutes beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Minutes/Preview Content\"";
+				DEVELOPMENT_TEAM = CG4JM2F932;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Minutes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -581,8 +585,10 @@
 			baseConfigurationReference = 948F67873229084DCB12BF7B /* Pods-Minutes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Minutes/Minutes beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Minutes/Preview Content\"";
+				DEVELOPMENT_TEAM = CG4JM2F932;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Minutes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

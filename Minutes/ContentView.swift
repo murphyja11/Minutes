@@ -55,6 +55,18 @@ struct ContentView: View {
                         }
                         .tag(1)
                 }
+                .onAppear {
+                    self.userInfo.configureMetricsSnapshotListener()
+                    FBFirestore.retrieveFBMetrics(uid: self.userInfo.user.uid) { result in
+                        switch result {
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        case .success(let metrics):
+                            self.userInfo.metrics.secondsListened = metrics.secondsListened
+                            self.userInfo.metrics.numberOfMeditations = metrics.numberOfMeditations
+                        }
+                    }
+                }
             }
         }
         .onAppear {
@@ -76,16 +88,6 @@ struct ContentView: View {
                                 break
                             }
                     }
-                }
-            }
-            self.userInfo.configureMetricsSnapshotListener()
-            FBFirestore.retrieveFBMetrics(uid: uid) { result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success(let metrics):
-                    self.userInfo.metrics.secondsListened = metrics.secondsListened
-                    self.userInfo.metrics.numberOfMeditations = metrics.numberOfMeditations
                 }
             }
         }
