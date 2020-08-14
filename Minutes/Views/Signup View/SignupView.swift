@@ -44,6 +44,9 @@ struct SignupView: View {
             SignupMethodsView(showThisView: self.$showSignupMethods)
                 .environmentObject(self.userInfo)
         }
+        .onAppear {
+            
+        }
     }
     
     @Environment(\.colorScheme) var colorScheme

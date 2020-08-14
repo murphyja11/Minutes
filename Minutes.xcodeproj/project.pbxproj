@@ -46,6 +46,8 @@
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
 		D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040724E6005D00E1D540 /* FBMetrics.swift */; };
 		D4C5040A24E6045600E1D540 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040924E6045600E1D540 /* Metrics.swift */; };
+		D4F7E6F124E6CB24009785B2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7E6F024E6CB24009785B2 /* SettingsView.swift */; };
+		D4F7E6F324E70025009785B2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7E6F224E70025009785B2 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +95,8 @@
 		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040924E6045600E1D540 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
+		D4F7E6F024E6CB24009785B2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D4F7E6F224E70025009785B2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,9 +152,10 @@
 				D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */,
 				D430C79F24E0D28A003F85C6 /* Firebase */,
 				D430C78424E0D223003F85C6 /* Views */,
+				D430C75624E0D12C003F85C6 /* ContentView.swift */,
+				D4F7E6F224E70025009785B2 /* MainView.swift */,
 				D430C75824E0D141003F85C6 /* AppDelegate.swift */,
 				D430C75924E0D142003F85C6 /* SceneDelegate.swift */,
-				D430C75624E0D12C003F85C6 /* ContentView.swift */,
 				D430C74624E0D002003F85C6 /* Assets.xcassets */,
 				D430C74B24E0D002003F85C6 /* LaunchScreen.storyboard */,
 				D430C74E24E0D002003F85C6 /* Info.plist */,
@@ -253,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				D430C77824E0D1F8003F85C6 /* MeView.swift */,
+				D4F7E6F024E6CB24009785B2 /* SettingsView.swift */,
 			);
 			path = "Me View";
 			sourceTree = "<group>";
@@ -393,6 +399,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4F7E6F124E6CB24009785B2 /* SettingsView.swift in Sources */,
+				D4F7E6F324E70025009785B2 /* MainView.swift in Sources */,
 				D430C77924E0D1F8003F85C6 /* MeView.swift in Sources */,
 				D430C76A24E0D188003F85C6 /* ContinueWithApple.swift in Sources */,
 				D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */,

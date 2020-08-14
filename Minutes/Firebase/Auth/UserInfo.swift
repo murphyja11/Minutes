@@ -62,6 +62,7 @@ class UserInfo: ObservableObject {
     
     func configureMetricsSnapshotListener() {
         if self.user.uid == "" { return }
+        print("Configuring Metrics Snapshot: \(self.user.uid)")
         let reference = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.metrics)

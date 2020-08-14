@@ -53,10 +53,13 @@ enum FBFirestore {
     }
     
     static func retrieveFBMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
+        print("retrieving Metrics FBFirestore")
+        print("Uid: \(uid)")
         let reference = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.metrics)
             .document(uid)
+        print("Metrics Reference")
         getDocument(for: reference) { result in
             switch result {
             case .failure(let error):
