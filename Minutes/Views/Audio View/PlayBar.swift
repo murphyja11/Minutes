@@ -12,21 +12,25 @@ import AVFoundation
 struct PlayBar: View {
     @EnvironmentObject var audioFile: AudioFile
     
-    @State var currentTime: Double = 0.0
-    
     var body: some View {
         VStack {
-            HStack {
-                Text("Time: ")
-                Text("\(audioFile.currentTime)")
-                Text("\(self.currentTime)")
-            }
-            Text("Duration: \(self.audioFile.duration)")
             Slider(value: self.$audioFile.currentTime, in: 0...self.audioFile.duration, onEditingChanged: { _ in
-                let targetTime = self.audioFile.currentTime * self.audioFile.duration
+                let targetTime = self.audioFile.currentTime
                 self.audioFile.seek(to: targetTime)
             })
-                .padding(.horizontal, 15)
+            HStack {
+                Text(self.toMinutesSeconds(audioFile.currentTime))
+                Spacer()
+                Text(self.toMinutesSeconds(audioFile.duration))
+            }
         }
+        .padding(.horizontal, 30)
+    }
+    
+    private func toMinutesSeconds (_ number: Double) -> String {
+        let int = Int(number)
+        let minutes = "\((int % 3600) / 60)"
+        let seconds = "\((int % 3600) % 60)"
+        return minutes + ":" + (seconds.count == 1 ? "0" + seconds : seconds)
     }
 }

@@ -12,7 +12,7 @@ import FirebaseAuth
 
 struct MainView: View {
     @EnvironmentObject var userInfo: UserInfo
-    //@EnvironmentObject var audioFile: AudioFile
+    @EnvironmentObject var audioFile: AudioFile
     
     @State private var selection = 0
     @State var showAudioView: Bool = false
@@ -48,6 +48,11 @@ struct MainView: View {
                     }
                 }
                 .tag(1)
+        }
+        .sheet(isPresented: self.$showAudioView) {
+            AudioView()
+                .environmentObject(self.userInfo)
+                .environmentObject(self.audioFile)
         }
         .onAppear {
             guard let uid = Auth.auth().currentUser?.uid else { return }

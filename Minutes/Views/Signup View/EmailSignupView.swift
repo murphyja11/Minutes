@@ -96,11 +96,13 @@ struct EmailSignupView: View {
                     }
                 }) {
                     Text("Register")
+                        .font(.system(size: 20))
+                        .fontWeight(.medium)
+                        .foregroundColor(.white)
                         .frame(width: 200)
                         .padding(.vertical, 15)
                         .background(Color.green)
-                        .cornerRadius(8)
-                        .foregroundColor(.white)
+                        .cornerRadius(5)
                         .opacity(user.isSignInComplete ? 1 : 0.75)
                 }
                 .disabled(!user.isSignInComplete)

@@ -39,10 +39,5 @@ struct HomeView: View {
                 }
             }
         }
-        .sheet(isPresented: self.$showAudioView) {
-            AudioView()
-                .environmentObject(self.userInfo)
-                .environmentObject(self.audioFile)
-        }
     }
 }

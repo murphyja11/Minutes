@@ -62,14 +62,14 @@ class AudioFile: ObservableObject {
                     break
                 }
             }
-            /*self.addTimeObserver(player: self.player) { result in
+            self.addTimeObserver(player: self.player) { result in
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)
                 case .success( _):
                     break
                 }
-            }*/
+            }
             self.play { result in
                 switch result {
                 case .failure(let error):
@@ -139,9 +139,8 @@ class AudioFile: ObservableObject {
         if self.player == nil {
             return
         }
-        //removePeriodicTimeObserver()
-        //self.player!.removeTimeObserver(self.timeObserverToken)
-        //self.timeObserverToken = nil
+        self.player!.removeTimeObserver(self.timeObserverToken)
+        self.timeObserverToken = nil
 
         self.player = nil
         self.status = .undefined

@@ -53,11 +53,13 @@ struct LoginWithEmailView: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 5)
                                     .foregroundColor(Color.green)
-                                    .cornerRadius(8)
+                                    .cornerRadius(5)
                                     .frame(width: 200, height: 50)
                                 Text("Sign in")
-                                    .padding(.vertical, 15)
+                                    .font(.system(size: 20))
+                                    .fontWeight(.medium)
                                     .foregroundColor(.white)
+                                    .padding(.vertical, 15)
                             }
                             .opacity(user.isLogInComplete ? 1 : 0.75)
                             .disabled(!user.isLogInComplete)

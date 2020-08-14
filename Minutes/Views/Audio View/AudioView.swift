@@ -40,7 +40,8 @@ struct AudioView: View {
                         Spacer()
                     }
                     Spacer()
-                    //PlayBar()
+                    PlayBar()
+                        .padding(.bottom, 50)
                 }
             }
         }
