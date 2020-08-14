@@ -18,21 +18,27 @@ struct PlayButton: View {
         Group {
             if self.audioFile.status == .playing {
                 Button(action: self.pause) {
-                    Image(systemName: "pause.fill").resizable()
-                    .frame(width: self.iconSize, height: self.iconSize)
-                    .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                    .padding(45)
-                    .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.05, green: 0.05, blue:0.05))
-                    .clipShape(Circle())
+                    ZStack {
+                        Circle()
+                            .foregroundColor(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.05, green: 0.05, blue:0.05))
+                            .frame(width: 120, height: 120)
+                        Image(systemName: "pause.fill").resizable()
+                        .frame(width: self.iconSize, height: self.iconSize)
+                        .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                        .padding(45)
+                    }
                 }
             } else {
                 Button(action: self.play) {
-                    Image(systemName: "play.fill").resizable()
-                    .frame(width: self.iconSize, height: self.iconSize)
-                    .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                    .padding(40)
-                    .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.05, green: 0.05, blue: 0.05))
-                    .clipShape(Circle())
+                    ZStack {
+                        Circle()
+                            .foregroundColor(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.05, green: 0.05, blue:0.05))
+                            .frame(width: 120, height: 120)
+                        Image(systemName: "play.fill").resizable()
+                        .frame(width: self.iconSize, height: self.iconSize)
+                        .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                        .padding(45)
+                    }
                 }
             }
         }

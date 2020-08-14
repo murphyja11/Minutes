@@ -22,10 +22,8 @@ struct MeView: View {
             VStack {
                 
                 HStack {
-                    Button(action: {}) {
-                        Text("")
-                            .frame(width: geometry.size.width * 0.15)
-                    }
+                    Text("")
+                        .frame(width: geometry.size.width * 0.15)
                     Spacer()
                     Text("Profile")
                         .font(.system(size: 20))
@@ -48,7 +46,7 @@ struct MeView: View {
                 Divider()
                     .padding(0)
                 Spacer()
-                Text("Total Minutes Meditated: \(self.userInfo.metrics.secondsListened / 60, specifier: "%.1f")")
+                Text("Total Minutes Meditated: " + self.toMinutesSeconds(self.userInfo.metrics.secondsListened))
                     .font(.system(size: 20))
                 Text("Number of Meditations: \(self.userInfo.metrics.numberOfMeditations)")
                     .font(.system(size: 20))
@@ -59,6 +57,13 @@ struct MeView: View {
                  SettingsView(showThisView: self.$showSettings)
             }
         }
+    }
+    
+    private func toMinutesSeconds (_ number: Double) -> String {
+        let int = Int(number)
+        let minutes = "\((int % 3600) / 60)"
+        let seconds = "\((int % 3600) % 60)"
+        return minutes + ":" + (seconds.count == 1 ? "0" + seconds : seconds)
     }
 }
 
