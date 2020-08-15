@@ -35,7 +35,9 @@ struct LoginWithEmailView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            self.showForgotPW = true
+                            withAnimation {
+                                self.showForgotPW = true
+                            }
                         }) {
                             Text("Forgot Password")
                         }
@@ -70,9 +72,10 @@ struct LoginWithEmailView: View {
                     }
                 }
                 .frame(width: 300)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 Spacer(minLength: self.keyboardValue + CGFloat(20))
             }
-            .background(self.colorScheme == .light ? Color.white : Color.black)
+            .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
             .onAppear {
                 NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
                     let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
@@ -87,6 +90,7 @@ struct LoginWithEmailView: View {
              
             if self.showForgotPW {
                 ForgotPasswordView(showThisView: self.$showForgotPW)
+                    .transition(.move(edge: .trailing))
             }
         }
         .alert(isPresented: self.$showAlert) {

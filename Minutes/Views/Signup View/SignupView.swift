@@ -44,9 +44,6 @@ struct SignupView: View {
             SigninView()
                 .environmentObject(self.userInfo)
         }
-        .onAppear {
-            
-        }
     }
     
     @Environment(\.colorScheme) var colorScheme

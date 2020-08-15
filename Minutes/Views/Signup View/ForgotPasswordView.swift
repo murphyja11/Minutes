@@ -16,6 +16,8 @@ struct ForgotPasswordView: View {
     @State private var showAlert: Bool = false
     @State private var errorString: String?
     
+    @State var keyboardValue: CGFloat = 0
+    
     var body: some View {
         VStack {
             EscapeChev(showView: self.$showThisView)
@@ -47,7 +49,7 @@ struct ForgotPasswordView: View {
                     .opacity(user.isEmailValid() ? 1 : 0.75)
             }
             .disabled(!user.isEmailValid())
-            Spacer()
+            Spacer(minLength: self.keyboardValue + CGFloat(20))
         }
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Password reset"), message: Text(self.errorString ?? "Success.  Reset password instructions sent to your email"), dismissButton: .default(Text("Ok")) {
@@ -57,7 +59,18 @@ struct ForgotPasswordView: View {
                 })
             }
         .textFieldStyle(RoundedBorderTextFieldStyle())
-        .background(self.colorScheme == .light ? Color.white : Color.black)
+        .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+                withAnimation {
+                    self.keyboardValue = value.height
+                }
+            }
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { notification in
+                self.keyboardValue = 0
+            }
+        }
     }
     
      @Environment(\.colorScheme) var colorScheme

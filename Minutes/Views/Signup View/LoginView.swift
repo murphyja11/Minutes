@@ -24,7 +24,9 @@ struct LoginView: View {
                     .fontWeight(.medium)
                     .padding(.bottom, 10)
                 Button(action: {
-                    self.emailView = true
+                    withAnimation {
+                        self.emailView = true
+                    }
                 }){
                     ContinueWith(logo: Image(systemName: "person"), text: "Use email")
                     .frame(height: 50)
@@ -35,36 +37,32 @@ struct LoginView: View {
                     .padding(2)
                 Spacer()
                 Divider()
-                ZStack {
-                    Rectangle()
-                        .frame(height: 45)
-                        .foregroundColor(self.colorScheme == .light ? Color.white : Color.black)
-                    HStack {
-                        Spacer()
-                        Text("Don't have an account?")
+                HStack {
+                    Spacer()
+                    Text("Don't have an account?")
+                        .font(.system(size: 15))
+                        .fontWeight(.medium)
+                    Button(action: {
+                        withAnimation {
+                            self.showView = .signup
+                        }
+                    }){
+                        Text("Sign up")
                             .font(.system(size: 15))
                             .fontWeight(.medium)
-                        Button(action: {
-                            withAnimation {
-                                self.showView = .signup
-                            }
-                        }){
-                            Text("Sign up")
-                                .font(.system(size: 15))
-                                .fontWeight(.medium)
-                                .foregroundColor(Color(red: 1, green: 0, blue: 0.5))
-                        }
-                        Spacer()
+                            .foregroundColor(Color(red: 1, green: 0, blue: 0.5))
                     }
-                    
+                    Spacer()
                 }
+                .frame(height: 45)
                 .padding(.bottom, 8)
             }
-            .background(self.colorScheme == .light ? Color.white : Color.black)
+            .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
             
             if self.emailView {
                 LoginWithEmailView(showThisView: self.$emailView)
-                    .background(self.colorScheme == .light ? Color.white : Color.black)
+                    .transition(.move(edge: .trailing))
+                    //.background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
             }
         }
     }

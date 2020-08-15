@@ -14,7 +14,9 @@ struct EscapeChev: View {
     var body: some View {
         Button(action: {
             self.hideKeyboard()
-            self.showView = false
+            withAnimation {
+                self.showView = false
+            }
         }) {
             Image(systemName: "chevron.left").resizable()
                 .frame(width: 12, height: 17)

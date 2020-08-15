@@ -27,7 +27,9 @@ struct SignupMethodsView: View {
                         .padding(.bottom, 10)
                     // Phone or Email
                     Button(action: {
-                        self.showEmail = true
+                        withAnimation {
+                            self.showEmail = true
+                        }
                     }){
                         ContinueWith(logo: Image(systemName: "person"), text: "Use email")
                         .frame(height: 50)
@@ -40,35 +42,33 @@ struct SignupMethodsView: View {
                     Spacer()
                     Divider()
                     // Login if already have an account
-                    ZStack {
-                        Rectangle()
-                            .frame(height: 45)
-                            .foregroundColor(self.colorScheme == .light ? Color.white : Color.black)
-                        HStack {
-                            Spacer()
-                            Text("Already have an account?")
+                    HStack {
+                        Spacer()
+                        Text("Already have an account?")
+                            .font(.system(size: 15))
+                            .fontWeight(.medium)
+                        Button(action: {
+                            withAnimation {
+                                self.showView = .login
+                            }
+                        }){
+                            Text("Log in")
                                 .font(.system(size: 15))
                                 .fontWeight(.medium)
-                            Button(action: {
-                                withAnimation {
-                                    self.showView = .login
-                                }
-                            }){
-                                Text("Log in")
-                                    .font(.system(size: 15))
-                                    .fontWeight(.medium)
-                                    .foregroundColor(Color(red: 1, green: 0, blue: 0.5))
-                            }
-                            Spacer()
+                                .foregroundColor(Color(red: 1, green: 0, blue: 0.5))
                         }
-                        
+                        Spacer()
                     }
+                    .frame(height: 45)
                     .padding(.bottom, 8)
+
                 }
                 .frame(height: geometry.size.height)
+                .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
 
             if self.showEmail {
                 EmailSignupView(showThisView: self.$showEmail)
+                    .transition(.move(edge: .trailing))
             }
         }
     }
