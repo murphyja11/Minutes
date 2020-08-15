@@ -13,6 +13,7 @@ struct EscapeChevron: View {
     
     var body: some View {
         Button(action: {
+            self.hideKeyboard()
             self.showView = false
         }) {
             Image(systemName: "chevron.left").resizable()
@@ -25,5 +26,9 @@ struct EscapeChevron: View {
     }
     
     @Environment(\.colorScheme) var colorScheme
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 
 }

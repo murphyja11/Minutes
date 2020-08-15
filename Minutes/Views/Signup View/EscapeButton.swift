@@ -12,6 +12,7 @@ struct EscapeButton: View {
     
     var body: some View {
         Button(action: {
+            self.hideKeyboard()
             self.presentationMode.wrappedValue.dismiss()
         }) {
             Image(systemName: "xmark").resizable()
@@ -25,4 +26,8 @@ struct EscapeButton: View {
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }

@@ -105,6 +105,12 @@ struct LoginWithEmailView: View {
     @Environment(\.colorScheme) var colorScheme
 }
 
+#if canImport(UIKit)
+extension View {
+    
+}
+#endif
+
 struct SignInWithEmailView_Previews: PreviewProvider {
     @State static var thisView: Bool = true
     
