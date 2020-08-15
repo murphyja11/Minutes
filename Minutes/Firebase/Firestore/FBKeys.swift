@@ -14,6 +14,7 @@ enum FBKeys {
         static let audioMetadata = "audio_metadata"
         static let events = "events"
         static let metrics = "metrics"
+        static let recommendations = "recommendations"
     }
     
     enum User {
@@ -22,6 +23,10 @@ enum FBKeys {
         static let email = "email"
         static let recommendations = "recommendations"
         // Add app specific keys here
+    }
+    
+    enum Recommendations {
+        static let array = "array"
     }
     
     enum Metrics {

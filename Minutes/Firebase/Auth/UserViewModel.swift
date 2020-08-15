@@ -83,9 +83,9 @@ struct UserViewModel {
     
     var validConfirmPasswordText: String {
         if passwordsMatch() {
-            return ""
+            return "Your passwords match!"
         } else {
-            return "Almost.  Your passwords don't match."
+            return ""
         }
     }
 }

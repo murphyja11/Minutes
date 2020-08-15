@@ -52,6 +52,25 @@ enum FBFirestore {
         
     }
     
+    static func retrieveRecommendations(uid: String, completion: @escaping (Result<FBRecommendations, Error>) -> ()) {
+        let reference = Firestore
+            .firestore()
+            .collection(FBKeys.CollectionPath.recommendations)
+            .document(uid)
+        getDocument(for: reference) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let data):
+                guard let recs = FBRecommendations(documentData: data) else {
+                    completion(.failure(FireStoreError.noRecommendations))
+                    return
+                }
+                completion(.success(recs))
+            }
+        }
+    }
+    
     static func retrieveFBMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
         print("retrieving Metrics FBFirestore")
         print("Uid: \(uid)")

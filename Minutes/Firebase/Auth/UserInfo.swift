@@ -72,7 +72,7 @@ class UserInfo: ObservableObject {
     }
     
     func getRecommendations (completion: @escaping (Result<Bool, Error>) -> ()) {
-        self.initializeRecommendationMetadata(user: user) { result in
+        self.initializeRecommendationMetadata(recs: self.user.recommendations) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -84,12 +84,17 @@ class UserInfo: ObservableObject {
     
     // called on reload, to re-fetch all user info to get new recommendations
     func getNewRecommendations (completion: @escaping (Result<Bool, Error>) -> ()) {
-        self.reloadUserInfo { result in
+        if self.user.uid == "" {
+            completion(.failure(FireStoreError.noUser))
+            self.reloading = false
+            return
+        }
+        FBFirestore.retrieveRecommendations(uid: self.user.uid) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-            case .success(let user):
-                self.initializeRecommendationMetadata(user: user) { result in
+            case .success(let recs):
+                self.initializeRecommendationMetadata(recs: recs.array) { result in
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))
@@ -101,7 +106,7 @@ class UserInfo: ObservableObject {
         }
     }
     
-    private func reloadUserInfo(completion: @escaping (Result<FBUser, Error>) -> ()) {
+    /*private func reloadUserInfo(completion: @escaping (Result<FBUser, Error>) -> ()) {
         if self.user.uid == "" {
             completion(.failure(FireStoreError.noUser))
             self.reloading = false
@@ -115,10 +120,9 @@ class UserInfo: ObservableObject {
                 completion(.success(user))
             }
         }
-    }
+    }*/
     
-    private func initializeRecommendationMetadata(user: FBUser, completion: @escaping (Result<Bool, Error>) -> ()) {
-        let array = user.recommendations
+    private func initializeRecommendationMetadata(recs array: [String], completion: @escaping (Result<Bool, Error>) -> ()) {
         self.recommendations = []
         var error: Error?
         let group = DispatchGroup()

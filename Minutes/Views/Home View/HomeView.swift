@@ -17,7 +17,7 @@ struct HomeView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                Text("Home")
+                Text("Minutes")
                     .font(.system(size: 20))
                     .frame(height: 45)
                     .padding(0)
