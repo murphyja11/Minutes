@@ -21,7 +21,7 @@ struct EmailSignupView: View {
     
     var body: some View {
         VStack {
-            EscapeChevron(showView: self.$showThisView)
+            EscapeChev(showView: self.$showThisView)
             Spacer()
             Group {
                 VStack(alignment: .leading, spacing: 2) {

@@ -10,14 +10,14 @@ import SwiftUI
 
 struct LoginView: View {
 
-    @Binding var showThisView: Bool
+    @Binding var showView: SigninView.ShowView
     @State var emailView: Bool = false
     
     
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                EscapeChevron(showView: self.$showThisView)
+                EscapeChevron(showView: self.$showView, lastView: .signup)
                 Spacer()
                 Text("Log in to Project Tucker")
                     .font(.system(size: 20))
@@ -45,7 +45,9 @@ struct LoginView: View {
                             .font(.system(size: 15))
                             .fontWeight(.medium)
                         Button(action: {
-                            self.showThisView = false
+                            withAnimation {
+                                self.showView = .signup
+                            }
                         }){
                             Text("Sign up")
                                 .font(.system(size: 15))
@@ -73,9 +75,9 @@ struct LoginView: View {
 }
 
 struct LoginView_Previews: PreviewProvider {
-    @State static var showView: Bool = true
+    @State static var showView: SigninView.ShowView = .login
     
     static var previews: some View {
-        LoginView(showThisView: $showView)
+        LoginView(showView: $showView)
     }
 }

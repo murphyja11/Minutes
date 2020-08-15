@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SignupView: View {
     @EnvironmentObject var userInfo: UserInfo
-    @State var showSignupMethods: Bool = false
+    @State var showSigninView: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -24,7 +24,7 @@ struct SignupView: View {
                         .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
                         .font(.system(size: 15))
                         .padding(.vertical, 8)
-                    Button(action: {self.showSignupMethods = true}) {
+                    Button(action: {self.showSigninView = true}) {
                         ZStack {
                             RoundedRectangle(cornerRadius: self.cornerRadius)
                                 .foregroundColor(Color(red: 1, green: 0, blue: 0.5))
@@ -40,8 +40,8 @@ struct SignupView: View {
             }
             .frame(height: geometry.size.height)
         }
-        .sheet(isPresented: self.$showSignupMethods) {
-            SignupMethodsView(showThisView: self.$showSignupMethods)
+        .sheet(isPresented: self.$showSigninView) {
+            SigninView()
                 .environmentObject(self.userInfo)
         }
         .onAppear {

@@ -18,7 +18,7 @@ struct ForgotPasswordView: View {
     
     var body: some View {
         VStack {
-            EscapeChevron(showView: self.$showThisView)
+            EscapeChev(showView: self.$showThisView)
             Spacer()
             Text("Request a password reset")
             TextField("Enter email address", text: $user.email).autocapitalization(.none).keyboardType(.emailAddress)

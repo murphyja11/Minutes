@@ -24,7 +24,7 @@ struct LoginWithEmailView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                EscapeChevron(showView: self.$showThisView)
+                EscapeChev(showView: self.$showThisView)
                 Spacer()
                 VStack {
                     TextField("Email Address",

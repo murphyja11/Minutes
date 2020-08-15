@@ -46,6 +46,8 @@
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
 		D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040724E6005D00E1D540 /* FBMetrics.swift */; };
 		D4C5040A24E6045600E1D540 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040924E6045600E1D540 /* Metrics.swift */; };
+		D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC524E8519C0000014D /* SigninView.swift */; };
+		D4DEAFC824E854840000014D /* EscapeChev.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC724E854840000014D /* EscapeChev.swift */; };
 		D4F7E6F124E6CB24009785B2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7E6F024E6CB24009785B2 /* SettingsView.swift */; };
 		D4F7E6F324E70025009785B2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7E6F224E70025009785B2 /* MainView.swift */; };
 /* End PBXBuildFile section */
@@ -95,6 +97,8 @@
 		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040924E6045600E1D540 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
+		D4DEAFC524E8519C0000014D /* SigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninView.swift; sourceTree = "<group>"; };
+		D4DEAFC724E854840000014D /* EscapeChev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeChev.swift; sourceTree = "<group>"; };
 		D4F7E6F024E6CB24009785B2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D4F7E6F224E70025009785B2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -176,16 +180,18 @@
 		D430C77624E0D1BE003F85C6 /* Signup View */ = {
 			isa = PBXGroup;
 			children = (
+				D430C76F24E0D1A2003F85C6 /* SignupView.swift */,
+				D4DEAFC524E8519C0000014D /* SigninView.swift */,
+				D430C76E24E0D1A0003F85C6 /* SignupMethodsView.swift */,
 				D430C77024E0D1A4003F85C6 /* LoginView.swift */,
 				D430C77124E0D1A6003F85C6 /* LoginWithEmailView.swift */,
-				D430C76E24E0D1A0003F85C6 /* SignupMethodsView.swift */,
-				D430C76F24E0D1A2003F85C6 /* SignupView.swift */,
 				D430C76124E0D17C003F85C6 /* ContinueWith.swift */,
 				D430C76424E0D182003F85C6 /* ContinueWithApple.swift */,
 				D430C76324E0D180003F85C6 /* EmailSignupView.swift */,
 				D430C76524E0D186003F85C6 /* EscapeButton.swift */,
 				D430C76224E0D17E003F85C6 /* EscapeChevron.swift */,
 				D430C76624E0D188003F85C6 /* ForgotPasswordView.swift */,
+				D4DEAFC724E854840000014D /* EscapeChev.swift */,
 			);
 			path = "Signup View";
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				D430C76B24E0D188003F85C6 /* EscapeButton.swift in Sources */,
 				D430C76824E0D188003F85C6 /* EscapeChevron.swift in Sources */,
 				D430C79A24E0D278003F85C6 /* UserViewModel.swift in Sources */,
+				D4DEAFC824E854840000014D /* EscapeChev.swift in Sources */,
 				D430C75724E0D12C003F85C6 /* ContentView.swift in Sources */,
 				D430C79024E0D245003F85C6 /* FBUser.swift in Sources */,
 				D430C76724E0D188003F85C6 /* ContinueWith.swift in Sources */,
@@ -448,6 +455,7 @@
 				D430C77C24E0D203003F85C6 /* AudioItemView.swift in Sources */,
 				D430C78824E0D23C003F85C6 /* AudioFile.swift in Sources */,
 				D430C79B24E0D278003F85C6 /* FBAuthError.swift in Sources */,
+				D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */,
 				D430C78224E0D210003F85C6 /* PlayBar.swift in Sources */,
 				D430C78724E0D23C003F85C6 /* AudioFileError.swift in Sources */,
 				D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */,

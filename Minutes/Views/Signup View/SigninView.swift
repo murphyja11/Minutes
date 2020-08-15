@@ -9,13 +9,21 @@
 import SwiftUI
 
 struct SigninView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    
+    enum ShowView {
+        case signup, login
     }
-}
-
-struct SigninView_Previews: PreviewProvider {
-    static var previews: some View {
-        SigninView()
+    
+    @State var showView: ShowView = .signup
+    
+    var body: some View {
+        ZStack {
+            if self.showView == .signup {
+                SignupMethodsView(showView: self.$showView)
+            } else {
+                LoginView(showView: self.$showView)
+                    .transition(.move(edge: .trailing))
+            }
+        }
     }
 }

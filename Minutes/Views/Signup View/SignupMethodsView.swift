@@ -10,10 +10,11 @@ import SwiftUI
 
 struct SignupMethodsView: View {
     @EnvironmentObject var userInfo: UserInfo
-    @State var showLoginScreen: Bool = false
-    @Binding var showThisView: Bool
-    @State var showEmail: Bool = false
+    @Binding var showView: SigninView.ShowView
     
+    @State var showLoginScreen: Bool = false
+    @State var showEmail: Bool = false
+
     
     var body: some View {
         GeometryReader { geometry in
@@ -49,7 +50,9 @@ struct SignupMethodsView: View {
                                 .font(.system(size: 15))
                                 .fontWeight(.medium)
                             Button(action: {
-                                self.showLoginScreen = true
+                                withAnimation {
+                                    self.showView = .login
+                                }
                             }){
                                 Text("Log in")
                                     .font(.system(size: 15))
@@ -63,10 +66,7 @@ struct SignupMethodsView: View {
                     .padding(.bottom, 8)
                 }
                 .frame(height: geometry.size.height)
-            
-            if self.showLoginScreen {
-                LoginView(showThisView: self.$showLoginScreen)
-            }
+
             if self.showEmail {
                 EmailSignupView(showThisView: self.$showEmail)
             }
@@ -79,9 +79,9 @@ struct SignupMethodsView: View {
 
 struct LoginMethodsView_Previews: PreviewProvider {
     
-    @State static var value = true
+    @State static var value: SigninView.ShowView = .login
     static var previews: some View {
-        SignupMethodsView(showThisView: self.$value)
+        SignupMethodsView(showView: self.$value)
         
     }
 }

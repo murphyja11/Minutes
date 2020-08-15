@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct EscapeChevron: View {
-    @Binding var showView: Bool
+    @Binding var showView: SigninView.ShowView
+    var lastView: SigninView.ShowView
     
     var body: some View {
         Button(action: {
             self.hideKeyboard()
-            self.showView = false
+            self.showView = self.lastView
         }) {
             Image(systemName: "chevron.left").resizable()
                 .frame(width: 12, height: 17)
