@@ -12,7 +12,7 @@ import Foundation
 struct MeView: View {
     @EnvironmentObject var userInfo: UserInfo
     
-    @State var showSettings: Bool = false
+    @Binding var showSettings: Bool
     
     @State var errorString: String?
     @State var showAlert = false
@@ -52,10 +52,6 @@ struct MeView: View {
                     .font(.system(size: 20))
                 Spacer()
             }
-            
-            if self.showSettings {
-                 SettingsView(showThisView: self.$showSettings)
-            }
         }
     }
     
@@ -68,9 +64,10 @@ struct MeView: View {
 }
 
 struct MeView_Previews: PreviewProvider {
+    @State static var showSettings: Bool = false
     
     static var previews: some View {
-        MeView()
+        MeView(showSettings: self.$showSettings)
             .environmentObject(UserInfo())
     }
 }

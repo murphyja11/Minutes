@@ -16,6 +16,7 @@ struct MainView: View {
     
     @State private var selection = 0
     @State var showAudioView: Bool = false
+    @State var showSettings: Bool = false
     
     @State var errorString: String?
     @State var showAlert = false
@@ -35,7 +36,7 @@ struct MainView: View {
                     }
                 }
                 .tag(0)
-            MeView()
+            MeView(showSettings: self.$showSettings)
                 .font(.title)
                 .tabItem {
                     VStack {
@@ -53,6 +54,9 @@ struct MainView: View {
             AudioView()
                 .environmentObject(self.userInfo)
                 .environmentObject(self.audioFile)
+        }
+        .sheet(isPresented: self.$showSettings) {
+            SettingsView(showThisView: self.$showSettings)
         }
         .onAppear {
             guard let uid = Auth.auth().currentUser?.uid else { return }
