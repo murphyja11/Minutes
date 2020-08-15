@@ -13,8 +13,11 @@ struct EmailSignupView: View {
     @State var user: UserViewModel = UserViewModel()
     @Environment(\.presentationMode) var presentationMode
     @Binding var showThisView: Bool
+    
     @State private var showError: Bool = false
     @State private var errorString: String = ""
+    
+    @State var keyboardValue: CGFloat = 0
     
     var body: some View {
         VStack {
@@ -49,10 +52,6 @@ struct EmailSignupView: View {
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text(user.validPasswordText).font(.caption).foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
-                    Text(user.validPasswordTextPrompt).font(.caption)
-                    .lineSpacing(0)
-                    .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
-                    .padding(.top, 1)
                     HStack {
                         SecureField("Password", text: self.$user.password)
                         if (self.user.isPasswordValid()) {
@@ -65,6 +64,12 @@ struct EmailSignupView: View {
                     }
                 }
                 VStack(alignment: .leading) {
+                    withAnimation {
+                        Text(user.validPasswordTextPrompt).font(.caption)
+                        .lineSpacing(0)
+                        .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
+                        .padding(.top, 1)
+                    }
                     HStack {
                         SecureField("Confirm Password", text: self.$user.confirmPassword)
                         if (self.user.passwordsMatch()) {
@@ -76,7 +81,9 @@ struct EmailSignupView: View {
                         }
                     }
                     if !self.user.passwordsMatch() {
-                        Text(user.validConfirmPasswordText).font(.caption).foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
+                        withAnimation {
+                            Text(user.validConfirmPasswordText).font(.caption).foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
+                        }
                     }
                 }
             }.frame(width: 300)
@@ -107,9 +114,20 @@ struct EmailSignupView: View {
                 }
                 .disabled(!user.isSignInComplete)
             }.padding()
-            Spacer()
+            Spacer(minLength: self.keyboardValue)
         }
         .background(self.colorScheme == .light ? Color.white : Color.black)
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+                withAnimation {
+                    self.keyboardValue = value.height
+                }
+            }
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { notification in
+                self.keyboardValue = 0
+            }
+        }
         .alert(isPresented: self.$showError) {
             Alert(title: Text("Error creating account"), message: Text(self.errorString), dismissButton: .default(Text("Ok")))
         }

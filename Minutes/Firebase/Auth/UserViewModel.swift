@@ -38,7 +38,7 @@ struct UserViewModel {
     func isPasswordValid() -> Bool {
         // Password must be 8 chars, contain a capital letter and a number
         let passwordTest = NSPredicate(format: "SELF MATCHES %@",
-                                       "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")
+        "^(?=.*?[a-z])(?=.*?[0-9]).{8,}$") //^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$
         return passwordTest.evaluate(with: self.password)
     }
     
@@ -61,39 +61,24 @@ struct UserViewModel {
     // MARK: - Validation Error Strings
     var validNameText: String {
         return "What's your name?"
-        /*if !isEmpty(_field: fullname) {
-            return ""
-        } else {
-            return "What's your name?"
-        }*/
+
     }
     
     
     var validEmailAddressText:String {
         return "What's your email address"
-        /*if isEmailValid() {
-            return ""
-        } else {
-            return "What's your email address"
-        }*/
     }
     
     var validPasswordText:String {
         return "Enter a password"
-        /*if isPasswordValid() {
-            return ""
-        } else {
-            return "Enter a password"
-        }*/
     }
     
     var validPasswordTextPrompt:String {
-        return "It must be 8 characters containing at least one number and one capital letter"
-        /*if isPasswordValid() {
+        if isPasswordValid() {
             return ""
         } else {
-            return "It must be 8 characters containing at least one number and one capital letter"
-        }*/
+            return "It must be 8 characters long and contain at least one number"
+        }
     }
     
     var validConfirmPasswordText: String {

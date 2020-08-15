@@ -11,15 +11,18 @@ import SwiftUI
 struct LoginWithEmailView: View {
     @EnvironmentObject var userInfo: UserInfo
     @State var user: UserViewModel = UserViewModel()
+
     @Binding var showThisView: Bool
     @State var showForgotPW: Bool = false
     
     @State private var authError: EmailAuthError?
     @State private var showAlert: Bool = false
+    
+    @State var keyboardValue: CGFloat = 0
 
     
     var body: some View {
-        Group {
+        GeometryReader { geometry in
             VStack {
                 EscapeChevron(showView: self.$showThisView)
                 Spacer()
@@ -28,7 +31,7 @@ struct LoginWithEmailView: View {
                               text: self.$user.email)
                         .autocapitalization(.none)
                         .keyboardType(.emailAddress)
-                    SecureField("Password", text: $user.password)
+                    SecureField("Password", text: self.$user.password)
                     HStack {
                         Spacer()
                         Button(action: {
@@ -61,16 +64,26 @@ struct LoginWithEmailView: View {
                                     .foregroundColor(.white)
                                     .padding(.vertical, 15)
                             }
-                            .opacity(user.isLogInComplete ? 1 : 0.75)
-                            .disabled(!user.isLogInComplete)
+                            .opacity(self.user.isLogInComplete ? 1 : 0.75)
+                            .disabled(!self.user.isLogInComplete)
                         }
                     }
                 }
                 .frame(width: 300)
-                Spacer()
+                Spacer(minLength: self.keyboardValue + CGFloat(20))
             }
-            .textFieldStyle(RoundedBorderTextFieldStyle())
             .background(self.colorScheme == .light ? Color.white : Color.black)
+            .onAppear {
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                    let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+                    withAnimation {
+                        self.keyboardValue = value.height
+                    }
+                }
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { notification in
+                    self.keyboardValue = 0
+                }
+            }
              
             if self.showForgotPW {
                 ForgotPasswordView(showThisView: self.$showForgotPW)
