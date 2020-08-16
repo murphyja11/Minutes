@@ -14,12 +14,17 @@ class AudioFile: ObservableObject {
     //@EnvironmentObject var userInfo: UserInfo
     
     private(set) var uid: String = ""
+    private var playerItemContext = 0
     private(set) var player: AVPlayer?
     @Published var status: AudioStatus = .undefined
     
+    
+    var healthCheckTimer: Timer?
+    
     private var timeObserverToken: Any?
     @Published var currentTime: Double = 0.0
-    @Published var duration: Double = 1.0
+    //@Published var timeBuffered: Double = 0.0
+    @Published var duration: Double = 180.0
     private var timeScale: Int32?
     
     init() {
@@ -32,118 +37,229 @@ class AudioFile: ObservableObject {
     }
     
     enum AudioStatus {
-        case undefined, playing, paused, completed
+        case undefined, playing, paused, stalled, completed, error
     }
     
+    // MARK: - Start Playing
+    // sets uid property, downloads file, creates asset, playerItem, and player
+    // Gets audio duration from asset, sets End Time and Stalling Notification for playerItem, Time Observer for player
+    // Finally, it starts playing the audio
+    
     func startPlaying(uid: String, filename: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        
         self.uid = uid
-        print("AudioFile UID: \(uid) \n\n\n")
+        // create reference to audio file in Firebase Cloud Storage
         let audioRef  = Storage.storage().reference().child(filename)
+        
+        // being downloading URL.  I believe this should allow streaming the data
         audioRef.downloadURL { url, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
+            // check if url is nil
             guard let url = url else {
                 completion(.failure(AudioFileError.urlIsNil))
                 return
             }
-            let asset = AVAsset(url: url) //, options: [AVURLAssetAllowsCellularAccessKey: false])
-            //self.duration = asset.duration.seconds
-            let playerItem = AVPlayerItem(asset: asset)
-            NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+            // automatically load playable asset key
+            let assetKeys = ["playable", "duration"]
+            
+            // initialize static asset object
+            // https://developer.apple.com/documentation/avfoundation/avasset
+            let asset = AVAsset(url: url)
+            
+            // initialize the playerItem. A dynamic object that stores info about the asset,
+            // https://developer.apple.com/documentation/avfoundation/avplayeritem
+            let playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: assetKeys)
+            
+            playerItem.addObserver(self,
+                                   forKeyPath: #keyPath(AVPlayerItem.status),
+                                   options: [.old, .new],
+                                   context: &playerItemContext)
+            
+            
+            // add endTime and Stalling observers to playerItem
+            self.addPlayerItemObservers()
+            
+            // Initialize the player.  Through this you can manage the playback and timing of the media asset
+            // https://developer.apple.com/documentation/avfoundation/avplayer
             self.player = AVPlayer(playerItem: playerItem)
+            // pause the player at the end.  This is redundant
             self.player?.actionAtItemEnd = .pause
-            self.setDuration(asset: asset) { result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success( _):
-                    break
-                }
+            
+            // Access the duration of the asset and set it as a property. Throws if asset is nil
+            try? self.setDuration(asset: asset)
+            // Observe the current time of the player.  Throws if player is nil
+            try? self.addTimeObserver()
+            
+            // try playing the audio file.  Throws if player is nil
+            do {
+                try self.play()
+            } catch {
+                self.status = .error
             }
-            self.addTimeObserver(player: self.player) { result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success( _):
-                    break
-                }
-            }
-            self.play { result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success( _):
-                    print("Audio File initialized and playing")
-                }
-            }
+            
         }
     }
     
-    private func addTimeObserver (player: AVPlayer?, completion: @escaping (Result<Bool, Error>) -> Void) {
-        guard let player = player  else {
-            completion(.failure(AudioFileError.playerIsNil))
-            return
+    
+    // MARK: - Adding Observers to Player Item and Player, getting duration of Asset
+    
+    private func addPlayerItemObservers () {
+        let nc = NotificationCenter.default
+        nc.addObserver(self,
+                       selector: #selector(playerItemDidPlayToEndTime),
+                       name: .AVPlayerItemDidPlayToEndTime,
+                       object: self.player!.currentItem)
+        nc.addObserver(self,
+                       selector: #selector(playerItemDidStall),
+                       name: .AVPlayerItemPlaybackStalled,
+                       object: self.player!.currentItem)
+    }
+    
+    private func addTimeObserver () throws {
+        guard let _ = self.player else {
+            throw AudioFileError.playerIsNil
         }
         let timeScale = CMTimeScale(NSEC_PER_SEC)
         print("\(NSEC_PER_SEC) \n\n\n")
         let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
 
-        self.timeObserverToken = player.addPeriodicTimeObserver(forInterval: time,
-                                                          queue: .main)
+        self.timeObserverToken = self.player!.addPeriodicTimeObserver(forInterval: time,
+                                                          queue: .main) // TODO: - Should this be the main thread????
         { [weak self] time in
             self!.currentTime = time.seconds
-            completion(.success(true))
         }
-        //completion(.failure(AudioFileError.cantAddObserver))
     }
     
-    private func setDuration (asset: AVAsset, completion: @escaping (Result<Bool, Error>) -> Void) {
+    private func timeBuffered () -> Double {
+        guard let _ = self.player else { return 0.0 }
+        guard let _ = self.player!.currentItem else { return 0.0 }
+        let timeRange = self.player!.currentItem!.loadedTimeRanges.last?.timeRangeValue
+        guard let _ = timeRange else { return 0.0 }
+        return CMTimeGetSeconds(timeRange!.end) //CMTimeGetSeconds(timeRange.start) + CMTimeGetSeconds(timeRange.duration)
+    }
+    
+    private func setDuration (asset: AVAsset?) throws {
+        guard let asset = asset else {
+            throw AudioFileError.AssetIsNil
+        }
         if asset.duration == nil {
-            completion(.failure(AudioFileError.DurationIsNil))
+            throw AudioFileError.DurationIsNil
         }
         self.duration = asset.duration.seconds
     }
     
-    func play(completion: @escaping (Result<Bool, AudioFileError>) -> Void) {
-        if self.player == nil {
-            completion(.failure(AudioFileError.playerIsNil))
-            return
-        }
-        self.player!.play()
-        self.status = .playing
-        completion(.success(true))
-    }
     
-    func pause(completion: @escaping (Result<Bool, AudioFileError>) -> Void) {
-        if self.player == nil {
-            completion(.failure(AudioFileError.playerIsNil))
-            return
-        }
-        self.status = .paused
-        self.player!.pause()
-        completion(.success(true))
-    }
+    // MARK: Configure PlayerItem endTime and Stalling Notifications
     
-    @objc func playerDidFinishPlaying(sender: Notification) {
+    @objc func playerItemDidPlayToEndTime(sender: Notification) {
         if self.player == nil {
             return
         }
         print("File Finished Playing \n\n\n")
         self.status = .completed
-        // This should trigger the UI to dismiss the sheet and call the end function below
+        // This will trigger the UI to dismiss the sheet and call the AudioFile.end() function below
     }
     
+    @objc func playerItemDidStall(sender: Notification) {
+        self.status = .stalled
+        // Something about setting a self.delegate to streamplayerdidstall?
+    }
+    
+    private func removeObservers () {
+        if let token = self.timeObserverToken {
+            if let _ = self.player {
+                self.player!.removeTimeObserver(token)
+            }
+            self.timeObserverToken = nil
+        }
+        // Don't need to remove playerItem observers, they are automically removed
+        // https://developer.apple.com/documentation/foundation/notificationcenter/1413994-removeobserver
+    }
+    
+    
+    
+    
+    // MARK: - End, called when the Audiofile finishes playing or the User dismisses it
     func end () {
         if self.player == nil {
             return
         }
-        self.player!.removeTimeObserver(self.timeObserverToken)
-        self.timeObserverToken = nil
-
+        self.removeObservers()
+        self.stopHealthCheckTimer()
         self.player = nil
         self.status = .undefined
+    }
+    
+    // MARK: - Advanced Playback Functions related to Stalling
+    
+    private func tryToPlayIfStalled () {
+        if self.status != .stalled {
+            return
+        }
+        if player == nil || player?.currentItem == nil {
+            return
+        }
+        if self.player!.currentItem!.isPlaybackLikelyToKeepUp || (self.timeBuffered() - self.currentTime) > 5.0 {
+            try? self.play()
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - HealthCheckTimer Methods: start, stop, fire
+    
+    private func startHealthCheckTimer () {
+        self.healthCheckTimerDidFire()
+        self.healthCheckTimer = Timer.scheduledTimer(timeInterval: 0.5,
+                                            target: self,
+                                            selector: #selector(healthCheckTimerDidFire),
+                                            userInfo: nil,
+                                            repeats: true)
+    }
+    
+    private func stopHealthCheckTimer () {
+        self.healthCheckTimer?.invalidate()
+        self.healthCheckTimer = nil
+    }
+    
+    @objc func healthCheckTimerDidFire () {
+        if self.status == .completed || self.status == .undefined {
+            return
+        }
+        self.tryToPlayIfStalled()
+    }
+    
+    
+    
+    
+    
+    
+    // MARK: - Playback Functions
+    // Play, Pause, Rewind 10, Fastforward 10, Seek
+    
+    func play () throws {
+        if self.player == nil {
+            throw AudioFileError.playerIsNil
+        }
+        self.player!.play()
+        self.status = .playing
+        self.startHealthCheckTimer()
+    }
+    
+    func pause () throws {
+        if self.player == nil {
+            throw AudioFileError.playerIsNil
+        }
+        self.player!.pause()
+        self.status = .paused
+        self.stopHealthCheckTimer()
     }
     
     func rewind (_ seconds: Float64) {

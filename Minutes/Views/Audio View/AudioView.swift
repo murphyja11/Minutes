@@ -21,11 +21,12 @@ struct AudioView: View {
                 Text("")
             } else if audioFile.status == .completed {
                 Text("").onAppear {
-                    print("AudioFile Status is Completed \n\n\n")
                     self.sendAudioEvent()
                     self.presentationMode.wrappedValue.dismiss()
                     self.audioFile.end()
                 }
+            } else if audioFile.status == .error {
+                Text("Error\nThis happens the the player is nil and the play function is called\n\nLMK if this happened because it shouldn't")
             } else {
                 VStack {
                     AudioEscapeButton()
