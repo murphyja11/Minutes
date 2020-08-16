@@ -36,6 +36,11 @@ struct MainView: View {
                     }
                 }
                 .tag(0)
+                .sheet(isPresented: self.$showAudioView) {
+                    AudioView()
+                        .environmentObject(self.userInfo)
+                        .environmentObject(self.audioFile)
+                }
             MeView(showSettings: self.$showSettings)
                 .font(.title)
                 .tabItem {
@@ -50,11 +55,7 @@ struct MainView: View {
                 }
                 .tag(1)
         }
-        .sheet(isPresented: self.$showAudioView) {
-            AudioView()
-                .environmentObject(self.userInfo)
-                .environmentObject(self.audioFile)
-        }
+            
         .sheet(isPresented: self.$showSettings) {
             SettingsView(showThisView: self.$showSettings)
         }

@@ -64,7 +64,7 @@ struct SignupMethodsView: View {
 
                 }
                 .frame(height: geometry.size.height)
-                .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
+                .background(self.colorScheme == .light ? Color.white : Color(red: 0.1, green: 0.1, blue: 0.1))
 
             if self.showEmail {
                 EmailSignupView(showThisView: self.$showEmail)

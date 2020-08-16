@@ -57,12 +57,11 @@ struct LoginView: View {
                 .frame(height: 45)
                 .padding(.bottom, 8)
             }
-            .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
+            .background(self.colorScheme == .light ? Color.white : Color(red: 0.1, green: 0.1, blue: 0.1))
             
             if self.emailView {
                 LoginWithEmailView(showThisView: self.$emailView)
                     .transition(.move(edge: .trailing))
-                    //.background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
             }
         }
     }

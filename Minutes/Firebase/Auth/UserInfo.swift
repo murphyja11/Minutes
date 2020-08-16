@@ -25,8 +25,7 @@ class UserInfo: ObservableObject {
     @Published var reloading: Bool = false {
         didSet {
             if !oldValue && reloading {
-                print(self.reloading)
-                self.getNewRecommendations() { result in
+                self.getNewRecommendations { result in
                     switch result {
                     case .failure(let error):
                         print(error.localizedDescription)
@@ -94,6 +93,7 @@ class UserInfo: ObservableObject {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let recs):
+                print("\(recs) \n\n")
                 self.initializeRecommendationMetadata(recs: recs.array) { result in
                     switch result {
                     case .failure(let error):

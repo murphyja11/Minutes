@@ -44,6 +44,7 @@
 		D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79524E0D277003F85C6 /* FBAuth.swift */; };
 		D430C79E24E0D282003F85C6 /* AudioMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79D24E0D281003F85C6 /* AudioMetadata.swift */; };
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
+		D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */; };
 		D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040724E6005D00E1D540 /* FBMetrics.swift */; };
 		D4C5040A24E6045600E1D540 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040924E6045600E1D540 /* Metrics.swift */; };
 		D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC524E8519C0000014D /* SigninView.swift */; };
@@ -95,6 +96,7 @@
 		D430C79824E0D278003F85C6 /* FBAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBAuthError.swift; sourceTree = "<group>"; };
 		D430C79D24E0D281003F85C6 /* AudioMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadata.swift; sourceTree = "<group>"; };
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
+		D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
 		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040924E6045600E1D540 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				D430C78024E0D210003F85C6 /* PlayBar.swift */,
 				D430C77F24E0D210003F85C6 /* PlayButton.swift */,
 				D4F055C924E9DE9800E2FA29 /* AudioEscapeButton.swift */,
+				D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */,
 			);
 			path = "Audio View";
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				D4F055CA24E9DE9800E2FA29 /* AudioEscapeButton.swift in Sources */,
 				D4F7E6F324E70025009785B2 /* MainView.swift in Sources */,
 				D430C77924E0D1F8003F85C6 /* MeView.swift in Sources */,
+				D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */,
 				D430C76A24E0D188003F85C6 /* ContinueWithApple.swift in Sources */,
 				D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */,
 				D430C75A24E0D142003F85C6 /* AppDelegate.swift in Sources */,

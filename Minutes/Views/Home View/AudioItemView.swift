@@ -52,8 +52,9 @@ struct AudioItemViewButton: View {
     var body: some View {
         HStack {
             Button(action: {
+                print("Clicked Button \n")
                 self.show = true
-                //self.startPlaying()
+                self.startPlaying()
             }) {
                 HStack {
                     Image(systemName: "play.fill").resizable()
@@ -77,6 +78,7 @@ struct AudioItemViewButton: View {
                         .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                 }
                 .padding(.trailing, 25)
+                .frame(height: 100)
             }
         }
         .alert(isPresented: self.$showAlert) {
@@ -85,8 +87,6 @@ struct AudioItemViewButton: View {
     }
     
     private func startPlaying () {
-        print("calling startPlaying function")
-        print("\(self.metadata.uid) \n\n\n")
         self.audioFile.startPlaying(uid: self.metadata.uid, filename: self.metadata.filename) { result in
             switch result {
             case .failure(let error):

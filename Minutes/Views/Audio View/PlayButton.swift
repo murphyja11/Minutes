@@ -14,8 +14,6 @@ struct PlayButton: View {
     @State var errorString: String?
     @State var showAlert: Bool = false
     
-    @State var isLoading = false
-    
     var body: some View {
         Group {
             if self.audioFile.status == .playing {
@@ -30,7 +28,7 @@ struct PlayButton: View {
                         .padding(45)
                     }
                 }
-            } else if self.audioFile.status == .paused {
+            } else {
                 Button(action: self.play) {
                     ZStack {
                         Circle()
@@ -41,19 +39,6 @@ struct PlayButton: View {
                         .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                         .padding(45)
                     }
-                }
-            } else {
-                Circle()
-                .trim(from: 0, to: 0.4)
-                .stroke(Color.blue)
-                .frame(width: 80, height: 80)
-                    .rotationEffect(Angle(degrees: self.isLoading ? 360 : 0))
-                .animation(Animation.default.repeatForever(autoreverses: false))
-                .onAppear {
-                    self.isLoading = true
-                }
-                .onDisappear {
-                    self.isLoading = false
                 }
             }
         }

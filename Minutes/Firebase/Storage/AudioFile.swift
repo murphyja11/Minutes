@@ -127,7 +127,6 @@ class AudioFile: ObservableObject {
             throw AudioFileError.playerIsNil
         }
         let timeScale = CMTimeScale(NSEC_PER_SEC)
-        print("\(NSEC_PER_SEC) \n\n\n")
         let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
 
         self.timeObserverToken = self.player!.addPeriodicTimeObserver(forInterval: time,
@@ -162,7 +161,7 @@ class AudioFile: ObservableObject {
         if self.player == nil {
             return
         }
-        print("File Finished Playing \n\n\n")
+        print("File Finished Playing")
         self.status = .completed
         // This will trigger the UI to dismiss the sheet and call the AudioFile.end() function below
     }
@@ -342,7 +341,6 @@ class AudioFile: ObservableObject {
                 percListened = secondsListened / self.duration
             }
             print("sending audio Event")
-            print("\(self.uid) \n\n\n")
             FBFirestore.sendAudioEvent(user: user_uid, audio: self.uid, secondsListened: secondsListened, percListened: percListened) { result in
                 switch result {
                 case .failure(let error):

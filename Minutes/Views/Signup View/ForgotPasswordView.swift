@@ -59,7 +59,7 @@ struct ForgotPasswordView: View {
                 })
             }
         .textFieldStyle(RoundedBorderTextFieldStyle())
-        .background(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
+        .background(self.colorScheme == .light ? Color.white : Color(red: 0.1, green: 0.1, blue: 0.1))
         .onAppear {
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
                 let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect

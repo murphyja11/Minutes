@@ -17,27 +17,29 @@ struct AudioView: View {
     
     var body: some View {
         Group {
-            if audioFile.status == .undefined {
-                Text("")
-            } else if audioFile.status == .completed {
+            if audioFile.status == .completed {
                 Text("").onAppear {
                     self.sendAudioEvent()
                     self.presentationMode.wrappedValue.dismiss()
                     self.audioFile.end()
                 }
             } else if audioFile.status == .error {
-                Text("Error\nThis happens the the player is nil and the play function is called\n\nLMK if this happened because it shouldn't")
+                Text("Error\nThis happens if the player is nil and the play function is called\n\nLMK if this happened because it shouldn't")
             } else {
                 VStack {
                     AudioEscapeButton()
                     Spacer()
                     HStack {
                         Spacer()
-                        RewindView()
-                            .padding(.trailing, 15)
-                        PlayButton()
-                        FastForwardView()
-                            .padding(.leading, 15)
+                        if self.audioFile.status == .undefined || self.audioFile.status == .stalled {
+                            LoadingSpinner()
+                        } else {
+                            RewindView()
+                                .padding(.trailing, 15)
+                            PlayButton()
+                            FastForwardView()
+                                .padding(.leading, 15)
+                        }
                         Spacer()
                     }
                     Spacer()
@@ -52,8 +54,6 @@ struct AudioView: View {
         if let player = self.audioFile.player {
             let secondsListened = player.currentTime().seconds
             let percListened = secondsListened / self.audioFile.duration
-            print("sending audio Event")
-            print("\(self.audioFile.uid) \n\n\n")
             FBFirestore.sendAudioEvent(user: self.userInfo.user.uid, audio: self.audioFile.uid, secondsListened: secondsListened, percListened: percListened) { result in
                 switch result {
                 case .failure(let error):
