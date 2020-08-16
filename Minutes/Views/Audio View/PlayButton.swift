@@ -14,6 +14,8 @@ struct PlayButton: View {
     @State var errorString: String?
     @State var showAlert: Bool = false
     
+    @State var isLoading = false
+    
     var body: some View {
         Group {
             if self.audioFile.status == .playing {
@@ -28,7 +30,7 @@ struct PlayButton: View {
                         .padding(45)
                     }
                 }
-            } else {
+            } else if self.audioFile.status == .paused {
                 Button(action: self.play) {
                     ZStack {
                         Circle()
@@ -39,6 +41,19 @@ struct PlayButton: View {
                         .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                         .padding(45)
                     }
+                }
+            } else {
+                Circle()
+                .trim(from: 0, to: 0.4)
+                .stroke(Color.blue)
+                .frame(width: 80, height: 80)
+                    .rotationEffect(Angle(degrees: self.isLoading ? 360 : 0))
+                .animation(Animation.default.repeatForever(autoreverses: false))
+                .onAppear {
+                    self.isLoading = true
+                }
+                .onDisappear {
+                    self.isLoading = false
                 }
             }
         }
@@ -51,28 +66,20 @@ struct PlayButton: View {
     private let iconSize: CGFloat = 40
     
     private func play () {
-        self.audioFile.play { result in
-            switch result {
-            case .failure(let error):
-                print("error playing audio")
-                self.errorString = error.localizedDescription
-                self.showAlert = true
-            case .success( _):
-                break
-            }
+        do {
+            try self.audioFile.play()
+        } catch {
+            self.errorString = error.localizedDescription
+            self.showAlert = true
         }
     }
     
     private func pause () {
-        self.audioFile.pause { result in
-            switch result {
-            case .failure(let error):
-                print("error pausing audio")
-                self.errorString = error.localizedDescription
-                self.showAlert = true
-            case .success( _):
-                break
-            }
+        do {
+            try self.audioFile.pause()
+        } catch {
+            self.errorString = error.localizedDescription
+            self.showAlert = true
         }
     }
 }

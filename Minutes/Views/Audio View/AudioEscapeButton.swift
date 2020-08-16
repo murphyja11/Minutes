@@ -9,13 +9,24 @@
 import SwiftUI
 
 struct AudioEscapeButton: View {
+    @EnvironmentObject var userInfo: UserInfo
+    @EnvironmentObject var audioFile: AudioFile
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: {
+            self.audioFile.sendAudioEvent(user_uid: self.userInfo.user.uid)
+            self.audioFile.end()
+            self.presentationMode.wrappedValue.dismiss()
+        }) {
+            Image(systemName: "xmark").resizable()
+                .frame(width: 15, height: 15)
+                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                .padding(25)
+        }
+            .position(x: 23, y: 35)
+            .frame(height: 30)
     }
-}
-
-struct AudioEscapeButton_Previews: PreviewProvider {
-    static var previews: some View {
-        AudioEscapeButton()
-    }
+    
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
 }

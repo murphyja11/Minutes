@@ -40,19 +40,21 @@ struct AudioItemViewButton: View {
     var metadata: FBAudioMetadata
     @Binding var show: Bool
     
-    init(metadata: FBAudioMetadata, show: Binding<Bool>) {
-        print("audio item view button starting")
-        self._show = show
-        self.metadata = metadata
-
-    }
+//    init(metadata: FBAudioMetadata, show: Binding<Bool>) {
+//        print("audio item view button starting")
+//        self._show = show
+//        self.metadata = metadata
+//    }
     
     @State var errorString: String = ""
     @State var showAlert: Bool = false
     
     var body: some View {
         HStack {
-            Button(action: self.startPlaying) {
+            Button(action: {
+                self.show = true
+                //self.startPlaying()
+            }) {
                 HStack {
                     Image(systemName: "play.fill").resizable()
                         .frame(width: 18, height: 20)
@@ -83,7 +85,6 @@ struct AudioItemViewButton: View {
     }
     
     private func startPlaying () {
-        self.show = true
         print("calling startPlaying function")
         print("\(self.metadata.uid) \n\n\n")
         self.audioFile.startPlaying(uid: self.metadata.uid, filename: self.metadata.filename) { result in

@@ -73,9 +73,17 @@ struct FastForwardView: View {
     @EnvironmentObject var audioFile: AudioFile
     
     var body: some View {
-        Button(action: { self.audioFile.fastForward(10) }) {
+        Button(action: { self.fastForward() }) {
             Image(systemName: "goforward.10").resizable()
             .frame(width: self.iconSize, height: self.iconSize)
+        }
+    }
+    
+    private func fastForward () {
+        do {
+            try self.audioFile.fastForward(10)
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
@@ -86,59 +94,19 @@ struct RewindView: View {
     @EnvironmentObject var audioFile: AudioFile
     
     var body: some View {
-        Button(action: { self.audioFile.rewind(10) }) {
+        Button(action: { self.rewind() }) {
             Image(systemName: "gobackward.10").resizable()
             .frame(width: self.iconSize, height: self.iconSize)
         }
     }
+    
+    private func rewind () {
+        do {
+            try self.audioFile.rewind(10)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     private let iconSize: CGFloat = 35
-}
-
-
-
-
-
-
-
-
-
-struct AudioEscapeButton: View {
-    @EnvironmentObject var userInfo: UserInfo
-    @EnvironmentObject var audioFile: AudioFile
-    
-    var body: some View {
-        Button(action: {
-            self.sendAudioEvent()
-            self.audioFile.end()
-            self.presentationMode.wrappedValue.dismiss()
-        }) {
-            Image(systemName: "xmark").resizable()
-                .frame(width: 15, height: 15)
-                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                .padding(25)
-        }
-            .position(x: 23, y: 35)
-            .frame(height: 30)
-    }
-    
-    private func sendAudioEvent () {
-        if let player = self.audioFile.player {
-            let secondsListened = player.currentTime().seconds
-            let percListened = secondsListened / self.audioFile.duration
-            print("sending audio Event")
-            print("\(self.audioFile.uid) \n\n\n")
-            FBFirestore.sendAudioEvent(user: self.userInfo.user.uid, audio: self.audioFile.uid, secondsListened: secondsListened, percListened: percListened) { result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success( _):
-                    print("Audio Event successfully recorded")
-                }
-                
-            }
-        }
-    }
-    
-    @Environment(\.presentationMode) var presentationMode
-    @Environment(\.colorScheme) var colorScheme
 }

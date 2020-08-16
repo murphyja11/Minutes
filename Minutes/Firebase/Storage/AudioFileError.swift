@@ -14,6 +14,7 @@ enum AudioFileError: Error {
     case AssetIsNil
     case DurationIsNil
     case cantAddObserver
+    case UnableToPlay
 }
 
 extension AudioFileError: LocalizedError {
@@ -30,6 +31,8 @@ extension AudioFileError: LocalizedError {
             return NSLocalizedString("AVAsset Duration is Nil", comment: "")
         case .cantAddObserver:
             return NSLocalizedString("For some reason can't add observer", comment: "")
+        case .UnableToPlay:
+            return NSLocalizedString("Unable to start playing the audio", comment: "")
         }
     }
 }
