@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7748027F66487A947E8E91C3 /* Pods_Minutes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A48B8441374BE4319B1F5AB /* Pods_Minutes.framework */; };
+		93E9A7791E837FECE0608917 /* Pods_Minutes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F316C16E67BAE40F106F33A /* Pods_Minutes.framework */; };
 		D430C74724E0D002003F85C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D430C74624E0D002003F85C6 /* Assets.xcassets */; };
 		D430C74A24E0D002003F85C6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D430C74924E0D002003F85C6 /* Preview Assets.xcassets */; };
 		D430C74D24E0D002003F85C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D430C74B24E0D002003F85C6 /* LaunchScreen.storyboard */; };
@@ -44,6 +44,7 @@
 		D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79524E0D277003F85C6 /* FBAuth.swift */; };
 		D430C79E24E0D282003F85C6 /* AudioMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79D24E0D281003F85C6 /* AudioMetadata.swift */; };
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
+		D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2A24EAC5970092B75C /* SwitchBar.swift */; };
 		D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */; };
 		D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040724E6005D00E1D540 /* FBMetrics.swift */; };
 		D4C5040A24E6045600E1D540 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040924E6045600E1D540 /* Metrics.swift */; };
@@ -56,8 +57,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4A48B8441374BE4319B1F5AB /* Pods_Minutes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Minutes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6B44C4FBDA29AB7B76B6E303 /* Pods-Minutes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minutes.debug.xcconfig"; path = "Target Support Files/Pods-Minutes/Pods-Minutes.debug.xcconfig"; sourceTree = "<group>"; };
+		8F316C16E67BAE40F106F33A /* Pods_Minutes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Minutes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7DECFC830B05485B71A0872 /* Pods-Minutes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minutes.debug.xcconfig"; path = "Target Support Files/Pods-Minutes/Pods-Minutes.debug.xcconfig"; sourceTree = "<group>"; };
 		D430C73D24E0CFFF003F85C6 /* Minutes beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Minutes beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D430C74624E0D002003F85C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D430C74924E0D002003F85C6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -96,6 +97,7 @@
 		D430C79824E0D278003F85C6 /* FBAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBAuthError.swift; sourceTree = "<group>"; };
 		D430C79D24E0D281003F85C6 /* AudioMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadata.swift; sourceTree = "<group>"; };
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
+		D4954B2A24EAC5970092B75C /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
 		D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
 		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040924E6045600E1D540 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
@@ -106,7 +108,7 @@
 		D4F055C924E9DE9800E2FA29 /* AudioEscapeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEscapeButton.swift; sourceTree = "<group>"; };
 		D4F7E6F024E6CB24009785B2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D4F7E6F224E70025009785B2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		FF49FD4C7BEF02E50F45E1F1 /* Pods-Minutes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minutes.release.xcconfig"; path = "Target Support Files/Pods-Minutes/Pods-Minutes.release.xcconfig"; sourceTree = "<group>"; };
+		E19BEAA7FFD4F36DF2428D16 /* Pods-Minutes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minutes.release.xcconfig"; path = "Target Support Files/Pods-Minutes/Pods-Minutes.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7748027F66487A947E8E91C3 /* Pods_Minutes.framework in Frameworks */,
+				93E9A7791E837FECE0608917 /* Pods_Minutes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,18 +126,10 @@
 		25B55EECCD42A80C2687863C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6B44C4FBDA29AB7B76B6E303 /* Pods-Minutes.debug.xcconfig */,
-				FF49FD4C7BEF02E50F45E1F1 /* Pods-Minutes.release.xcconfig */,
+				A7DECFC830B05485B71A0872 /* Pods-Minutes.debug.xcconfig */,
+				E19BEAA7FFD4F36DF2428D16 /* Pods-Minutes.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		A359EA1D07FADCD450F1AEFD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4A48B8441374BE4319B1F5AB /* Pods_Minutes.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D430C73424E0CFFF003F85C6 = {
@@ -144,7 +138,7 @@
 				D430C73F24E0CFFF003F85C6 /* Minutes */,
 				D430C73E24E0CFFF003F85C6 /* Products */,
 				25B55EECCD42A80C2687863C /* Pods */,
-				A359EA1D07FADCD450F1AEFD /* Frameworks */,
+				FAB16FA130DF16D9FCA95D35 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -272,6 +266,7 @@
 			children = (
 				D430C77824E0D1F8003F85C6 /* MeView.swift */,
 				D4F7E6F024E6CB24009785B2 /* SettingsView.swift */,
+				D4954B2A24EAC5970092B75C /* SwitchBar.swift */,
 			);
 			path = "Me View";
 			sourceTree = "<group>";
@@ -298,6 +293,14 @@
 			path = "Audio View";
 			sourceTree = "<group>";
 		};
+		FAB16FA130DF16D9FCA95D35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8F316C16E67BAE40F106F33A /* Pods_Minutes.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -305,12 +308,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D430C75124E0D002003F85C6 /* Build configuration list for PBXNativeTarget "Minutes" */;
 			buildPhases = (
-				470BE8A70AC23F86AEB42B20 /* [CP] Check Pods Manifest.lock */,
+				B92D47E68A4B5A2F409F7A0D /* [CP] Check Pods Manifest.lock */,
 				D430C73924E0CFFF003F85C6 /* Sources */,
 				D430C73A24E0CFFF003F85C6 /* Frameworks */,
 				D430C73B24E0CFFF003F85C6 /* Resources */,
-				5F972D9A08C5F00F51F2B6B8 /* [CP] Embed Pods Frameworks */,
 				D468D6DB24E8AAB60021DAC9 /* ShellScript */,
+				29AC6EC06D74470F90019546 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -369,7 +372,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		470BE8A70AC23F86AEB42B20 /* [CP] Check Pods Manifest.lock */ = {
+		29AC6EC06D74470F90019546 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Minutes/Pods-Minutes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Minutes/Pods-Minutes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Minutes/Pods-Minutes-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B92D47E68A4B5A2F409F7A0D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -389,23 +409,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5F972D9A08C5F00F51F2B6B8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Minutes/Pods-Minutes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Minutes/Pods-Minutes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Minutes/Pods-Minutes-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D468D6DB24E8AAB60021DAC9 /* ShellScript */ = {
@@ -470,6 +473,7 @@
 				D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */,
 				D430C78224E0D210003F85C6 /* PlayBar.swift in Sources */,
 				D430C78724E0D23C003F85C6 /* AudioFileError.swift in Sources */,
+				D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */,
 				D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */,
 				D430C79924E0D278003F85C6 /* UserInfo.swift in Sources */,
 				D430C79224E0D245003F85C6 /* FBKeys.swift in Sources */,
@@ -606,11 +610,12 @@
 		};
 		D430C75224E0D002003F85C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B44C4FBDA29AB7B76B6E303 /* Pods-Minutes.debug.xcconfig */;
+			baseConfigurationReference = A7DECFC830B05485B71A0872 /* Pods-Minutes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Minutes/Minutes beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Minutes/Preview Content\"";
 				DEVELOPMENT_TEAM = CG4JM2F932;
 				ENABLE_PREVIEWS = YES;
@@ -619,6 +624,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "no.organization.Minutes-beta";
 				PRODUCT_NAME = "Minutes beta";
 				SWIFT_VERSION = 5.0;
@@ -628,11 +634,12 @@
 		};
 		D430C75324E0D002003F85C6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FF49FD4C7BEF02E50F45E1F1 /* Pods-Minutes.release.xcconfig */;
+			baseConfigurationReference = E19BEAA7FFD4F36DF2428D16 /* Pods-Minutes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Minutes/Minutes beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Minutes/Preview Content\"";
 				DEVELOPMENT_TEAM = CG4JM2F932;
 				ENABLE_PREVIEWS = YES;
@@ -641,6 +648,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "no.organization.Minutes-beta";
 				PRODUCT_NAME = "Minutes beta";
 				SWIFT_VERSION = 5.0;

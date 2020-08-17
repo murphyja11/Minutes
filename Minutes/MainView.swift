@@ -55,9 +55,9 @@ struct MainView: View {
                 }
                 .tag(1)
         }
-            
         .sheet(isPresented: self.$showSettings) {
             SettingsView(showThisView: self.$showSettings)
+                .environmentObject(self.userInfo)
         }
         .onAppear {
             guard let uid = Auth.auth().currentUser?.uid else { return }

@@ -95,12 +95,9 @@ struct LoginWithEmailView: View {
         }
         .alert(isPresented: self.$showAlert) {
             Alert(title: Text("Login error"), message: Text(self.authError?.localizedDescription ?? "Unknown error"), dismissButton: .default(Text("Ok")) {
-                if self.authError == .incorrectPassword {
-                    self.user.password = ""
-                } else {
-                    self.user.email = ""
-                    self.user.password = ""
-                }
+//                if self.authError == .incorrectPassword {
+//                    self.user.password = ""
+//                }
             })
             
         }

@@ -19,7 +19,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section {
+                Section(header: Text(self.returnUserName())) {
                     Button(action: {
                         FBAuth.logout { result in
                             switch result {
@@ -48,4 +48,12 @@ struct SettingsView: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
+    
+    private func returnUserName () -> String {
+        if self.userInfo.user.name != "" {
+            return "Logged in as \(self.userInfo.user.name)"
+        } else {
+            return ""
+        }
+    }
 }

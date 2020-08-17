@@ -11,8 +11,13 @@ import Foundation
 
 struct MeView: View {
     @EnvironmentObject var userInfo: UserInfo
-    
     @Binding var showSettings: Bool
+    
+    enum SubView {
+        case metrics, activity
+    }
+    
+    @State var subView: SubView = .metrics
     
     @State var errorString: String?
     @State var showAlert = false
@@ -25,8 +30,7 @@ struct MeView: View {
                     Text("")
                         .frame(width: geometry.size.width * 0.15)
                     Spacer()
-                    Text("Profile")
-                        .font(.system(size: 20))
+                    SwitchBar(subView: self.$subView)
                     Spacer()
                     Button(action: {
                         self.showSettings = true
@@ -42,9 +46,6 @@ struct MeView: View {
                 }
                 .frame(height: 45)
                 .padding(0)
-                
-                Divider()
-                    .padding(0)
                 Spacer()
                 Text("Total Minutes Meditated: " + self.toMinutesSeconds(self.userInfo.metrics.secondsListened))
                     .font(.system(size: 20))
@@ -62,6 +63,7 @@ struct MeView: View {
         return minutes + ":" + (seconds.count == 1 ? "0" + seconds : seconds)
     }
 }
+
 
 struct MeView_Previews: PreviewProvider {
     @State static var showSettings: Bool = false

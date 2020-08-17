@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if userInfo.isUserAuthenticated == .undefined {
-                Text("loading...")
+                LoadingSpinner()
             } else if userInfo.isUserAuthenticated == .signedOut {
                 SignupView()
             } else {
