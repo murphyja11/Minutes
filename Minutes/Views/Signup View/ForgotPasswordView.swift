@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var user: UserViewModel = UserViewModel()
+    @State var user: EmailSignupViewModel = EmailSignupViewModel()
     @Binding var showThisView: Bool
     
     @State private var showAlert: Bool = false

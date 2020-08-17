@@ -1,5 +1,5 @@
 //
-//  UserViewModel.swift
+//  EmailSignupViewModel.swift
 //  Signin With Apple
 //
 //  Created by Stewart Lynch on 2020-03-18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserViewModel {
+struct EmailSignupViewModel {
     var email: String = ""
     var password: String = ""
     var fullname: String = ""

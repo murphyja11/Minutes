@@ -61,39 +61,33 @@ struct MainView: View {
         }
         .onAppear {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            print("retrieving User")
-            FBFirestore.retrieveFBUser(uid: uid) { (result) in
-                switch result {
-                    case .failure(let error):
-                        self.errorString = error.localizedDescription
-                        self.showAlert = true
-                    case .success(let user):
-                        self.userInfo.user = user
-                        self.userInfo.getRecommendations { result in
-                            switch result {
-                            case .failure(let error):
-                                self.errorString = error.localizedDescription
-                                self.showAlert = true
-                            case .success( _):
-                                break
-                            }
-                    }
-                }
-            }
-            self.userInfo.configureMetricsSnapshotListener()
-            print("retrieving Metrics COntentView")
-            FBFirestore.retrieveFBMetrics(uid: uid) { result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success(let metrics):
-                    self.userInfo.metrics.secondsListened = metrics.secondsListened
-                    self.userInfo.metrics.numberOfMeditations = metrics.numberOfMeditations
-                }
-            }
+            self.retrieveData(uid: uid)
         }
         .alert(isPresented: self.$showAlert) {
             Alert(title: Text("Retrieval Error"), message: Text(self.errorString ?? ""), dismissButton: .default(Text("Ok")))
+        }
+    }
+    
+    
+    private func retrieveData(uid: String) {
+        // retrieve user
+        FBFirestore.retrieveFBUser(uid: uid) { (result) in
+            switch result {
+                case .failure(let error):
+                    self.errorString = error.localizedDescription
+                    self.showAlert = true
+                case .success(let user):
+                    self.userInfo.user = user
+            }
+        }
+        // retrieve recommendations, goes though userInfo method to initialize array of strings as AudioMetadata objects
+        self.userInfo.getRecommendationsMetadata { result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success( _):
+                break
+            }
         }
     }
 }

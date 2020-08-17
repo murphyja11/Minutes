@@ -10,7 +10,7 @@ import SwiftUI
 
 struct EmailSignupView: View {
     @EnvironmentObject var userInfo: UserInfo
-    @State var user: UserViewModel = UserViewModel()
+    @State var user: EmailSignupViewModel = EmailSignupViewModel()
     @Environment(\.presentationMode) var presentationMode
     @Binding var showThisView: Bool
     

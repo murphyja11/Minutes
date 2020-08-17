@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LoginWithEmailView: View {
     @EnvironmentObject var userInfo: UserInfo
-    @State var user: UserViewModel = UserViewModel()
+    @State var user: EmailSignupViewModel = EmailSignupViewModel()
 
     @Binding var showThisView: Bool
     @State var showForgotPW: Bool = false

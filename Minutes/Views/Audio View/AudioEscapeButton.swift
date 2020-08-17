@@ -14,8 +14,7 @@ struct AudioEscapeButton: View {
     
     var body: some View {
         Button(action: {
-            self.audioFile.sendAudioEvent(user_uid: self.userInfo.user.uid)
-            self.audioFile.end()
+            self.audioFile.end(user_uid: self.userInfo.user.uid)
             self.presentationMode.wrappedValue.dismiss()
         }) {
             Image(systemName: "xmark").resizable()

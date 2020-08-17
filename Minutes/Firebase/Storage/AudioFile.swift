@@ -13,9 +13,14 @@ import AVFoundation
 class AudioFile: ObservableObject {
     //@EnvironmentObject var userInfo: UserInfo
     
-    private(set) var uid: String = ""
+    private(set) var metadata: FBAudioMetadata?
     private var playerItemContext = 0
     private(set) var player: AVPlayer?
+    
+    enum AudioStatus {
+        case undefined, playing, paused, stalled, completed, error
+    }
+    
     @Published var status: AudioStatus = .undefined
     
     
@@ -29,7 +34,6 @@ class AudioFile: ObservableObject {
     
     var hasForcedDurationLoad: Bool = false
     
-    
     init() {
        do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.spokenAudio)
@@ -39,20 +43,16 @@ class AudioFile: ObservableObject {
         }
     }
     
-    enum AudioStatus {
-        case undefined, playing, paused, stalled, completed, error
-    }
-    
     // MARK: - Start Playing
     // sets uid property, downloads file, creates asset, playerItem, and player
     // Gets audio duration from asset, sets End Time and Stalling Notification for playerItem, Time Observer for player
     // Finally, it starts playing the audio
     
-    func startPlaying(uid: String, filename: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+    func startPlaying(metadata: FBAudioMetadata, completion: @escaping (Result<Bool, Error>) -> Void) {
         
-        self.uid = uid
+        self.metadata = metadata
         // create reference to audio file in Firebase Cloud Storage
-        let audioRef  = Storage.storage().reference().child(filename)
+        let audioRef  = Storage.storage().reference().child(metadata.filename)
         
         // being downloading URL.  I believe this should allow streaming the data
         audioRef.downloadURL { url, error in
@@ -186,7 +186,10 @@ class AudioFile: ObservableObject {
     
     
     // MARK: - End, called when the Audiofile finishes playing or the User dismisses it
-    func end () {
+    func end(user_uid: String) {
+        if let metadata = metadata {
+            self.sendAudioEvent(user_uid: user_uid, metadata: metadata)
+        }
         self.player?.pause()
         self.stopHealthCheckTimer()
         self.removeObserver()
@@ -333,7 +336,7 @@ class AudioFile: ObservableObject {
     
     // MARK: - Record Event to events database
     
-    func sendAudioEvent(user_uid: String) {
+    func sendAudioEvent(user_uid: String, metadata: FBAudioMetadata) {
         if let player = self.player {
             let secondsListened = player.currentTime().seconds
             var percListened = 0.0
@@ -341,7 +344,7 @@ class AudioFile: ObservableObject {
                 percListened = secondsListened / self.duration
             }
             print("sending audio Event")
-            FBFirestore.sendAudioEvent(user: user_uid, audio: self.uid, secondsListened: secondsListened, percListened: percListened) { result in
+            FBFirestore.sendAudioEvent(user_uid: user_uid, audio_metadata: metadata, secondsListened: secondsListened, percListened: percListened) { result in
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)

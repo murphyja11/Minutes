@@ -20,10 +20,7 @@ struct AudioItemView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
                     .foregroundColor(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue:0.1))
-
-                if !self.presentationMode.wrappedValue.isPresented {
-                    AudioItemViewButton(metadata: self.metadata, show: self.$show)
-                }
+                AudioItemViewButton(metadata: self.metadata, show: self.$show)
             }
             .frame(height: 100)
         }
@@ -87,7 +84,7 @@ struct AudioItemViewButton: View {
     }
     
     private func startPlaying () {
-        self.audioFile.startPlaying(uid: self.metadata.uid, filename: self.metadata.filename) { result in
+        self.audioFile.startPlaying(metadata: self.metadata) { result in
             switch result {
             case .failure(let error):
                 self.errorString = error.localizedDescription

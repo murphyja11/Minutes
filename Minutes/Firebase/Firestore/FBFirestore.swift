@@ -9,29 +9,7 @@ import FirebaseFirestore
 
 enum FBFirestore {
     
-    static func retrieveAudioMetadata(uid: String, completion: @escaping (Result<FBAudioMetadata, Error>) -> ()) {
-        print("retrieving FBAudioMetadata : FBFirestore")
-        print("\(uid) \n")
-        let reference = Firestore
-            .firestore()
-            .collection(FBKeys.CollectionPath.audioMetadata)
-            .document(uid)
-        getDocument(for: reference) { result in
-            switch result {
-            case .success(let data):
-                guard let metadata = FBAudioMetadata(documentData: data) else {
-                    completion(.failure(FireStoreError.noAudioMetadata))
-                    return
-                }
-                completion(.success(metadata))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-
     static func retrieveFBUser(uid: String, completion: @escaping (Result<FBUser, Error>) -> ()) {
-        print("retrieving FBUser : FBFirestore.retrieveFBUser")
         let reference = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.users)
@@ -40,16 +18,33 @@ enum FBFirestore {
             switch result {
             case .success(let data):
                 guard let user = FBUser(documentData: data) else {
-                    completion(.failure(FireStoreError.noUser))
+                    completion(.failure(FirestoreError.noUser))
                     return
                 }
-                print("retrieved FBUser : FBFirestore.retrieveFBUser")
                 completion(.success(user))
             case .failure(let err):
                 completion(.failure(err))
             }
         }
-        
+    }
+    
+    static func retrieveAudioMetadata(uid: String, completion: @escaping (Result<FBAudioMetadata, Error>) -> ()) {
+        let reference = Firestore
+            .firestore()
+            .collection(FBKeys.CollectionPath.audioMetadata)
+            .document(uid)
+        getDocument(for: reference) { result in
+            switch result {
+            case .success(let data):
+                guard let metadata = FBAudioMetadata(documentData: data) else {
+                    completion(.failure(FirestoreError.noAudioMetadata))
+                    return
+                }
+                completion(.success(metadata))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     static func retrieveRecommendations(uid: String, completion: @escaping (Result<FBRecommendations, Error>) -> ()) {
@@ -63,7 +58,7 @@ enum FBFirestore {
                 completion(.failure(error))
             case .success(let data):
                 guard let recs = FBRecommendations(documentData: data) else {
-                    completion(.failure(FireStoreError.noRecommendations))
+                    completion(.failure(FirestoreError.noRecommendations))
                     return
                 }
                 completion(.success(recs))
@@ -71,32 +66,26 @@ enum FBFirestore {
         }
     }
     
-    static func retrieveFBMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
-        print("retrieving Metrics FBFirestore")
-        print("Uid: \(uid)")
+    static func retrieveMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
         let reference = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.metrics)
             .document(uid)
-        print("Metrics Reference")
         getDocument(for: reference) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let data):
-                do {
-                    let metrics = try FBMetrics(documentData: data)!
-                    completion(.success(metrics))
-                } catch {
-                    completion(.failure(FireStoreError.metricsError))
+                guard let metrics = FBMetrics(documentData: data) else {
+                    completion(.failure(FirestoreError.noMetrics))
+                    return
                 }
+                completion(.success(metrics))
             }
         }
-        
     }
     
     static func mergeFBUser(_ data: [String: Any], uid: String, completion: @escaping (Result<Bool, Error>) -> ()) {
-        print("starting merge FBUser : FBFirestore.mergeFBUser")
         let reference = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.users)
@@ -106,21 +95,25 @@ enum FBFirestore {
                 completion(.failure(err))
                 return
             }
-            print("merged FBUser : FBFirestore.mergeFBUser")
+            print("Merged User:\n\(data)\n")
             completion(.success(true))
         }
     }
     
-    static func sendAudioEvent(user: String, audio: String, secondsListened: Double, percListened: Double, completion: @escaping (Result<Bool, Error>) -> ()) {
+    static func sendAudioEvent(user_uid: String, audio_metadata: FBAudioMetadata?, secondsListened: Double, percListened: Double, completion: @escaping (Result<Bool, Error>) -> ()) {
         print("Sending Audio Event")
         var ref: DocumentReference? = nil
+        guard let metadata = audio_metadata else {
+            completion(.failure(FirestoreError.noMetadata))
+            return
+        }
         ref = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.events)
             .addDocument(data: [
                     "type": "audio_event",
-                    "user_uid": user,
-                    "audio_uid": audio,
+                    "user_uid": user_uid,
+                    "audio_metadata": metadata,
                     "secondsListened": secondsListened,
                     "percListened": percListened,
                     "time": Date()
@@ -133,37 +126,36 @@ enum FBFirestore {
         }
     }
     
-    /*static func updateFBUserLikes(uid: String, data: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
-        let reference = Firestore
+    static func sendLikeEvent(user_uid: String, audio_uid: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+        print("Sending Like Event")
+        var ref: DocumentReference? = nil
+        ref = Firestore
             .firestore()
-            .collection(FBKeys.CollectionPath.users)
-            .document(uid)
-        reference.setData(data, merge: true) { error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            completion(.success(true))
+            .collection(FBKeys.CollectionPath.events)
+            .addDocument(data: [
+                "type": "like_event",
+                "user_uid": user_uid,
+                "audio_uid": audio_uid
+            ]) { error in
+                
         }
-    }*/
+    }
     
     fileprivate static func getDocument(for reference: DocumentReference, completion: @escaping (Result<[String : Any], Error>) -> ()) {
-        print("Getting Document : FBFirestore.getDocument")
         reference.getDocument { (documentSnapshot, err) in
             if let err = err {
                 completion(.failure(err))
                 return
             }
             guard let documentSnapshot = documentSnapshot else {
-                completion(.failure(FireStoreError.noDocumentSnapshot))
+                completion(.failure(FirestoreError.noDocumentSnapshot))
                 return
             }
             guard let data = documentSnapshot.data() else {
-                completion(.failure(FireStoreError.noSnapshotData))
+                completion(.failure(FirestoreError.noSnapshotData))
                 return
             }
-            print("Got Document : FBFirestore.getDocument")
-            print("\(data) \n")
+            print("Got from Firestore:\n\(data)\n")
             completion(.success(data))
         }
     }
