@@ -189,6 +189,7 @@ class AudioFile: ObservableObject {
     // MARK: - End, called when the Audiofile finishes playing or the User dismisses it
     func end () {
         self.player?.pause()
+        self.player?.seek(to: .zero)
         self.stopHealthCheckTimer()
         self.removeObserver()
         self.player?.currentItem?.cancelPendingSeeks()
