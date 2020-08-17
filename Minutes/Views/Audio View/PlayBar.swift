@@ -16,7 +16,7 @@ struct PlayBar: View {
         VStack {
             Slider(value: self.$audioFile.currentTime, in: 0...self.audioFile.duration, onEditingChanged: { _ in
                 let targetTime = self.audioFile.currentTime
-                self.audioFile.seek(to: targetTime)
+                self.seek(to: targetTime)
             })
             HStack {
                 Text(self.toMinutesSeconds(audioFile.currentTime))
@@ -25,6 +25,15 @@ struct PlayBar: View {
             }
         }
         .padding(.horizontal, 30)
+    }
+    
+    
+    private func seek(to time: Double) {
+        do {
+            try self.audioFile.seek(to: time)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     private func toMinutesSeconds (_ number: Double) -> String {

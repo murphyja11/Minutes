@@ -30,14 +30,14 @@ class AudioFile: ObservableObject {
     var hasForcedDurationLoad: Bool = false
     
     
-    init() {
-       do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.spokenAudio)
-            //For playing volume when phone is on silent
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
+//    init() {
+//       do {
+//            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.spokenAudio)
+//            //For playing volume when phone is on silent
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
     
     enum AudioStatus {
         case undefined, playing, paused, stalled, completed, error
@@ -89,6 +89,7 @@ class AudioFile: ObservableObject {
             // add endTime and Stalling observers to playerItem
             self.addPlayerItemObservers()
             // pause the player at the end.  This is redundant
+            self.player?.preventsDisplaySleepDuringVideoPlayback = true
             self.player?.actionAtItemEnd = .pause
             
             // Access the duration of the asset and set it as a property. Throws if asset is nil
@@ -126,8 +127,8 @@ class AudioFile: ObservableObject {
         guard let _ = self.player else {
             throw AudioFileError.playerIsNil
         }
-        let timeScale = CMTimeScale(NSEC_PER_SEC)
-        let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
+        self.timeScale = CMTimeScale(NSEC_PER_SEC)
+        let time = CMTime(seconds: 0.5, preferredTimescale: self.timeScale!)
 
         self.timeObserverToken = self.player!.addPeriodicTimeObserver(forInterval: time,
                                                           queue: .main) // TODO: - Should this be the main thread????
@@ -324,10 +325,17 @@ class AudioFile: ObservableObject {
         player!.seek(to: CMTime(value: CMTimeValue(newTime * 1000), timescale: 1000))
     }
     
-    func seek (to time: Float64) {
-        let cmTime = CMTimeMakeWithSeconds(time, preferredTimescale: 48000)
+    func seek (to time: Double) throws {
+        if self.player == nil {
+            throw AudioFileError.playerIsNil
+        }
+        var timeScale: Int32 = 4800
+        if self.timeScale != nil {
+            timeScale = self.timeScale!
+        }
+        let cmTime = CMTimeMakeWithSeconds(time, preferredTimescale: timeScale)
         guard let _ = player else { return }
-        self.player!.seek(to: cmTime)
+        player!.seek(to: cmTime)
     }
     
     
