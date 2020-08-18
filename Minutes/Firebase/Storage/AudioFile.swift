@@ -30,14 +30,14 @@ class AudioFile: ObservableObject {
     var hasForcedDurationLoad: Bool = false
     
     
-//    init() {
-//       do {
-//            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.spokenAudio)
-//            //For playing volume when phone is on silent
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
+    init() {
+       do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.spokenAudio)
+            //For playing volume when phone is on silent
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
     enum AudioStatus {
         case undefined, playing, paused, stalled, completed, error

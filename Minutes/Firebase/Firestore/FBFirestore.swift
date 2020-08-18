@@ -123,7 +123,7 @@ enum FBFirestore {
                     "audio_uid": audio,
                     "secondsListened": secondsListened,
                     "percListened": percListened,
-                    "time": Date()
+                    "time": Date(timeIntervalSinceNow: Double(TimeZone.current.secondsFromGMT()))
             ]) { error in
                 if let error = error {
                     completion(.failure(error))

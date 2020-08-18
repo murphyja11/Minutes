@@ -30,9 +30,10 @@ enum FBKeys {
     }
     
     enum Metrics {
-        static let uid = "uid"
         static let secondsListened = "secondsListened"
+        static let secondsOverTime = "secondsOverTime"
         static let numberOfMeditations = "numberOfMeditations"
+        static let meditationsOverTime = "meditationsOverTime"
     }
     
     enum AudioMetadata {
