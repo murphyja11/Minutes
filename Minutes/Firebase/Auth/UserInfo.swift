@@ -41,12 +41,12 @@ class UserInfo: ObservableObject {
     }
     @Published var reloadingGenres: Bool = false {
         didSet {
-            if !oldValue && reloading {
+            if !oldValue && reloadingGenres {
                 self.reloadGenres { result in
                     switch result {
                     case .failure(let error):
                         print(error.localizedDescription)
-                        self.reloading = false
+                        self.reloadingGenres = false
                     case .success( _):
                         self.reloadingGenres = false
                     }
