@@ -19,12 +19,12 @@ struct SwitchBar: View {
                 }) {
                     if self.subView == .forYou {
                         Text("For You")
-                            .font(.system(size: 20)).fontWeight(.bold)
+                            .font(.system(size: 16)).fontWeight(.bold)
                             .foregroundColor(self.colorScheme == .light ? self.selectedLightModeColor : self.selectedDarkModeColor)
                             .frame(width: self.textWidth, alignment: .center)
                     } else {
                         Text("For You")
-                            .font(.system(size: 20)).fontWeight(.regular)
+                            .font(.system(size: 16)).fontWeight(.regular)
                             .foregroundColor(self.colorScheme == .light ? self.unselectedLightModeColor : self.unselectedDarkModeColor)
                             .frame(width: self.textWidth, alignment: .center)
                     }
@@ -34,12 +34,12 @@ struct SwitchBar: View {
                 }) {
                     if self.subView == .topics {
                         Text("Topics")
-                            .font(.system(size: 20)).fontWeight(.bold)
+                            .font(.system(size: 16)).fontWeight(.bold)
                             .foregroundColor(self.colorScheme == .light ? self.selectedLightModeColor : self.selectedDarkModeColor)
                             .frame(width: self.textWidth, alignment: .center)
                     } else {
                         Text("Topics")
-                            .font(.system(size: 20)).fontWeight(.regular)
+                            .font(.system(size: 16)).fontWeight(.regular)
                             .foregroundColor(self.colorScheme == .light ? self.unselectedLightModeColor : self.unselectedDarkModeColor)
                             .frame(width: self.textWidth, alignment: .center)
                     }

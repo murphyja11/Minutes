@@ -30,7 +30,7 @@ struct MeView: View {
                         .frame(width: geometry.size.width * 0.15)
                     Spacer()
                     Text("Profile")
-                        .font(.system(size: 20)).fontWeight(.medium)
+                        .font(.system(size: 16)).fontWeight(.medium)
                     Spacer()
                     Button(action: {
                         self.showSettings = true
