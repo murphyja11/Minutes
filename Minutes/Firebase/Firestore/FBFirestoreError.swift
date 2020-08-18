@@ -21,6 +21,7 @@ enum FirestoreError: Error {
     case noMetadata
     case metricsError
     case logoutError
+    case MetricsDocumentNil
 }
 
 extension FirestoreError: LocalizedError {
@@ -49,6 +50,8 @@ extension FirestoreError: LocalizedError {
             return NSLocalizedString("Some Metrics Error", comment: "")
         case .logoutError:
             return NSLocalizedString("Error logging out", comment: "")
+        case .MetricsDocumentNil:
+            return NSLocalizedString("Metrics Document retrieved is nil", comment: "")
         }
     }
 }

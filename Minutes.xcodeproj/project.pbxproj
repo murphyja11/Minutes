@@ -49,6 +49,7 @@
 		D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2A24EAC5970092B75C /* SwitchBar.swift */; };
 		D4954B2D24EAD6510092B75C /* MetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2C24EAD6510092B75C /* MetricsView.swift */; };
 		D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */; };
+		D4C0220424EC48D30010E171 /* MetricsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0220324EC48D30010E171 /* MetricsObject.swift */; };
 		D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040724E6005D00E1D540 /* FBMetrics.swift */; };
 		D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC524E8519C0000014D /* SigninView.swift */; };
 		D4DEAFC824E854840000014D /* EscapeChev.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC724E854840000014D /* EscapeChev.swift */; };
@@ -104,6 +105,7 @@
 		D4954B2A24EAC5970092B75C /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
 		D4954B2C24EAD6510092B75C /* MetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsView.swift; sourceTree = "<group>"; };
 		D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
+		D4C0220324EC48D30010E171 /* MetricsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsObject.swift; sourceTree = "<group>"; };
 		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
 		D4DEAFC524E8519C0000014D /* SigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninView.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				D430C78D24E0D245003F85C6 /* FBKeys.swift */,
 				D430C78C24E0D245003F85C6 /* FBUser.swift */,
 				D4C5040724E6005D00E1D540 /* FBMetrics.swift */,
+				D4C0220324EC48D30010E171 /* MetricsObject.swift */,
 				D4DEAFC924E875080000014D /* FBRecommendations.swift */,
 				D430C78B24E0D244003F85C6 /* FBAudioMetadata.swift */,
 			);
@@ -471,6 +474,7 @@
 				D430C79124E0D245003F85C6 /* FBAudioMetadata.swift in Sources */,
 				D430C78124E0D210003F85C6 /* AudioView.swift in Sources */,
 				D430C78F24E0D245003F85C6 /* FBFirestore.swift in Sources */,
+				D4C0220424EC48D30010E171 /* MetricsObject.swift in Sources */,
 				D430C77C24E0D203003F85C6 /* AudioItemView.swift in Sources */,
 				D430C78824E0D23C003F85C6 /* AudioFile.swift in Sources */,
 				D430C79B24E0D278003F85C6 /* FBAuthError.swift in Sources */,

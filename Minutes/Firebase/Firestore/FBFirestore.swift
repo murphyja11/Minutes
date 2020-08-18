@@ -66,24 +66,41 @@ enum FBFirestore {
         }
     }
     
-    static func retrieveMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
+//    static func retrieveMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
+//        let reference = Firestore
+//            .firestore()
+//            .collection(FBKeys.CollectionPath.metrics)
+//            .document(uid)
+//        getDocument(for: reference) { result in
+//            switch result {
+//            case .failure(let error):
+//                completion(.failure(error))
+//            case .success(let data):
+//                guard let metrics = FBMetrics(documentData: data) else {
+//                    completion(.failure(FirestoreError.noMetrics))
+//                    return
+//                }
+//                completion(.success(metrics))
+//            }
+//        }
+//    }
+    
+    static func retrieveMetrics(uid: String, completion: @escaping (Result<[String: Any], Error>) -> ()) {
         let reference = Firestore
-            .firestore()
-            .collection(FBKeys.CollectionPath.metrics)
-            .document(uid)
-        getDocument(for: reference) { result in
+                    .firestore()
+                    .collection(FBKeys.CollectionPath.metrics)
+                    .document(uid)
+        getDocument { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-            case .success(let data):
-                guard let metrics = FBMetrics(documentData: data) else {
-                    completion(.failure(FirestoreError.noMetrics))
-                    return
-                }
-                completion(.success(metrics))
+            case .success(let dictionary):
+                completion(.sucess(dictionary))
             }
         }
     }
+    
+    //static func mapMetricsDictionaryToObject
     
     static func mergeFBUser(_ data: [String: Any], uid: String, completion: @escaping (Result<Bool, Error>) -> ()) {
         let reference = Firestore

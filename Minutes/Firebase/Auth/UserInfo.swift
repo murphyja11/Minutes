@@ -20,7 +20,7 @@ class UserInfo: ObservableObject {
     @Published var isUserAuthenticated: FBAuthState = .undefined
     
     @Published var user: FBUser = .init(uid: "", name: "", email: "", likes: [], recommendations: [])
-    @Published var metrics: FBMetrics = .init(secondsListened: 0.0, numberOfMeditations: 0)
+    @Published var metrics: MetricsObject = .init()
     @Published var recommendations: [FBAudioMetadata] = []
     
     @Published var reloading: Bool = false {
