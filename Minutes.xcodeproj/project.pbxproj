@@ -44,9 +44,10 @@
 		D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79524E0D277003F85C6 /* FBAuth.swift */; };
 		D430C79E24E0D282003F85C6 /* AudioMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79D24E0D281003F85C6 /* AudioMetadata.swift */; };
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
+		D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */; };
+		D47AA9F724EB622C0085C8C1 /* TopicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F624EB622C0085C8C1 /* TopicsView.swift */; };
 		D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2A24EAC5970092B75C /* SwitchBar.swift */; };
 		D4954B2D24EAD6510092B75C /* MetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2C24EAD6510092B75C /* MetricsView.swift */; };
-		D4954B2F24EAD7EF0092B75C /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2E24EAD7EF0092B75C /* ActivityView.swift */; };
 		D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */; };
 		D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040724E6005D00E1D540 /* FBMetrics.swift */; };
 		D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC524E8519C0000014D /* SigninView.swift */; };
@@ -98,9 +99,10 @@
 		D430C79824E0D278003F85C6 /* FBAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBAuthError.swift; sourceTree = "<group>"; };
 		D430C79D24E0D281003F85C6 /* AudioMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadata.swift; sourceTree = "<group>"; };
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
+		D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouView.swift; sourceTree = "<group>"; };
+		D47AA9F624EB622C0085C8C1 /* TopicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsView.swift; sourceTree = "<group>"; };
 		D4954B2A24EAC5970092B75C /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
 		D4954B2C24EAD6510092B75C /* MetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsView.swift; sourceTree = "<group>"; };
-		D4954B2E24EAD7EF0092B75C /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
 		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
@@ -266,9 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				D430C77824E0D1F8003F85C6 /* MeView.swift */,
-				D4954B2E24EAD7EF0092B75C /* ActivityView.swift */,
 				D4F7E6F024E6CB24009785B2 /* SettingsView.swift */,
-				D4954B2A24EAC5970092B75C /* SwitchBar.swift */,
 				D4954B2C24EAD6510092B75C /* MetricsView.swift */,
 			);
 			path = "Me View";
@@ -277,9 +277,12 @@
 		D430C7A524E0D2D2003F85C6 /* Home View */ = {
 			isa = PBXGroup;
 			children = (
-				D430C77B24E0D203003F85C6 /* AudioItemView.swift */,
 				D430C77A24E0D203003F85C6 /* HomeView.swift */,
 				D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */,
+				D4954B2A24EAC5970092B75C /* SwitchBar.swift */,
+				D430C77B24E0D203003F85C6 /* AudioItemView.swift */,
+				D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */,
+				D47AA9F624EB622C0085C8C1 /* TopicsView.swift */,
 			);
 			path = "Home View";
 			sourceTree = "<group>";
@@ -470,16 +473,17 @@
 				D430C78F24E0D245003F85C6 /* FBFirestore.swift in Sources */,
 				D430C77C24E0D203003F85C6 /* AudioItemView.swift in Sources */,
 				D430C78824E0D23C003F85C6 /* AudioFile.swift in Sources */,
-				D4954B2F24EAD7EF0092B75C /* ActivityView.swift in Sources */,
 				D430C79B24E0D278003F85C6 /* FBAuthError.swift in Sources */,
 				D4DEAFCA24E875080000014D /* FBRecommendations.swift in Sources */,
 				D4954B2D24EAD6510092B75C /* MetricsView.swift in Sources */,
 				D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */,
+				D47AA9F724EB622C0085C8C1 /* TopicsView.swift in Sources */,
 				D430C78224E0D210003F85C6 /* PlayBar.swift in Sources */,
 				D430C78724E0D23C003F85C6 /* AudioFileError.swift in Sources */,
 				D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */,
 				D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */,
 				D430C79924E0D278003F85C6 /* UserInfo.swift in Sources */,
+				D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */,
 				D430C79224E0D245003F85C6 /* FBKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,13 +24,13 @@ struct MeView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                
+            VStack(spacing: 0) {
                 HStack {
                     Text("")
                         .frame(width: geometry.size.width * 0.15)
                     Spacer()
-                    SwitchBar(subView: self.$subView)
+                    Text("Profile")
+                        .font(.system(size: 20)).fontWeight(.medium)
                     Spacer()
                     Button(action: {
                         self.showSettings = true
@@ -46,11 +46,9 @@ struct MeView: View {
                 }
                 .frame(height: 45)
                 .padding(0)
-                if self.subView == .metrics {
-                    MetricsView()
-                } else {
-                    ActivityView()
-                }
+                Divider()
+                    .padding(0)
+                MetricsView()
             }
         }
 //        .onAppear {
