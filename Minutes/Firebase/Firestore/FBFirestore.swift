@@ -100,7 +100,7 @@ enum FBFirestore {
         }
     }
     
-    static func sendAudioEvent(user_uid: String, audio_metadata: FBAudioMetadata?, secondsListened: Double, percListened: Double, completion: @escaping (Result<Bool, Error>) -> ()) {
+    static func sendAudioEvent(user_uid: String, audio_metadata: FBAudioMetadata?, secondsListened: Double, percListened: Double, data: [Bool], completion: @escaping (Result<Bool, Error>) -> ()) {
         print("Sending Audio Event")
         var ref: DocumentReference? = nil
         guard let metadata = audio_metadata else {
@@ -113,9 +113,21 @@ enum FBFirestore {
             .addDocument(data: [
                     "type": "audio_event",
                     "user_uid": user_uid,
-                    "audio_metadata": metadata,
+                    "audio_metadata": [
+                        "uid": metadata.uid,
+                        "title": metadata.title,
+                        "description": metadata.description,
+                        "genre": metadata.genre,
+                        "length": metadata.length,
+                        "tags": metadata.tags
+                    ],
                     "secondsListened": secondsListened,
                     "percListened": percListened,
+                    "didPause": data[0],
+                    "didStall": data[1],
+                    "didRewind": data[2],
+                    "didFastForward": data[3],
+                    "didSeek": data[4],
                     "time": Date(timeIntervalSinceNow: Double(TimeZone.current.secondsFromGMT()))
             ]) { error in
                 if let error = error {
@@ -135,7 +147,8 @@ enum FBFirestore {
             .addDocument(data: [
                 "type": "like_event",
                 "user_uid": user_uid,
-                "audio_uid": audio_uid
+                "audio_uid": audio_uid,
+                "time": Date(timeIntervalSinceNow: Double(TimeZone.current.secondsFromGMT()))
             ]) { error in
                 
         }

@@ -15,7 +15,6 @@ enum FBKeys {
         static let events = "events"
         static let metrics = "metrics"
         static let recommendations = "recommendations"
-        static let activity = "activity"
     }
     
     enum User {
@@ -55,9 +54,5 @@ enum FBKeys {
         static let secondsListened = "secondsListened"
         static let percListened = "percListened"
         static let time = "time"
-    }
-    
-    enum Activity {
-        static let type = "type"
     }
 }

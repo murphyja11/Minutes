@@ -34,6 +34,15 @@ class AudioFile: ObservableObject {
     
     var hasForcedDurationLoad: Bool = false
     
+    // MARK: - Audio Event Bools
+    var didPause: Bool = false
+    var didStall: Bool = false
+    var didRewind: Bool = false
+    var didFastForward: Bool = false
+    var didSeek: Bool = false
+    
+    
+    
     init() {
        do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.spokenAudio)
@@ -168,6 +177,7 @@ class AudioFile: ObservableObject {
     }
     
     @objc func playerItemDidStall(sender: Notification) {
+        self.didStall = true
         self.status = .stalled
         // Something about setting a self.delegate to streamplayerdidstall?
     }
@@ -191,8 +201,8 @@ class AudioFile: ObservableObject {
         if let metadata = metadata {
             self.sendAudioEvent(user_uid: user_uid, metadata: metadata)
         }
-        self.player?.pause()
         self.player?.seek(to: .zero)
+        self.player?.pause()
         self.stopHealthCheckTimer()
         self.removeObserver()
         self.player?.currentItem?.cancelPendingSeeks()
@@ -218,10 +228,6 @@ class AudioFile: ObservableObject {
             try? self.play()
         }
     }
-    
-    
-    
-    
     
     
     
@@ -276,8 +282,6 @@ class AudioFile: ObservableObject {
     }
     
     private func forceLoadOfDuration () {
-        
-        
         self.hasForcedDurationLoad = true
     }
     
@@ -299,6 +303,7 @@ class AudioFile: ObservableObject {
         if self.player == nil {
             throw AudioFileError.playerIsNil
         }
+        self.didPause = true
         self.player!.pause()
         self.status = .paused
         self.stopHealthCheckTimer()
@@ -308,6 +313,7 @@ class AudioFile: ObservableObject {
         if self.player == nil {
             throw AudioFileError.playerIsNil
         }
+        self.didRewind = true
         let currentTime = player!.currentTime()
         var newTime = currentTime.seconds - seconds
         if newTime <= 0 {
@@ -321,6 +327,7 @@ class AudioFile: ObservableObject {
         if self.player == nil {
             throw AudioFileError.playerIsNil
         }
+        self.didFastForward = true
         let currentTime = player!.currentTime()
         var newTime = CMTimeGetSeconds(currentTime) + seconds
         if newTime >= self.duration {
@@ -333,6 +340,7 @@ class AudioFile: ObservableObject {
         if self.player == nil {
             throw AudioFileError.playerIsNil
         }
+        self.didSeek = true
         var timeScale: Int32 = 4800
         if self.timeScale != nil {
             timeScale = self.timeScale!
@@ -352,8 +360,9 @@ class AudioFile: ObservableObject {
             if self.duration != nil {
                 percListened = secondsListened / self.duration
             }
-            print("sending audio Event")
-            FBFirestore.sendAudioEvent(user_uid: user_uid, audio_metadata: metadata, secondsListened: secondsListened, percListened: percListened) { result in
+            let data = [self.didPause, self.didStall, self.didRewind, self.didFastForward, self.didSeek]
+            
+            FBFirestore.sendAudioEvent(user_uid: user_uid, audio_metadata: metadata, secondsListened: secondsListened, percListened: percListened, data: data) { result in
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)

@@ -55,7 +55,6 @@ struct MeView: View {
         }
 //        .onAppear {
 //            if self.userInfo.user.uid == nil || self.userInfo.user.uid == "" { return }
-//            self.retrieveMetricsAndActivity(uid: self.userInfo.user.uid)
 //        }
     }
     
@@ -70,17 +69,6 @@ struct MeView: View {
 //            case .success(let metrics):
 //                self.userInfo.metrics.secondsListened = metrics.secondsListened
 //                self.userInfo.metrics.numberOfMeditations = metrics.numberOfMeditations
-//            }
-//        }
-//    }
-    
-//    private func retrieveActivity(uid: String) {
-//        FBFirestore.retrieveActivity(uid: uid) { result in
-//            switch result {
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            case .success(let activity):
-//                break
 //            }
 //        }
 //    }

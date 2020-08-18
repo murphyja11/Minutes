@@ -49,22 +49,6 @@ struct AudioView: View {
         }
     }
     
-    private func sendAudioEvent () {
-        if let player = self.audioFile.player {
-            let secondsListened = player.currentTime().seconds
-            let percListened = secondsListened / self.audioFile.duration
-            FBFirestore.sendAudioEvent(user_uid: self.userInfo.user.uid, audio_metadata: self.audioFile.metadata, secondsListened: secondsListened, percListened: percListened) { result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success( _):
-                    print("Audio Event successfully recorded")
-                }
-                
-            }
-        }
-    }
-    
     @Environment(\.presentationMode) var presentationMode
 }
 
