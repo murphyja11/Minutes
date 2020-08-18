@@ -16,18 +16,18 @@ struct MetricsObject {
     init(dictionary dict: [String : Any]) {
         self.numberOfMeditations = dict["numberOfMeditations"] as? Int ?? 0
         self.secondsListened = dict["secondsListened"] as? Double ?? 0.0
-        self.genres = self.getGenres(dict["genres"])
-        self.daily = self.getDaily(dict["daily"])
+        self.genres = MetricsObject.getGenres(dict["genres"])
+        self.daily = MetricsObject.getDaily(dict["daily"])
     }
     
     init() {
         self.numberOfMeditations = 0
         self.secondsListened = 0
-        self.genres = self.getGenres(nil)
-        self.daily = self.getDaily(nil)
+        self.genres = MetricsObject.self.getGenres(nil)
+        self.daily = MetricsObject.self.getDaily(nil)
     }
    
-    private func getGenres(_ dict: Any?) -> [String: Stats] {
+    private static func getGenres(_ dict: Any?) -> [String: Stats] {
         guard let dict = dict as? [String : Any] else {
             return ["": Stats()]
         }
@@ -38,14 +38,14 @@ struct MetricsObject {
         return dictionary
     }
     
-    private func getStats(_ dict: Any?) -> Stats {
+    private static func getStats(_ dict: Any?) -> Stats {
         guard let dict = dict as? [String : Any] else {
             return Stats(numberOfMeditations: 0, secondsListened: 0.0)
         }
         return Stats(numberOfMeditations: dict["numberOfMeditations"] as? Int ?? 0, secondsListened: dict["secondsListened"] as? Double ?? 0.0)
     }
     
-    private func getDaily(_ dict: Any?) -> [String: DailyMetric] {
+    private static func getDaily(_ dict: Any?) -> [String: DailyMetric] {
         guard let dict = dict as? [String: Any] else {
             return ["": DailyMetric()]
         }
@@ -56,7 +56,7 @@ struct MetricsObject {
         return dictionary
     }
     
-    private func getStatsAndGenre(_ dict: Any?) -> DailyMetric {
+    private static func getStatsAndGenre(_ dict: Any?) -> DailyMetric {
         guard let dict = dict as? [String: Any] else {
             return DailyMetric()
         }

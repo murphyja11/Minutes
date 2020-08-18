@@ -9,13 +9,13 @@
 import Foundation
 import FirebaseFirestore
 
-struct FBGenre {
+struct FBGenre: Hashable {
     var genre: String
     var references: [DocumentReference?]
     
     init(genre: String, references: [DocumentReference?]) {
         self.genre = genre
-        self.references = reference
+        self.references = references
     }
 }
 

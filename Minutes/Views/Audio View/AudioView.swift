@@ -15,36 +15,35 @@ struct AudioView: View {
     @State var errorString: String = ""
     @State var showAlert: Bool = false
     
+    @ViewBuilder
     var body: some View {
-        Group {
-            if audioFile.status == .completed {
-                Text("").onAppear {
-                    self.audioFile.end(user_uid: self.userInfo.user.uid)
-                    self.presentationMode.wrappedValue.dismiss()
-                }
-            } else if audioFile.status == .error {
-                Text("Error\nThis happens if the player is nil and the play function is called\n\nLMK if this happened because it shouldn't")
-            } else {
-                VStack {
-                    AudioEscapeButton()
+        if audioFile.status == .completed {
+            Text("").onAppear {
+                self.audioFile.end(user_uid: self.userInfo.user.uid)
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        } else if audioFile.status == .error {
+            Text("Error\nThis happens if the player is nil and the play function is called\n\nLMK if this happened because it shouldn't")
+        } else {
+            VStack {
+                AudioEscapeButton()
+                Spacer()
+                HStack {
                     Spacer()
-                    HStack {
-                        Spacer()
-                        if self.audioFile.status == .undefined || self.audioFile.status == .stalled {
-                            LoadingSpinner()
-                        } else {
-                            RewindView()
-                                .padding(.trailing, 15)
-                            PlayButton()
-                            FastForwardView()
-                                .padding(.leading, 15)
-                        }
-                        Spacer()
+                    if self.audioFile.status == .undefined || self.audioFile.status == .stalled {
+                        LoadingSpinner()
+                    } else {
+                        RewindView()
+                            .padding(.trailing, 15)
+                        PlayButton()
+                        FastForwardView()
+                            .padding(.leading, 15)
                     }
                     Spacer()
-                    PlayBar()
-                        .padding(.bottom, 50)
                 }
+                Spacer()
+                PlayBar()
+                    .padding(.bottom, 50)
             }
         }
     }

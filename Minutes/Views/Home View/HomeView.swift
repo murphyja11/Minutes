@@ -11,7 +11,6 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
-    @Binding var genres: [FBGenre]
     
     @Binding var showAudioView: Bool
     
@@ -32,7 +31,7 @@ struct HomeView: View {
                 if self.subView == .forYou {
                     ForYouView(showAudioView: self.$showAudioView)
                 } else {
-                    GenresView(genres: self.$genres)
+                    GenresView()
                 }
             }
         }

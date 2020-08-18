@@ -13,7 +13,6 @@ import FirebaseAuth
 struct MainView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
-    @State var genres: [FBGenre] = []
     
     @State private var selection = 0
     @State var showAudioView: Bool = false
@@ -24,7 +23,7 @@ struct MainView: View {
     
     var body: some View {
         TabView(selection: $selection){
-            HomeView(showAudioView: self.$showAudioView, genres: self.$genres)
+            HomeView(showAudioView: self.$showAudioView)
                 .font(.title)
                 .tabItem {
                     VStack {
