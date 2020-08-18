@@ -22,6 +22,7 @@ class UserInfo: ObservableObject {
     @Published var user: FBUser = .init(uid: "", name: "", email: "", likes: [], recommendations: [])
     @Published var metrics: MetricsObject = .init()
     @Published var recommendations: [FBAudioMetadata] = []
+    @Published var genres: [FBGenres] = []
     
     @Published var reloading: Bool = false {
         didSet {

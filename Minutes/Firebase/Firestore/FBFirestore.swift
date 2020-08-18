@@ -85,17 +85,35 @@ enum FBFirestore {
 //        }
 //    }
     
-    static func retrieveMetrics(uid: String, completion: @escaping (Result<[String: Any], Error>) -> ()) {
+    static func retrieveGenres(completion: @escaping (Result<[FBGenre], Error>) -> ()){
+        let reference = Firestore
+            .firestore()
+            .collection(FBKeys.CollectionPath.genres)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    competion(.failure(let err))
+                } else {
+                    var array = []
+                    for document in querySnapshot!.documents {
+                        array.append(FBGenre(documentData: document))
+                    }
+                    completion(.success(array))
+                }
+            }
+        
+    }
+    
+    static func retrieveMetrics(uid: String, completion: @escaping (Result<MetricsObject, Error>) -> ()) {
         let reference = Firestore
                     .firestore()
                     .collection(FBKeys.CollectionPath.metrics)
                     .document(uid)
-        getDocument { result in
+        getDocument(for: reference) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let dictionary):
-                completion(.sucess(dictionary))
+                completion(.success(MetricsObject(dictionary: dictionary)))
             }
         }
     }

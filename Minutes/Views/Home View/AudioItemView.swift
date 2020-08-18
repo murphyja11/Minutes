@@ -49,7 +49,6 @@ struct AudioItemViewButton: View {
     var body: some View {
         HStack {
             Button(action: {
-                print("Clicked Button \n")
                 self.show = true
                 self.startPlaying()
             }) {

@@ -55,4 +55,9 @@ enum FBKeys {
         static let percListened = "percListened"
         static let time = "time"
     }
+    
+    enum Genre {
+        static let genre = "genre"
+        static let reference = "reference"
+    }
 }

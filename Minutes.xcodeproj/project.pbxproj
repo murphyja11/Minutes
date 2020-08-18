@@ -45,11 +45,13 @@
 		D430C79E24E0D282003F85C6 /* AudioMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79D24E0D281003F85C6 /* AudioMetadata.swift */; };
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
 		D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */; };
-		D47AA9F724EB622C0085C8C1 /* TopicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F624EB622C0085C8C1 /* TopicsView.swift */; };
+		D47AA9F724EB622C0085C8C1 /* GenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F624EB622C0085C8C1 /* GenresView.swift */; };
 		D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2A24EAC5970092B75C /* SwitchBar.swift */; };
 		D4954B2D24EAD6510092B75C /* MetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2C24EAD6510092B75C /* MetricsView.swift */; };
 		D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */; };
 		D4C0220424EC48D30010E171 /* MetricsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0220324EC48D30010E171 /* MetricsObject.swift */; };
+		D4C0220624EC57B90010E171 /* FBGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0220524EC57B90010E171 /* FBGenre.swift */; };
+		D4C0220824EC5D370010E171 /* GenreItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0220724EC5D370010E171 /* GenreItemView.swift */; };
 		D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040724E6005D00E1D540 /* FBMetrics.swift */; };
 		D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC524E8519C0000014D /* SigninView.swift */; };
 		D4DEAFC824E854840000014D /* EscapeChev.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC724E854840000014D /* EscapeChev.swift */; };
@@ -101,11 +103,13 @@
 		D430C79D24E0D281003F85C6 /* AudioMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadata.swift; sourceTree = "<group>"; };
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 		D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouView.swift; sourceTree = "<group>"; };
-		D47AA9F624EB622C0085C8C1 /* TopicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsView.swift; sourceTree = "<group>"; };
+		D47AA9F624EB622C0085C8C1 /* GenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresView.swift; sourceTree = "<group>"; };
 		D4954B2A24EAC5970092B75C /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
 		D4954B2C24EAD6510092B75C /* MetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsView.swift; sourceTree = "<group>"; };
 		D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
 		D4C0220324EC48D30010E171 /* MetricsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsObject.swift; sourceTree = "<group>"; };
+		D4C0220524EC57B90010E171 /* FBGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBGenre.swift; sourceTree = "<group>"; };
+		D4C0220724EC5D370010E171 /* GenreItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreItemView.swift; sourceTree = "<group>"; };
 		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
 		D4DEAFC524E8519C0000014D /* SigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninView.swift; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 				D4C0220324EC48D30010E171 /* MetricsObject.swift */,
 				D4DEAFC924E875080000014D /* FBRecommendations.swift */,
 				D430C78B24E0D244003F85C6 /* FBAudioMetadata.swift */,
+				D4C0220524EC57B90010E171 /* FBGenre.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -285,7 +290,8 @@
 				D4954B2A24EAC5970092B75C /* SwitchBar.swift */,
 				D430C77B24E0D203003F85C6 /* AudioItemView.swift */,
 				D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */,
-				D47AA9F624EB622C0085C8C1 /* TopicsView.swift */,
+				D47AA9F624EB622C0085C8C1 /* GenresView.swift */,
+				D4C0220724EC5D370010E171 /* GenreItemView.swift */,
 			);
 			path = "Home View";
 			sourceTree = "<group>";
@@ -456,6 +462,7 @@
 				D430C76B24E0D188003F85C6 /* EscapeButton.swift in Sources */,
 				D430C76824E0D188003F85C6 /* EscapeChevron.swift in Sources */,
 				D430C79A24E0D278003F85C6 /* EmailSignupViewModel.swift in Sources */,
+				D4C0220824EC5D370010E171 /* GenreItemView.swift in Sources */,
 				D4DEAFC824E854840000014D /* EscapeChev.swift in Sources */,
 				D430C75724E0D12C003F85C6 /* ContentView.swift in Sources */,
 				D430C79024E0D245003F85C6 /* FBUser.swift in Sources */,
@@ -479,9 +486,10 @@
 				D430C78824E0D23C003F85C6 /* AudioFile.swift in Sources */,
 				D430C79B24E0D278003F85C6 /* FBAuthError.swift in Sources */,
 				D4DEAFCA24E875080000014D /* FBRecommendations.swift in Sources */,
+				D4C0220624EC57B90010E171 /* FBGenre.swift in Sources */,
 				D4954B2D24EAD6510092B75C /* MetricsView.swift in Sources */,
 				D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */,
-				D47AA9F724EB622C0085C8C1 /* TopicsView.swift in Sources */,
+				D47AA9F724EB622C0085C8C1 /* GenresView.swift in Sources */,
 				D430C78224E0D210003F85C6 /* PlayBar.swift in Sources */,
 				D430C78724E0D23C003F85C6 /* AudioFileError.swift in Sources */,
 				D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */,
