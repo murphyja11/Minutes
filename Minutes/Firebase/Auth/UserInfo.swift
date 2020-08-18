@@ -12,20 +12,21 @@ import FirebaseFirestore
 
 class UserInfo: ObservableObject {
     
-    // Is the user logged in, logged out, or undefined
     enum FBAuthState {
+        // Is the user logged in, logged out, or undefined
         case undefined, signedOut, signedIn
     }
-    // auth state is undefined when the user first launches the app
-    // Published to monitor changes
+    
     @Published var isUserAuthenticated: FBAuthState = .undefined
-    @Published var user: FBUser = .init(uid: "", name: "", email: "", recommendations: [])
-    @Published var metrics = Metrics()
+    
+    @Published var user: FBUser = .init(uid: "", name: "", email: "", likes: [], recommendations: [])
+    @Published var metrics: FBMetrics = .init(secondsListened: 0.0, numberOfMeditations: 0, activity: [])
     @Published var recommendations: [FBAudioMetadata] = []
+    
     @Published var reloading: Bool = false {
         didSet {
             if !oldValue && reloading {
-                self.getNewRecommendations { result in
+                self.getRecommendationsMetadata { result in
                     switch result {
                     case .failure(let error):
                         print(error.localizedDescription)
@@ -42,93 +43,80 @@ class UserInfo: ObservableObject {
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
     func configureFirebaseStateDidChange() {
-        print("starting function configureFirebaseDidChange()")
         let currentUser = Auth.auth().currentUser
-        print("Current User: \(String(describing: currentUser))")
         
         authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener({ (_, user) in
-            print("starting Listener Handle execution")
             // TODO: - User can stay logged in even after account is deleted
             if user == nil {
                 self.isUserAuthenticated = .signedOut
-                print("User is nil. User is signed out. Ending Listener Handle execution")
                 return
             }
-            print("User is not nil.  Marking user to signed in")
             self.isUserAuthenticated = .signedIn
         })
+        
+        // TODO: - Add Metrics Snapshot Listener HERE!?!?!?
     }
     
-    func configureMetricsSnapshotListener() {
-        if self.user.uid == "" { return }
-        print("Configuring Metrics Snapshot: \(self.user.uid)")
-        let reference = Firestore
-            .firestore()
-            .collection(FBKeys.CollectionPath.metrics)
-            .document(self.user.uid)
-            
-        self.metrics.addSnapshotListener(reference: reference)
-    }
     
-    func getRecommendations (completion: @escaping (Result<Bool, Error>) -> ()) {
-        self.initializeRecommendationMetadata(recs: self.user.recommendations) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success( _):
-                completion(.success(true))
+    // called on appear and reaload, fetches recommendation uids and afterwards fetches the corresponding metadata
+    func getRecommendationsMetadata (completion: @escaping (Result<Bool, Error>) -> ()) {
+        var uid: String? = self.user.uid
+        if uid == "" {
+            guard let authUID = Auth.auth().currentUser?.uid else {
+                completion(.failure(FirestoreError.noUser))
+                self.reloading = false
+                return
             }
+            uid = authUID
         }
-    }
-    
-    // called on reload, to re-fetch all user info to get new recommendations
-    func getNewRecommendations (completion: @escaping (Result<Bool, Error>) -> ()) {
-        if self.user.uid == "" {
-            completion(.failure(FireStoreError.noUser))
-            self.reloading = false
-            return
-        }
-        FBFirestore.retrieveRecommendations(uid: self.user.uid) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let recs):
-                print("\(recs) \n\n")
-                self.initializeRecommendationMetadata(recs: recs.array) { result in
-                    switch result {
-                    case .failure(let error):
-                        completion(.failure(error))
-                    case .success( _):
-                        completion(.success(true))
+        if uid == nil {
+            completion(.failure(FirestoreError.noUser))
+        } else {
+            FBFirestore.retrieveRecommendations(uid: uid!) { result in
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
+                    // If there are no recommendations available, check the user collection
+                    // NOTE -> Phasing out getting recommendations from User collection, instead from Recommendation Collection
+                    self.reloadUserInfo { result in
+                        switch result {
+                        case .failure(let error):
+                            completion(.failure(error))
+                        case .success(let user):
+                            self.initializeRecommendationMetadata(recs: user.recommendations) { result in
+                                switch result {
+                                case .failure(let error):
+                                    completion(.failure(error))
+                                case .success( _):
+                                    completion(.success(true))
+                                }
+                            }
+                        }
+                    }
+                case .success(let recs):
+                    self.initializeRecommendationMetadata(recs: recs.array) { result in
+                        switch result {
+                        case .failure(let error):
+                            completion(.failure(error))
+                        case .success( _):
+                            completion(.success(true))
+                        }
                     }
                 }
             }
         }
     }
     
-    /*private func reloadUserInfo(completion: @escaping (Result<FBUser, Error>) -> ()) {
-        if self.user.uid == "" {
-            completion(.failure(FireStoreError.noUser))
-            self.reloading = false
-            return
-        }
-        FBFirestore.retrieveFBUser(uid: self.user.uid) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let user):
-                completion(.success(user))
-            }
-        }
-    }*/
-    
-    private func initializeRecommendationMetadata(recs array: [String], completion: @escaping (Result<Bool, Error>) -> ()) {
+    // This function is super keys, turns recommendation UIDs into AudioMetadata Objects
+    // But is it in the right play?????????
+    func initializeRecommendationMetadata(recs array: [String], completion: @escaping (Result<Bool, Error>) -> ()) {
+        // In case the array was full before
         self.recommendations = []
         var error: Error?
         let group = DispatchGroup()
         for uid in array {
             group.enter()
-            retrieveMetadata(uid: uid) { result in
+            FBFirestore.retrieveAudioMetadata(uid: uid) { result in
                 switch result {
                 case .failure(let err):
                     error = err
@@ -148,13 +136,20 @@ class UserInfo: ObservableObject {
         }
     }
     
-    private func retrieveMetadata (uid: String, completion: @escaping (Result<FBAudioMetadata, Error>) -> ()) {
-        FBFirestore.retrieveAudioMetadata(uid: uid) { result in
+    // Backup -> if recommendations collection doesn't have recommendations, check here.
+    // This Method will get phased out!!!!
+    private func reloadUserInfo(completion: @escaping (Result<FBUser, Error>) -> ()) {
+        if self.user.uid == "" {
+            completion(.failure(FirestoreError.noUser))
+            self.reloading = false
+            return
+        }
+        FBFirestore.retrieveFBUser(uid: self.user.uid) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-            case .success(let metadata):
-                completion(.success(metadata))
+            case .success(let user):
+                completion(.success(user))
             }
         }
     }

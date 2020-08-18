@@ -19,9 +19,8 @@ struct AudioView: View {
         Group {
             if audioFile.status == .completed {
                 Text("").onAppear {
-                    self.sendAudioEvent()
+                    self.audioFile.end(user_uid: self.userInfo.user.uid)
                     self.presentationMode.wrappedValue.dismiss()
-                    self.audioFile.end()
                 }
             } else if audioFile.status == .error {
                 Text("Error\nThis happens if the player is nil and the play function is called\n\nLMK if this happened because it shouldn't")
@@ -54,7 +53,7 @@ struct AudioView: View {
         if let player = self.audioFile.player {
             let secondsListened = player.currentTime().seconds
             let percListened = secondsListened / self.audioFile.duration
-            FBFirestore.sendAudioEvent(user: self.userInfo.user.uid, audio: self.audioFile.uid, secondsListened: secondsListened, percListened: percListened) { result in
+            FBFirestore.sendAudioEvent(user_uid: self.userInfo.user.uid, audio_metadata: self.audioFile.metadata, secondsListened: secondsListened, percListened: percListened) { result in
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)

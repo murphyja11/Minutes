@@ -1,5 +1,5 @@
 //
-//  FBFireStoreError.swift
+//  FBFirestoreError.swift
 //  Signin With Apple
 //
 //  Created by Stewart Lynch on 2020-03-21.
@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Firstore errors
-enum FireStoreError: Error {
+enum FirestoreError: Error {
     case noAuthDataResult
     case noCurrentUser
     case noDocumentSnapshot
@@ -17,12 +17,14 @@ enum FireStoreError: Error {
     case noUser
     case noRecommendations
     case noAudioMetadata
+    case noMetrics
+    case noMetadata
     case metricsError
     case logoutError
 }
 
-extension FireStoreError: LocalizedError {
-    // This will provide me with a specific localized description for the FireStoreError
+extension FirestoreError: LocalizedError {
+    // This will provide me with a specific localized description for the FirestoreError
     var errorDescription: String? {
         switch self {
         case .noAuthDataResult:
@@ -39,6 +41,10 @@ extension FireStoreError: LocalizedError {
             return NSLocalizedString("No Recommendations were provided", comment: "")
         case .noAudioMetadata:
             return NSLocalizedString("No Audio Metadata", comment: "")
+        case .noMetrics:
+            return NSLocalizedString("No Metrics", comment: "")
+        case .noMetadata:
+            return NSLocalizedString("No Metadata", comment: "")
         case .metricsError:
             return NSLocalizedString("Some Metrics Error", comment: "")
         case .logoutError:

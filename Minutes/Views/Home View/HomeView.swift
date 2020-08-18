@@ -16,13 +16,11 @@ struct HomeView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                Text("Minutes")
-                    .font(.system(size: 20))
-                    .frame(height: 45)
+            VStack(spacing: 0) {
+                Image("LogoText").resizable()
+                    .frame(width: 150, height: 35)
                     .padding(0)
-                Divider()
-                    .padding(0)
+                    .padding(.top, 15)
                 RefreshableScrollView(height: 100, refreshing: self.$userInfo.reloading) {
                     ForEach(self.userInfo.recommendations, id: \.self) { rec in
                         AudioItemView(metadata: rec, show: self.$showAudioView)

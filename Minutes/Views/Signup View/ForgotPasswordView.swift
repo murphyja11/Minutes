@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var user: UserViewModel = UserViewModel()
+    @State var user: EmailSignupViewModel = EmailSignupViewModel()
     @Binding var showThisView: Bool
     
     @State private var showAlert: Bool = false
-    @State private var errorString: String?
+    @State private var alertString: String?
     
     @State var keyboardValue: CGFloat = 0
     
@@ -31,14 +31,13 @@ struct ForgotPasswordView: View {
                 FBAuth.resetPassword(email: self.user.email) { result in
                     switch result {
                     case .failure(let error):
-                        self.errorString = error.localizedDescription
+                        self.alertString = error.localizedDescription
+                        self.showAlert = true
                     case .success( _):
-                        break
+                        self.alertString = "Success.  Reset password instructions sent to your email"
+                        self.showAlert = true
                     }
-                    self.showAlert = true
-                    print("showAlert = \(self.showAlert)")
                 }
-                print("done with reset password function")
             }) {
                 Text("Reset")
                     .frame(width: 200)
@@ -49,15 +48,11 @@ struct ForgotPasswordView: View {
                     .opacity(user.isEmailValid() ? 1 : 0.75)
             }
             .disabled(!user.isEmailValid())
-            Spacer(minLength: self.keyboardValue + CGFloat(20))
+            Spacer(minLength: self.keyboardValue + CGFloat(50))
         }
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Password reset"), message: Text(self.errorString ?? "Success.  Reset password instructions sent to your email"), dismissButton: .default(Text("Ok")) {
-                    if self.errorString == nil {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-                })
-            }
+        .alert(isPresented: self.$showAlert) {
+            Alert(title: Text("Password reset"), message: Text(self.alertString ?? "Unknown error"), dismissButton: .default(Text("Ok")))
+        }
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .background(self.colorScheme == .light ? Color.white : Color(red: 0.1, green: 0.1, blue: 0.1))
         .onAppear {

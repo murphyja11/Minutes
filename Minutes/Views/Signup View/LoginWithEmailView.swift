@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LoginWithEmailView: View {
     @EnvironmentObject var userInfo: UserInfo
-    @State var user: UserViewModel = UserViewModel()
+    @State var user: EmailSignupViewModel = EmailSignupViewModel()
 
     @Binding var showThisView: Bool
     @State var showForgotPW: Bool = false
@@ -95,12 +95,9 @@ struct LoginWithEmailView: View {
         }
         .alert(isPresented: self.$showAlert) {
             Alert(title: Text("Login error"), message: Text(self.authError?.localizedDescription ?? "Unknown error"), dismissButton: .default(Text("Ok")) {
-                if self.authError == .incorrectPassword {
-                    self.user.password = ""
-                } else {
-                    self.user.email = ""
-                    self.user.password = ""
-                }
+//                if self.authError == .incorrectPassword {
+//                    self.user.password = ""
+//                }
             })
             
         }

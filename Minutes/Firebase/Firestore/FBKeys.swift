@@ -15,12 +15,14 @@ enum FBKeys {
         static let events = "events"
         static let metrics = "metrics"
         static let recommendations = "recommendations"
+        static let activity = "activity"
     }
     
     enum User {
         static let uid = "uid"
         static let name = "name"
         static let email = "email"
+        static let likes = "likes"
         static let recommendations = "recommendations"
         // Add app specific keys here
     }
@@ -53,5 +55,9 @@ enum FBKeys {
         static let secondsListened = "secondsListened"
         static let percListened = "percListened"
         static let time = "time"
+    }
+    
+    enum Activity {
+        static let type = "type"
     }
 }

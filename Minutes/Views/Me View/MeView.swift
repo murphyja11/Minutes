@@ -11,8 +11,13 @@ import Foundation
 
 struct MeView: View {
     @EnvironmentObject var userInfo: UserInfo
-    
     @Binding var showSettings: Bool
+    
+    enum SubView {
+        case metrics, activity
+    }
+    
+    @State var subView: SubView = .metrics
     
     @State var errorString: String?
     @State var showAlert = false
@@ -25,8 +30,7 @@ struct MeView: View {
                     Text("")
                         .frame(width: geometry.size.width * 0.15)
                     Spacer()
-                    Text("Profile")
-                        .font(.system(size: 20))
+                    SwitchBar(subView: self.$subView)
                     Spacer()
                     Button(action: {
                         self.showSettings = true
@@ -42,26 +46,46 @@ struct MeView: View {
                 }
                 .frame(height: 45)
                 .padding(0)
-                
-                Divider()
-                    .padding(0)
-                Spacer()
-                Text("Total Minutes Meditated: " + self.toMinutesSeconds(self.userInfo.metrics.secondsListened))
-                    .font(.system(size: 20))
-                Text("Number of Meditations: \(self.userInfo.metrics.numberOfMeditations)")
-                    .font(.system(size: 20))
-                Spacer()
+                if self.subView == .metrics {
+                    MetricsView()
+                } else {
+                    ActivityView()
+                }
             }
         }
+//        .onAppear {
+//            if self.userInfo.user.uid == nil || self.userInfo.user.uid == "" { return }
+//            self.retrieveMetricsAndActivity(uid: self.userInfo.user.uid)
+//        }
     }
     
-    private func toMinutesSeconds (_ number: Double) -> String {
-        let int = Int(number)
-        let minutes = "\((int % 3600) / 60)"
-        let seconds = "\((int % 3600) % 60)"
-        return minutes + ":" + (seconds.count == 1 ? "0" + seconds : seconds)
-    }
+//    private func retrieveMetrics(uid: String) {
+//        self.userInfo.configureMetricsSnapshotListener()
+//        print("retrieving Metrics COntentView")
+//        // retrieve metrics
+//        FBFirestore.retrieveMetrics(uid: uid) { result in
+//            switch result {
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            case .success(let metrics):
+//                self.userInfo.metrics.secondsListened = metrics.secondsListened
+//                self.userInfo.metrics.numberOfMeditations = metrics.numberOfMeditations
+//            }
+//        }
+//    }
+    
+//    private func retrieveActivity(uid: String) {
+//        FBFirestore.retrieveActivity(uid: uid) { result in
+//            switch result {
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            case .success(let activity):
+//                break
+//            }
+//        }
+//    }
 }
+
 
 struct MeView_Previews: PreviewProvider {
     @State static var showSettings: Bool = false
