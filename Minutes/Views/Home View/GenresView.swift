@@ -13,33 +13,31 @@ struct GenresView: View {
     @State var status: Status = .undefined
     
     enum Status {
-        case undefined, sucess, failure
+        case undefined, success, failure
     }
     
     var body: some View {
-        Group {
+        GeometryReader { geometry in
             if self.status == .undefined {
                 LoadingSpinner()
             } else if self.status == .failure {
-                VStack {
+                return VStack {
                     Spacer()
                     Text("Error getting the genres\nIts bad if this happens so LMK")
                     Spacer()
                 }
             } else {
-                GeometryReader { geometry in
-                    RefreshableScrollView(height: 100, refreshing: self.$userInfo.reloading) {
-                        ForEach(self.userInfo.genres, id: \.self) { genre in
-                            GenreItemView(genre: genre)
-                                .frame(width: geometry.size.width * 0.9, height: 100)
-                                .padding(.horizontal, geometry.size.width * 0.1)
-                        }
-                        
-                        // So that the ScrollView doesn't initialize empty:
-                        if self.userInfo.user.recommendations.count == 0 {
-                            HStack {
-                                Spacer()
-                            }
+                RefreshableScrollView(height: 100, refreshing: self.$userInfo.reloading) {
+                    ForEach(self.userInfo.genres, id: \.self) { genre in
+                        GenreItemView(genre: genre)
+                            .frame(width: geometry.size.width * 0.9, height: 100)
+                            .padding(.horizontal, geometry.size.width * 0.1)
+                    }
+                    
+                    // So that the ScrollView doesn't initialize empty:
+                    if self.userInfo.user.recommendations.count == 0 {
+                        HStack {
+                            Spacer()
                         }
                     }
                 }
@@ -61,11 +59,5 @@ struct GenresView: View {
                 self.status = .success
             }
         }
-    }
-}
-
-struct TopicsView_Previews: PreviewProvider {
-    static var previews: some View {
-        GenresView()
     }
 }

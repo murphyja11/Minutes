@@ -89,18 +89,21 @@ enum FBFirestore {
         let reference = Firestore
             .firestore()
             .collection(FBKeys.CollectionPath.genres)
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    competion(.failure(let err))
-                } else {
-                    var array = []
-                    for document in querySnapshot!.documents {
-                        array.append(FBGenre(documentData: document))
+            .document("genres")
+        getDocument(for: reference) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let data):
+                var array: [FBGenre] = []
+                for (key, value) in data {
+                    if let value = value as? [String: Any] {
+                        array.append(FBGenre(genre: key, references: value["references"] as? [DocumentReference?] ?? []))
                     }
-                    completion(.success(array))
                 }
+                completion(.success(array))
             }
-        
+        }
     }
     
     static func retrieveMetrics(uid: String, completion: @escaping (Result<MetricsObject, Error>) -> ()) {

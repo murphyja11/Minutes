@@ -11,9 +11,9 @@ import FirebaseFirestore
 
 struct FBGenre {
     var genre: String
-    var references: [DocumentReference]
+    var references: [DocumentReference?]
     
-    init(genre: String, reference: [DocumentReference]) {
+    init(genre: String, references: [DocumentReference?]) {
         self.genre = genre
         self.references = reference
     }
@@ -21,9 +21,9 @@ struct FBGenre {
 
 extension FBGenre {
     init?(documentData: [String : Any]) {
-        self.genre = documentData[FBKeys.Genre.genre] as? String ?? ""
-        self.references = documentData[FBKeys.Genre.reference] as? DocumentReference? ?? nil
+        let genre = documentData[FBKeys.Genre.genre] as? String ?? ""
+        let references = documentData[FBKeys.Genre.references] as? [DocumentReference?] ?? []
         
-        self.init(genre: genre, reference: reference)
+        self.init(genre: genre, references: references)
     }
 }

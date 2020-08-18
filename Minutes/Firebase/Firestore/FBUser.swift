@@ -16,7 +16,6 @@ struct FBUser {
     let recommendations: [String] // Recommendations stored as and Array of AudioMetadata UIDs
         
     init(uid: String, name: String, email: String, likes: [String], recommendations: [String]) {
-        print("initializing FBUser : FBUser")
         self.uid = uid
         self.name = name
         self.email = email
@@ -28,7 +27,6 @@ struct FBUser {
 
 extension FBUser {
     init?(documentData: [String : Any]) {
-        print("initializing FBUser using failable initializer : FBUser")
         let uid = documentData[FBKeys.User.uid] as? String ?? ""
         let name = documentData[FBKeys.User.name] as? String ?? ""
         let email = documentData[FBKeys.User.email] as? String ?? ""
