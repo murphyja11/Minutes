@@ -13,30 +13,52 @@ struct GenreItemView: View {
     
     var body: some View {
         HStack {
-            Button(action: {
-                self.show = true
-                self.startPlaying()
-            }) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(self.metadata.title)
+            Button(action: {}) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(self.getDisplayColor(self.genre.genre))
+                    HStack {
+                        Text(self.getDisplayTitle(self.genre.genre))
                             .font(.system(size: 20))
                             .fontWeight(.medium)
                             .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                        Text(self.metadata.description)
-                            .font(.system(size: 12))
-                            .fontWeight(.light)
-                            .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                            .padding(.leading, 25)
+                        Spacer()
+                        ZStack {
+                            Circle()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(self.colorScheme == .light ? Color(red: 0.95, green: 0.95, blue: 0.95) : Color(red: 0.05, green: 0.05, blue:0.05))
+                            Image(systemName: "chevron.right").resizable()
+                                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                                .frame(width: 10, height: 15)
+                        }
+                        .padding(.trailing, 15)
                     }
-                    Spacer()
-                    Text(self.metadata.length)
-                        .font(.system(size: 20))
-                        .fontWeight(.regular)
-                        .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                        .padding(.trailing, 25)
+                    .frame(height: 100)
                 }
-                .frame(height: 100)
             }
+        }
+    }
+    
+    @Environment(\.colorScheme) var colorScheme
+    
+    func getDisplayTitle(_ genre: String) -> String {
+        if genre == "breath" {
+            return "Breathing"
+        } else if genre == "body_scan" {
+            return "Body Scan"
+        } else {
+            return ""
+        }
+    }
+    
+    func getDisplayColor(_ genre: String) -> Color {
+        if genre == "breath" {
+            return self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1)
+        } else if genre == "body_scan" {
+            return self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1)
+        } else {
+            return self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1)
         }
     }
 }

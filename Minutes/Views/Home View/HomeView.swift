@@ -34,6 +34,22 @@ struct HomeView: View {
                     GenresView()
                 }
             }
+            .onAppear {
+                if self.userInfo.genres == [] {
+                    self.setGenres()
+                }
+            }
+        }
+    }
+    
+    private func setGenres() {
+        FBFirestore.retrieveGenres { result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let genres):
+                self.userInfo.genres = genres
+            }
         }
     }
 }
