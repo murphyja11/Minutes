@@ -148,7 +148,7 @@ enum FBFirestore {
                     "didRewind": data[2],
                     "didFastForward": data[3],
                     "didSeek": data[4],
-                    "time": Date() //Date(timeIntervalSinceNow: Double(TimeZone.current.secondsFromGMT()))
+                    "time": ISO8601DateFormatter.string(from: Date(), timeZone: TimeZone.current, formatOptions: [.withFullDate, .withDashSeparatorInDate])
             ]) { error in
                 if let error = error {
                     completion(.failure(error))

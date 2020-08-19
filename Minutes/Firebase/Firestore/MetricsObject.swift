@@ -78,6 +78,16 @@ struct MetricsObject {
             self.numberOfMeditations = numberOfMeditations
             self.secondsListened = secondsListened
         }
+        
+        func get(_ key: String) -> Any {
+            if key == "numberOfMeditations" {
+                return self.numberOfMeditations
+            } else if key == "secondsListened" {
+                return self.secondsListened
+            } else {
+                return 0
+            }
+        }
     }
     
     struct DailyMetric: Codable {

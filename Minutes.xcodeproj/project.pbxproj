@@ -46,6 +46,9 @@
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
 		D457CDAA24ECA191007D2815 /* GenreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDA924ECA191007D2815 /* GenreViewModel.swift */; };
 		D457CDAF24ED6FCD007D2815 /* GenreEscapeChevron.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDAE24ED6FCD007D2815 /* GenreEscapeChevron.swift */; };
+		D457CDB124EDB9F3007D2815 /* MetricsGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB024EDB9F3007D2815 /* MetricsGenreView.swift */; };
+		D457CDB324EDBFB0007D2815 /* MetricsDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */; };
+		D457CDB524EDC210007D2815 /* MetricsSwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */; };
 		D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */; };
 		D47AA9F724EB622C0085C8C1 /* GenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F624EB622C0085C8C1 /* GenresView.swift */; };
 		D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2A24EAC5970092B75C /* SwitchBar.swift */; };
@@ -106,6 +109,9 @@
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 		D457CDA924ECA191007D2815 /* GenreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewModel.swift; sourceTree = "<group>"; };
 		D457CDAE24ED6FCD007D2815 /* GenreEscapeChevron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEscapeChevron.swift; sourceTree = "<group>"; };
+		D457CDB024EDB9F3007D2815 /* MetricsGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsGenreView.swift; sourceTree = "<group>"; };
+		D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsDayView.swift; sourceTree = "<group>"; };
+		D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsSwitchBar.swift; sourceTree = "<group>"; };
 		D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouView.swift; sourceTree = "<group>"; };
 		D47AA9F624EB622C0085C8C1 /* GenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresView.swift; sourceTree = "<group>"; };
 		D4954B2A24EAC5970092B75C /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
@@ -283,6 +289,9 @@
 				D430C77824E0D1F8003F85C6 /* MeView.swift */,
 				D4F7E6F024E6CB24009785B2 /* SettingsView.swift */,
 				D4954B2C24EAD6510092B75C /* MetricsView.swift */,
+				D457CDB024EDB9F3007D2815 /* MetricsGenreView.swift */,
+				D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */,
+				D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */,
 			);
 			path = "Me View";
 			sourceTree = "<group>";
@@ -466,6 +475,7 @@
 			files = (
 				D4F7E6F124E6CB24009785B2 /* SettingsView.swift in Sources */,
 				D4F055CA24E9DE9800E2FA29 /* AudioEscapeButton.swift in Sources */,
+				D457CDB324EDBFB0007D2815 /* MetricsDayView.swift in Sources */,
 				D4F7E6F324E70025009785B2 /* MainView.swift in Sources */,
 				D430C77924E0D1F8003F85C6 /* MeView.swift in Sources */,
 				D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */,
@@ -498,6 +508,7 @@
 				D4C0220424EC48D30010E171 /* MetricsObject.swift in Sources */,
 				D430C77C24E0D203003F85C6 /* AudioItemView.swift in Sources */,
 				D457CDAF24ED6FCD007D2815 /* GenreEscapeChevron.swift in Sources */,
+				D457CDB524EDC210007D2815 /* MetricsSwitchBar.swift in Sources */,
 				D457CDAA24ECA191007D2815 /* GenreViewModel.swift in Sources */,
 				D430C78824E0D23C003F85C6 /* AudioFile.swift in Sources */,
 				D430C79B24E0D278003F85C6 /* FBAuthError.swift in Sources */,
@@ -508,6 +519,7 @@
 				D47AA9F724EB622C0085C8C1 /* GenresView.swift in Sources */,
 				D430C78224E0D210003F85C6 /* PlayBar.swift in Sources */,
 				D430C78724E0D23C003F85C6 /* AudioFileError.swift in Sources */,
+				D457CDB124EDB9F3007D2815 /* MetricsGenreView.swift in Sources */,
 				D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */,
 				D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */,
 				D430C79924E0D278003F85C6 /* UserInfo.swift in Sources */,
