@@ -11,7 +11,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
-    @ObservedObject var genreViewModel = GenreViewModel()
+    var genreViewModel = GenreViewModel()
     
     @Binding var showAudioView: Bool
     
@@ -32,22 +32,23 @@ struct HomeView: View {
                 if self.subView == .forYou {
                     ForYouView(showAudioView: self.$showAudioView)
                 } else if self.subView == .topics {
-                    GenresView(viewModel: self.genreViewModel, showAudioView: self.$showAudioView)
+                    GenresView(showAudioView: self.$showAudioView)
+                        .environmentObject(self.genreViewModel)
                 } else {
                     Spacer()
                     Text("UH oh")
                     Spacer()
                 }
             }
-            .onAppear {
-                if self.genreViewModel.genres.count == 0 {
-                    self.genreViewModel.setGenres { result in
-                        switch result {
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                        case .success( _):
-                            break
-                        }
+        }
+        .onAppear {
+            if self.genreViewModel.genres.count == 0 {
+                self.genreViewModel.setGenres { result in
+                    switch result {
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    case .success( _):
+                        break
                     }
                 }
             }

@@ -13,16 +13,18 @@ class GenreViewModel: ObservableObject {
     @Published var genres: [FBGenre] = []
     @Published var dictOfMetadataArrays: [String : [FBAudioMetadata]] = [:]
     
+    enum Status {
+        case undefined, success, failure
+    }
+    @Published var status: Status = .success
+    @Published var audioSubviewStatus: Status = .success
+    
     enum SelectedGenreEnum {
         case none, breath, body_scan
     }
-    enum AudioItemStatus {
-        case undefined, failure, sucsess
-    }
-    
+
     @Published var selectedGenre: FBGenre?
     @Published var selectedGenreEnum: SelectedGenreEnum = .none
-    @Published var audioItemStatus: AudioItemStatus = .undefined
     
     @Published var reloading: Bool = false {
            didSet {
@@ -41,27 +43,36 @@ class GenreViewModel: ObservableObject {
        }
     
     func setGenres(completion: @escaping (Result<Bool, Error>) -> ()) {
-        FBFirestore.retrieveGenres { result in
-            switch result {
-            case .failure(let error):
-                print(error.localizedDescription)
-            case .success(let genres):
-                self.genres = genres
+        if genres.count == 0 {
+            FBFirestore.retrieveGenres { result in
+                switch result {
+                case .failure(let error):
+                    self.status = .failure
+                    completion(.failure(error))
+                    return
+                case .success(let genres):
+                    self.genres = genres
+                    self.status = .success
+                    completion(.success(true))
+                    return
+                }
             }
+        } else {
+            completion(.success(true))
+            return
         }
     }
     
     // add completion
-    func getMetadataArray(_ gen: FBGenre?) -> ([FBAudioMetadata]) {
+    func setMetadataArray(_ gen: FBGenre?) {
         var genre: FBGenre
         if gen == nil {
-            var genre = self.selectedGenre
+            if self.selectedGenre == nil { return }
+            genre = self.selectedGenre!
         } else {
             genre = gen!
         }
-        if let metadataArray = self.dictOfMetadataArrays[genre.genre] {
-            return metadataArray
-        }
+        if let metadataArray = self.dictOfMetadataArrays[genre.genre] { return }
         var array: [FBAudioMetadata] = []
         var count = genre.references.count
         for reference in genre.references {
@@ -72,7 +83,6 @@ class GenreViewModel: ObservableObject {
                         count = count - 1
                         if array.count == count {
                             self.dictOfMetadataArrays[genre.genre] = array
-                            return array
                         }
                         print(error.localizedDescription)
                     case .success(let data):
@@ -83,13 +93,12 @@ class GenreViewModel: ObservableObject {
                         }
                         if array.count == count {
                             self.dictOfMetadataArrays[genre.genre] = array
-                            return array
+                            self.audioSubviewStatus = .success
                         }
                     }
                 }
             }
         }
-        return []
     }
     
     func selectGenre(for genre: String) {
