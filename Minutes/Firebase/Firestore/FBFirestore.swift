@@ -65,25 +65,7 @@ enum FBFirestore {
             }
         }
     }
-    
-//    static func retrieveMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
-//        let reference = Firestore
-//            .firestore()
-//            .collection(FBKeys.CollectionPath.metrics)
-//            .document(uid)
-//        getDocument(for: reference) { result in
-//            switch result {
-//            case .failure(let error):
-//                completion(.failure(error))
-//            case .success(let data):
-//                guard let metrics = FBMetrics(documentData: data) else {
-//                    completion(.failure(FirestoreError.noMetrics))
-//                    return
-//                }
-//                completion(.success(metrics))
-//            }
-//        }
-//    }
+
     
     static func retrieveGenres(completion: @escaping (Result<[FBGenre], Error>) -> ()){
         let reference = Firestore
@@ -166,7 +148,7 @@ enum FBFirestore {
                     "didRewind": data[2],
                     "didFastForward": data[3],
                     "didSeek": data[4],
-                    "time": Date(timeIntervalSinceNow: Double(TimeZone.current.secondsFromGMT()))
+                    "time": Date() //Date(timeIntervalSinceNow: Double(TimeZone.current.secondsFromGMT()))
             ]) { error in
                 if let error = error {
                     completion(.failure(error))
