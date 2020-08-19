@@ -22,7 +22,6 @@ class UserInfo: ObservableObject {
     @Published var user: FBUser = .init(uid: "", name: "", email: "", likes: [], recommendations: [])
     @Published var metrics: MetricsObject = .init()
     @Published var recommendations: [FBAudioMetadata] = []
-    @Published var genres: [FBGenre] = []
     
     @Published var reloading: Bool = false {
         didSet {
@@ -39,21 +38,7 @@ class UserInfo: ObservableObject {
             }
         }
     }
-    @Published var reloadingGenres: Bool = false {
-        didSet {
-            if !oldValue && reloadingGenres {
-                self.reloadGenres { result in
-                    switch result {
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        self.reloadingGenres = false
-                    case .success( _):
-                        self.reloadingGenres = false
-                    }
-                }
-            }
-        }
-    }
+   
 
     
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
@@ -149,18 +134,6 @@ class UserInfo: ObservableObject {
                 return
             }
             completion(.success(true))
-        }
-    }
-    
-    func reloadGenres(completion: @escaping (Result<Bool, Error>) -> ()) {
-        FBFirestore.retrieveGenres { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let array):
-                self.genres = array
-                completion(.success(true))
-            }
         }
     }
     

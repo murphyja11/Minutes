@@ -11,6 +11,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
+    @ObservedObject var genreViewModel = GenreViewModel()
     
     @Binding var showAudioView: Bool
     
@@ -30,26 +31,28 @@ struct HomeView: View {
                 }
                 if self.subView == .forYou {
                     ForYouView(showAudioView: self.$showAudioView)
+                } else if self.subView == .topics {
+                    GenresView(viewModel: self.genreViewModel, showAudioView: self.$showAudioView)
                 } else {
-                    GenresView()
+                    Spacer()
+                    Text("UH oh")
+                    Spacer()
                 }
             }
             .onAppear {
-                if self.userInfo.genres == [] {
-                    self.setGenres()
+                if self.genreViewModel.genres.count == 0 {
+                    self.genreViewModel.setGenres { result in
+                        switch result {
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        case .success( _):
+                            break
+                        }
+                    }
                 }
             }
         }
     }
     
-    private func setGenres() {
-        FBFirestore.retrieveGenres { result in
-            switch result {
-            case .failure(let error):
-                print(error.localizedDescription)
-            case .success(let genres):
-                self.userInfo.genres = genres
-            }
-        }
-    }
+    
 }

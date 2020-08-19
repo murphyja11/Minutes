@@ -50,7 +50,7 @@ struct SwitchBar: View {
                 .frame(width: 40, height: 3, alignment: .center)
                 .padding(.top, 3)
                 .offset(x: self.underlineOffset())
-                .animation(Animation.easeInOut.speed(1))
+                .animation(Animation.easeInOut.speed(0.75))
         }
         .frame(width: 240)
         .padding(.top, 20)

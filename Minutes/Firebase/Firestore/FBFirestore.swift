@@ -192,22 +192,33 @@ enum FBFirestore {
         }
     }
     
-    fileprivate static func getDocument(for reference: DocumentReference, completion: @escaping (Result<[String : Any], Error>) -> ()) {
+    static func getDocument(for reference: DocumentReference, completion: @escaping (Result<[String : Any], Error>) -> ()) {
+        print("starting network call for \(reference)")
         reference.getDocument { (documentSnapshot, err) in
             if let err = err {
                 completion(.failure(err))
+                print("ending network call for " + reference.path)
                 return
             }
             guard let documentSnapshot = documentSnapshot else {
+                print("ending network call for " + reference.path)
                 completion(.failure(FirestoreError.noDocumentSnapshot))
                 return
             }
             guard let data = documentSnapshot.data() else {
+                print("ending network call for " + reference.path)
                 completion(.failure(FirestoreError.noSnapshotData))
                 return
             }
-            print("Got from Firestore:\n\(data)\n")
-            completion(.success(data))
+            if let data = documentSnapshot.data() {
+                print("ending network call for " + reference.path)
+                print("got data:\n\(data)\n")
+                completion(.success(data))
+                return
+            }
+            print("ending network call for " + reference.path)
+            completion(.failure(FirestoreError.noSnapshotData))
+            return
         }
     }
 }

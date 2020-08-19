@@ -44,6 +44,8 @@
 		D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79524E0D277003F85C6 /* FBAuth.swift */; };
 		D430C79E24E0D282003F85C6 /* AudioMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430C79D24E0D281003F85C6 /* AudioMetadata.swift */; };
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
+		D457CDAA24ECA191007D2815 /* GenreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDA924ECA191007D2815 /* GenreViewModel.swift */; };
+		D457CDAF24ED6FCD007D2815 /* GenreEscapeChevron.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDAE24ED6FCD007D2815 /* GenreEscapeChevron.swift */; };
 		D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */; };
 		D47AA9F724EB622C0085C8C1 /* GenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F624EB622C0085C8C1 /* GenresView.swift */; };
 		D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2A24EAC5970092B75C /* SwitchBar.swift */; };
@@ -102,6 +104,8 @@
 		D430C79824E0D278003F85C6 /* FBAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBAuthError.swift; sourceTree = "<group>"; };
 		D430C79D24E0D281003F85C6 /* AudioMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadata.swift; sourceTree = "<group>"; };
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
+		D457CDA924ECA191007D2815 /* GenreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewModel.swift; sourceTree = "<group>"; };
+		D457CDAE24ED6FCD007D2815 /* GenreEscapeChevron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEscapeChevron.swift; sourceTree = "<group>"; };
 		D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouView.swift; sourceTree = "<group>"; };
 		D47AA9F624EB622C0085C8C1 /* GenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresView.swift; sourceTree = "<group>"; };
 		D4954B2A24EAC5970092B75C /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */,
+				D457CDAB24ECBCE2007D2815 /* View Models */,
 				D430C79F24E0D28A003F85C6 /* Firebase */,
 				D430C78424E0D223003F85C6 /* Views */,
 				D430C75624E0D12C003F85C6 /* ContentView.swift */,
@@ -292,6 +297,7 @@
 				D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */,
 				D47AA9F624EB622C0085C8C1 /* GenresView.swift */,
 				D4C0220724EC5D370010E171 /* GenreItemView.swift */,
+				D457CDAE24ED6FCD007D2815 /* GenreEscapeChevron.swift */,
 			);
 			path = "Home View";
 			sourceTree = "<group>";
@@ -306,6 +312,14 @@
 				D4B4CC2524E9F94100163C5B /* LoadingSpinner.swift */,
 			);
 			path = "Audio View";
+			sourceTree = "<group>";
+		};
+		D457CDAB24ECBCE2007D2815 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				D457CDA924ECA191007D2815 /* GenreViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 		FAB16FA130DF16D9FCA95D35 /* Frameworks */ = {
@@ -483,6 +497,8 @@
 				D430C78F24E0D245003F85C6 /* FBFirestore.swift in Sources */,
 				D4C0220424EC48D30010E171 /* MetricsObject.swift in Sources */,
 				D430C77C24E0D203003F85C6 /* AudioItemView.swift in Sources */,
+				D457CDAF24ED6FCD007D2815 /* GenreEscapeChevron.swift in Sources */,
+				D457CDAA24ECA191007D2815 /* GenreViewModel.swift in Sources */,
 				D430C78824E0D23C003F85C6 /* AudioFile.swift in Sources */,
 				D430C79B24E0D278003F85C6 /* FBAuthError.swift in Sources */,
 				D4DEAFCA24E875080000014D /* FBRecommendations.swift in Sources */,
