@@ -49,20 +49,24 @@ struct MeView: View {
                 .padding(0)
                 Divider()
                     .padding(0)
-                if self.status == .undefined {
-                    VStack {
-                        Spacer()
-                        Text("loading")
-                        Spacer()
-                    }
-                } else if self.status == .failure {
-                    VStack {
-                        Spacer()
-                        Text("netowrk error, could not get metrics")
-                    }
-                } else {
-                    MetricsView()
-                }
+//                if self.status == .undefined {
+//                    VStack {
+//                        Spacer()
+//                        Text("loading")
+//                            .font(.system(size: 15))
+//                        Spacer()
+//                    }
+//                } else if self.status == .failure {
+//                    VStack {
+//                        Spacer()
+//                        Text("netowrk error, could not get metrics")
+//                            .font(.system(size: 15))
+//                        Spacer()
+//                    }
+//                } else {
+                MetricsView()
+                Spacer()
+                //}
             }
         }
         .onAppear {
