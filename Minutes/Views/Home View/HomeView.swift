@@ -41,19 +41,5 @@ struct HomeView: View {
                 }
             }
         }
-        .onAppear {
-            if self.genreViewModel.genres.count == 0 {
-                self.genreViewModel.setGenres { result in
-                    switch result {
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    case .success( _):
-                        break
-                    }
-                }
-            }
-        }
     }
-    
-    
 }

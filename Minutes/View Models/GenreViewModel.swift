@@ -10,7 +10,8 @@ import Foundation
 import FirebaseFirestore
 
 class GenreViewModel: ObservableObject {
-    @Published var genres: [FBGenre] = []
+    @Published var genres: [FBGenre] = []    
+    
     @Published var dictOfMetadataArrays: [String : [FBAudioMetadata]] = [:]
     
     enum Status {
@@ -53,6 +54,7 @@ class GenreViewModel: ObservableObject {
                 case .success(let genres):
                     self.genres = genres
                     self.status = .success
+                    self.objectWillChange.send()
                     completion(.success(true))
                     return
                 }
@@ -61,6 +63,13 @@ class GenreViewModel: ObservableObject {
             completion(.success(true))
             return
         }
+    }
+    
+    func getMetadataArray() -> [FBAudioMetadata] {
+        if self.selectedGenre != nil {
+            return  self.dictOfMetadataArrays[self.selectedGenre!.genre] ?? []
+        }
+        return []
     }
     
     // add completion
@@ -101,7 +110,7 @@ class GenreViewModel: ObservableObject {
         }
     }
     
-    func selectGenre(for genre: String) {
+    func selectGenre(_ genre: String) {
         if genre == "breath" {
             self.selectedGenreEnum = .breath
         } else if genre == "body_scan" {

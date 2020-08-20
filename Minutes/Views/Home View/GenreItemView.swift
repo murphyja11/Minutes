@@ -16,8 +16,7 @@ struct GenreItemView: View {
         GeometryReader { geometry in
             HStack {
                 Button(action: {
-                    self.viewModel.setMetadataArray(self.genre)
-                    self.viewModel.selectGenre(for: self.genre.genre)
+                    self.viewModel.selectGenre(self.genre.genre)
                 }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)

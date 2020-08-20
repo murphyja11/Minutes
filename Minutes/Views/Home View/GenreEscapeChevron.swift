@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct GenreEscapeChevron: View {
-    @ObservedObject var viewModel: GenreViewModel
+    @EnvironmentObject var viewModel: GenreViewModel
     
     var body: some View {
         Button(action: {
             withAnimation {
-                self.viewModel.selectedGenre = .none
+                self.viewModel.selectedGenreEnum = .none
+                self.viewModel.selectedGenre = nil
             }
         }) {
             Image(systemName: "chevron.left").resizable()
@@ -22,8 +23,8 @@ struct GenreEscapeChevron: View {
                 .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                 .padding(25)
         }
-            .position(x: 23, y: 35)
-            .frame(height: 30)
+            .position(x: 23, y: 20)
+            .frame(height: 20)
     }
     
     @Environment(\.colorScheme) var colorScheme
