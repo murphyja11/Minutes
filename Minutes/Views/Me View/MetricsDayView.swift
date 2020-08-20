@@ -11,86 +11,57 @@ import SwiftUI
 struct MetricsDayView: View {
     var day: MetricsObject.DailyMetric
     
-    enum Status {
+    enum MetricsStatus {
         case number, seconds
     }
     
-    @State var state: Status = .number
+    @State var state: MetricsStatus = .seconds
     
     var body: some View {
         GeometryReader { geometry in
-            NavigationView {
-                Section {
-                    Form {
-                        if self.state == .number {
-                            VStack {
+            VStack(spacing: 0) {
+                if self.state == .seconds {
+                    VStack {
+                        HStack {
+                            VStack(alignment: .leading) {
                                 Text("Today, \(self.getDate())")
                                     .font(.system(size: 15))
-                                    .foregroundColor(self.colorScheme == .light ? Color(red: 0.8, green: 0.8, blue: 0.8) : Color(red: 0.2, green: 0.2, blue: 0.2))
+                                    .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
+                                    .padding(.top, 10)
                                 Text("\(self.toMinutes(self.day.secondsListened))")
                                     .font(.system(size: 25))
-                                HorizontalBar(day: self.day.genres, key: "secondsListened")
                             }
-                            .frame(width: geometry.size.width * 0.9)
-                        } else {
-                            VStack {
+                            Spacer()
+                        }
+                        .padding(.leading, 15)
+                        HorizontalBar(day: self.day.genres, key: "secondsListened")
+                            .padding(.horizontal, 30)
+                    }
+                    .frame(height: 200)
+                    .background(self.colorScheme == .light ? Color.white : Color.black)
+                } else {
+                    VStack {
+                        HStack {
+                            VStack(alignment: .leading) {
                                Text("Today, \(self.getDate())")
                                    .font(.system(size: 15))
-                                   .foregroundColor(self.colorScheme == .light ? Color(red: 0.8, green: 0.8, blue: 0.8) : Color(red: 0.2, green: 0.2, blue: 0.2))
-                                Text("\(self.day.numberOfMeditations, specifier:" %.1f") meditations")
+                                   .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
+                                    .padding(.top, 10)
+                                Text("\(Int(self.day.numberOfMeditations)) meditations")
                                    .font(.system(size: 25))
-                               HorizontalBar(day: self.day.genres, key: "numberOfMeditations")
-                           }
-                           .frame(width: geometry.size.width * 0.9)
-                        }
-                        HStack {
+                            }
                             Spacer()
-                            Button(action: {
-                                self.state = .number
-                            }) {
-                                if self.state == .number {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .frame(width: geometry.size.width / 4, height: 20)
-                                            .foregroundColor(Color(red: 0.2, green: 0.6, blue: 1.0))
-                                        Text("Number")
-                                            .font(.system(size: 15))
-                                    }
-                                } else {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .frame(width: geometry.size.width / 4, height: 20)
-                                            .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
-                                        Text("Number")
-                                                .font(.system(size: 15))
-                                    }
-                                }
-                            }
-                            Button(action: {
-                                self.state = .seconds
-                            }) {
-                                if self.state == .seconds {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .frame(width: geometry.size.width / 4, height: 20)
-                                            .foregroundColor(Color(red: 0.2, green: 0.6, blue: 1.0))
-                                        Text("Minutes")
-                                            .font(.system(size: 15))
-                                    }
-                                } else {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .frame(width: geometry.size.width / 4, height: 20)
-                                            .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
-                                        Text("Minutes")
-                                            .font(.system(size: 15))
-                                    }
-                                }
-                            }
                         }
-                    }
+                        .padding(.leading, 15)
+                        HorizontalBar(day: self.day.genres, key: "numberOfMeditations")
+                            .padding(.horizontal, 30)
+                   }
+                    .frame(height: 200)
+                    .background(self.colorScheme == .light ? Color.white : Color.black)
                 }
+                DayViewButtons(state: self.$state)
             }
+            .frame(height: 250)
         }
     }
     
@@ -112,3 +83,23 @@ struct MetricsDayView: View {
     
     @Environment(\.colorScheme) var colorScheme
 }
+
+
+struct MetricsDayView_Previews: PreviewProvider {
+    @ObservedObject static var userInfo = UserInfo()
+    
+    static let date = ISO8601DateFormatter.string(from: Date(), timeZone: TimeZone.current, formatOptions: [.withFullDate, .withDashSeparatorInDate])
+    static let day: MetricsObject.DailyMetric = userInfo.metrics.daily[date] ?? MetricsObject.DailyMetric()
+    
+    static var previews: some View {
+        MetricsDayView(day: day)
+        .environmentObject(userInfo)
+    }
+}
+
+
+
+
+
+
+

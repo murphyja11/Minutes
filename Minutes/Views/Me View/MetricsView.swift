@@ -24,14 +24,20 @@ struct MetricsView: View {
         return GeometryReader { geometry in
             VStack {
                 MetricsSwitchBar(view: self.$view)
+                .frame(height: 30)
+                    .padding(.top, 10)
+                    .padding(.bottom, 20)
                 if self.view == .day {
                     MetricsDayView(day: day)
                 } else if self.view == .week {
-                     MetricsWeekView(daily: self.userInfo.metrics.daily)
+                    Text("Week View")
                 } else {
-                     Spacer()
+                    Text("Total View")
                 }
+                Spacer()
             }
+            .frame(height: geometry.size.height)
+            .background(self.colorScheme == .light ? Color(red: 0.95, green: 0.95, blue: 0.95) : Color(red: 0.05, green: 0.05, blue: 0.05))
         }
     }
     
@@ -44,6 +50,8 @@ struct MetricsView: View {
         let minutes = "\((int % 3600) / 60)"
         return minutes + "m"
     }
+    
+    @Environment(\.colorScheme) var colorScheme
 }
 
 
@@ -53,3 +61,12 @@ struct MetricsView_Previews: PreviewProvider {
             .environmentObject(UserInfo())
     }
 }
+
+
+    //                if self.view == .day {
+//                        MetricsDayView(day: day)
+    //                } else if self.view == .week {
+    //                     MetricsWeekView(daily: self.userInfo.metrics.daily)
+    //                } else {
+    //                     Spacer()
+    //                }

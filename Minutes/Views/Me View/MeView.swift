@@ -49,24 +49,15 @@ struct MeView: View {
                 .padding(0)
                 Divider()
                     .padding(0)
-//                if self.status == .undefined {
-//                    VStack {
-//                        Spacer()
-//                        Text("loading")
-//                            .font(.system(size: 15))
-//                        Spacer()
-//                    }
-//                } else if self.status == .failure {
-//                    VStack {
-//                        Spacer()
-//                        Text("netowrk error, could not get metrics")
-//                            .font(.system(size: 15))
-//                        Spacer()
-//                    }
-//                } else {
-                MetricsView()
+                if self.status == .undefined {
+                    Text("loading")
+                        .font(.system(size: 15))
+                } else if self.status == .failure {
+                    Text("request failed")
+                } else {
+                    MetricsView()
+                }
                 Spacer()
-                //}
             }
         }
         .onAppear {
@@ -92,6 +83,7 @@ struct MeView: View {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
+                self.status = .failure
             case .success(let metrics):
                 self.userInfo.metrics = metrics
                 completion(.success(true))

@@ -19,10 +19,12 @@ struct HorizontalBar: View {
         for (key, value) in day {
             let doubleValue = value.get(k) as? Double ?? 0.0
             count = count + doubleValue
-            tempArray.append((key, doubleValue))
+            if key != "" {
+                tempArray.append((key, doubleValue))
+            }
         }
         self.array = tempArray
-        self.count = CGFloat(count)
+        self.count = count == 0.0 ? CGFloat(1) : CGFloat(count)
         self.colorArray = [Color.blue, Color(red: 1.0, green: 0.6, blue: 0), Color(red: 0, green: 0.9, blue: 1), Color(red: 0, green: 0.5, blue: 1), Color(red: 1.0, green: 0.6, blue: 1.0)]
     }
     
@@ -47,8 +49,8 @@ struct HorizontalBar: View {
                             Text(self.array[index].0)
                                 .font(.system(size: 15))
                                 .foregroundColor(self.colorArray[index])
-                            Text(self.toMinutes(self.array[index].1))
-                                .font(.system(size: 15))
+                            //Text(self.toMinutes(self.array[index].1))
+                              //  .font(.system(size: 15))
                         }
                     }
                 }
@@ -63,5 +65,5 @@ struct HorizontalBar: View {
     }
     
     @Environment(\.colorScheme) var colorScheme
-    private let height: CGFloat = 40
+    private let height: CGFloat = 60
 }

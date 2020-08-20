@@ -175,7 +175,7 @@ enum FBFirestore {
     }
     
     static func getDocument(for reference: DocumentReference, completion: @escaping (Result<[String : Any], Error>) -> ()) {
-        print("starting network call for \(reference)")
+        print("starting network call for \(reference.path)")
         reference.getDocument { (documentSnapshot, err) in
             if let err = err {
                 completion(.failure(err))
