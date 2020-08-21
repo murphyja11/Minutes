@@ -27,20 +27,35 @@ struct MetricsView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 20)
                 if self.view == .day {
-                    if self.viewModel.status == .undefined {
+                    if self.viewModel.status == .success {
+                        MetricsDayView()
+                    } else {
                         VStack {
                             Spacer()
                             Text("loading")
                             Spacer()
                         }
-                    } else {
-                        MetricsDayView()
-                            //.environmentObject(self.viewModel)
                     }
                 } else if self.view == .week {
-                    Text("Week View")
+                    if self.viewModel.status == .success {
+                        Text("Week View")
+                    } else {
+                        VStack {
+                            Spacer()
+                            Text("loading")
+                            Spacer()
+                        }
+                    }
                 } else {
-                    Text("Total View")
+                    if self.viewModel.status == .success {
+                        Text("Total View")
+                    } else {
+                        VStack {
+                            Spacer()
+                            Text("loading")
+                            Spacer()
+                        }
+                    }
                 }
                 Spacer()
             }
@@ -48,7 +63,7 @@ struct MetricsView: View {
             .background(self.colorScheme == .light ? Color(red: 0.95, green: 0.95, blue: 0.95) : Color(red: 0.05, green: 0.05, blue: 0.05))
         }
         .onAppear {
-            //self.viewModel.getMetrics(uid: self.uid)
+            self.viewModel.getMetrics(uid: self.uid)
         }
     }
     

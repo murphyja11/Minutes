@@ -148,7 +148,8 @@ enum FBFirestore {
                     "didRewind": data[2],
                     "didFastForward": data[3],
                     "didSeek": data[4],
-                    "time": Date()
+                    "time": Date(),
+                    "usersCurrentTime": Date().description(with: .current)
             ]) { error in
                 if let error = error {
                     completion(.failure(error))

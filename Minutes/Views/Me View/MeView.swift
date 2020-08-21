@@ -11,6 +11,7 @@ import Foundation
 
 struct MeView: View {
     @EnvironmentObject var userInfo: UserInfo
+    var viewModel = MetricsViewModel()
     @Binding var showSettings: Bool
     
 
@@ -44,6 +45,7 @@ struct MeView: View {
                 Divider()
                     .padding(0)
                 MetricsView(uid: self.userInfo.user.uid)
+                    .environmentObject(self.viewModel)
                 Spacer()
             }
         }
