@@ -34,10 +34,13 @@ struct MetricsDayView: View {
                             Spacer()
                         }
                         .padding(.leading, 15)
-                        HorizontalBar(day: self.viewModel.getDataRange(days: 1), key: "secondsListened")
+                        HorizontalBar(data: self.viewModel.getDataRange(days: 1), key: "secondsListened")
+                            .padding(.horizontal, 30)
+                        Barchart(data: self.viewModel.getDataRange(days: 1), key: "secondsListened")
+                            .frame(height: 150)
                             .padding(.horizontal, 30)
                     }
-                    .frame(height: 200)
+                    .frame(height: self.frameHeight - 50)
                     .background(self.colorScheme == .light ? Color.white : Color.black)
                 } else {
                     VStack {
@@ -47,22 +50,22 @@ struct MetricsDayView: View {
                                    .font(.system(size: 15))
                                    .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .padding(.top, 10)
-                                Text("\(Int(self.viewModel.getDataSum(days: 1, key: "numberOfMeditations"))) meditations")
+                                Text(self.numberOfMeditations())
                                    .font(.system(size: 25))
                             }
                             Spacer()
                         }
                         .padding(.leading, 15)
-                        HorizontalBar(day: self.viewModel.getDataRange(days: 1), key: "numberOfMeditations")
+                        HorizontalBar(data: self.viewModel.getDataRange(days: 1), key: "numberOfMeditations")
                             .padding(.horizontal, 30)
                    }
-                    .frame(height: 200)
+                    .frame(height: self.frameHeight - 50)
                     .background(self.colorScheme == .light ? Color.white : Color.black)
                 }
                 DayViewButtons(state: self.$state)
                     .environmentObject(self.viewModel)
             }
-            .frame(height: 250)
+            .frame(height: self.frameHeight)
         }
     }
     
@@ -77,12 +80,25 @@ struct MetricsDayView: View {
     }
     
     private func toMinutes (_ number: Double) -> String {
-            let int = Int(number)
-            let minutes = "\((int % 3600) / 60)"
-            return minutes + "m"
+        if number < 60 {
+            return "\(Int(number))s"
+        }
+        let int = Int(number)
+        let minutes = "\((int % 3600) / 60)"
+        return minutes + "m"
+    }
+    
+    private func numberOfMeditations() -> String {
+        let number = Int(self.viewModel.getDataSum(days: 1, key: "numberOfMeditations"))
+        if number == 1 {
+            return "\(number) meditation"
+        } else {
+            return "\(number) meditations"
+        }
     }
     
     @Environment(\.colorScheme) var colorScheme
+    private let frameHeight: CGFloat = 450
 }
 
 

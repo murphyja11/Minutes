@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+
 struct MetricsObject {
     var numberOfMeditations: Int
     var secondsListened: Double
@@ -48,7 +50,8 @@ struct MetricsObject {
         for itemInArray in array {
             if let item = itemInArray as? [String: Any] {
                 //let time = item["time"]
-                let date = item["time"] as? Date ?? Date()
+                let timestamp = item["time"] as? Timestamp ?? Timestamp(seconds:0, nanoseconds:0)
+                let date = timestamp.dateValue()
                 let secondsListened = item["secondsListened"] as? Double ?? -1.0
                 let genre = item["genre"] as? String ?? ""
                 let singleItem = SingleItem(time: date, secondsListened: secondsListened, genre: genre)

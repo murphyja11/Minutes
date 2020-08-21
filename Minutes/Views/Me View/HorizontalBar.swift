@@ -14,11 +14,11 @@ struct HorizontalBar: View {
     var colorArray: [Color]
     
     
-    init(day: [MetricsObject.SingleItem], key: String) {
+    init(data: [MetricsObject.SingleItem], key: String) {
         
         var tempArray: [(String, Double)] = []
         var count: Double = 0.0
-        for item in day {
+        for item in data {
             tempArray.append((item.genre, item.getKeysValue(key: key)))
             count = count + Double(item.getKeysValue(key: key))
         }

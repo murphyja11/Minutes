@@ -89,6 +89,9 @@ enum FBFirestore {
     }
     
     static func retrieveMetrics(uid: String, completion: @escaping (Result<MetricsObject, Error>) -> ()) {
+        if uid == "" {
+            completion(.failure(FirestoreError.noUser))
+        }
         let reference = Firestore
                     .firestore()
                     .collection(FBKeys.CollectionPath.metrics)

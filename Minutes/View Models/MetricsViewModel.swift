@@ -44,13 +44,13 @@ class MetricsViewModel: ObservableObject {
         var month: String?
         var day: String?
         
-        let regex = try? NSRegularExpression(pattern: "(?<year>\\d){4}-(?<month>\\d){2}-(?<day>\\d){2}", options: [])
+        let regex = try? NSRegularExpression(pattern: "(?<year>\\d{4})/(?<month>\\d{2})/(?<day>\\d{2})", options: [])
         guard let regx = regex else {
             print("Regex matched no dates")
             return []
         }
         if let match = regx.firstMatch(in: stringDate, options: [], range: NSRange(location: 0, length: stringDate.utf16.count)) {
-            if let yearRange = Range(match.range(at: 1), in: stringDate) {
+            if let yearRange = Range(match.range(withName: "year"), in: stringDate) {
                 year = String(stringDate[yearRange])
             }
             if let monthRange = Range(match.range(withName: "month"), in: stringDate) {
@@ -62,9 +62,10 @@ class MetricsViewModel: ObservableObject {
         }
         var midnightInGMT: Date?
         if year != nil, month != nil, day != nil {
-            let midnightString = "\(year)-\(month)-\(day) 00:00:00 +0000"
+            let midnightString = "\(year!)-\(month!)-\(day!) 00:00:00"
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             if let midnight = formatter.date(from: midnightString) {
-                let secondsInThisDay = Double(midnight.timeIntervalSince(dateInCurrentTimeZone))
+                let secondsInThisDay = Double(dateInCurrentTimeZone.timeIntervalSince(midnight))
                 let secondsInDay = Double(86400)
                 midnightInGMT = Date() - secondsInThisDay - secondsInDay * Double(days - 1)
             }
@@ -75,7 +76,7 @@ class MetricsViewModel: ObservableObject {
             for int in 0..<count {
                 let index = (count - 1 - int)
                 let item = self.metrics.timeData[index]
-                if item.time < midnightInGMT! {
+                if item.time > midnightInGMT! {
                     array.append(item)
                 }
             }
