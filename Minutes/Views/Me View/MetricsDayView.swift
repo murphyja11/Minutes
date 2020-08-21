@@ -28,13 +28,13 @@ struct MetricsDayView: View {
                                     .font(.system(size: 15))
                                     .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .padding(.top, 10)
-                                Text("\(self.toMinutes(self.viewModel.getDailyMetrics().secondsListened))")
+                                Text("\(self.toMinutes(self.viewModel.getDataSum(days: 1, key: "secondsListened")))")
                                     .font(.system(size: 25))
                             }
                             Spacer()
                         }
                         .padding(.leading, 15)
-                        HorizontalBar(day: self.viewModel.getDailyMetrics(), key: "secondsListened")
+                        HorizontalBar(day: self.viewModel.getDataRange(), key: "secondsListened")
                             .padding(.horizontal, 30)
                     }
                     .frame(height: 200)

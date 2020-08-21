@@ -9,38 +9,24 @@
 import SwiftUI
 
 struct HorizontalBar: View {
-    
-    var array: [(String, Double)] = []
+    var array: [MetricsObject.SingleItem]
     var count: CGFloat = 0
-    var colorArray: [Color] = []
+    var colorArray: [Color]
     
     
-    init(day: MetricsObject.DailyMetric?, key k: String) {
-        var metrics = MetricsObject.DailyMetric()
-        if day != nil {
-            metrics = day!
-        }
+    init(day: [MetricsObject.SingleItem], key: String) {
+        
         var tempArray: [(String, Double)] = []
         var count: Double = 0.0
-        for (key, value) in metrics.genres {
-            if k == "numberOfMeditations" {
-                let val = value.get(k) as? Int ?? 0
-                count = count + Double(val)
-                if key != "" {
-                    tempArray.append((key, Double(val)))
-                }
-            } else {
-                let val = value.get(k) as? Double ?? 0.0
-                count = count + val
-                if key != "" {
-                    tempArray.append((key, val))
-                }
-            }
+        for item in day {
+            tempArray.append((item.time, item.getKeysValue(key: key)))
+            count = count + Double(item.getKeysValue(key: key))
         }
         self.array = tempArray
         self.count = count == 0.0 ? CGFloat(1) : CGFloat(count)
         self.colorArray = [Color.blue, Color(red: 1.0, green: 0.6, blue: 0), Color(red: 0, green: 0.9, blue: 1), Color(red: 0, green: 0.5, blue: 1), Color(red: 1.0, green: 0.6, blue: 1.0)]
     }
+    
     
     var body: some View {
         GeometryReader { geometry in

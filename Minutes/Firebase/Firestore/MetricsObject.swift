@@ -57,5 +57,15 @@ struct MetricsObject {
             self.secondsListened = secondsListened
             self.genre = genre
         }
+        
+        func getKeysValue(key: String) -> Double {
+            if key == "secondsListened"{
+                return item.secondsListened
+            } else if key == "numberOfMeditations" {
+                return Double(item.numberOfMeditations)
+            } else {
+                return -1
+            }
+        }
     }
 }
