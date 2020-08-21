@@ -23,20 +23,16 @@ struct DayViewButtons: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: self.cornerRadius)
                                 .frame(width: geometry.size.width / self.widthScale, height: self.height)
-                                .foregroundColor(self.colorScheme == .light ? Color(red: 0.8, green: 0.9, blue: 1.0) : Color(red: 0, green: 0.1, blue: 0.2))
+                                .foregroundColor(self.colorScheme == .light ? Color(red: 0.8, green: 0.9, blue: 1.0) : Color(red: 0.2, green: 0.2, blue: 0.2))
                             Text("Time")
                                 .font(.system(size: 15))
                                 .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                         }
                     } else {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: self.cornerRadius)
-                                .frame(width: geometry.size.width / self.widthScale, height: self.height)
-                                .foregroundColor(self.colorScheme == .light ? Color(red: 0.8, green: 0.8, blue: 0.8) : Color(red: 0.2, green: 0.2, blue: 0.2))
-                            Text("Time")
-                                .font(.system(size: 15))
-                                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                        }
+                        Text("Time")
+                            .font(.system(size: 15))
+                            .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                            .frame(width: geometry.size.width / self.widthScale, height: self.height)
                     }
                 }
                 .padding(.trailing, 20)
@@ -47,20 +43,16 @@ struct DayViewButtons: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: self.cornerRadius)
                                 .frame(width: geometry.size.width / self.widthScale, height: self.height)
-                                .foregroundColor(self.colorScheme == .light ? Color(red: 0.8, green: 0.9, blue: 1.0) : Color(red: 0, green: 0.1, blue: 0.2))
+                                .foregroundColor(self.colorScheme == .light ? Color(red: 0.8, green: 0.9, blue: 1.0) : Color(red: 0.2, green: 0.2, blue: 0.2))
                             Text("Number")
                                 .font(.system(size: 15))
                                 .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
                         }
                     } else {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: self.cornerRadius)
-                                .frame(width: geometry.size.width / self.widthScale, height: self.height)
-                                .foregroundColor(self.colorScheme == .light ? Color(red: 0.8, green: 0.8, blue: 0.8) : Color(red: 0.2, green: 0.2, blue: 0.2))
-                            Text("Number")
-                                .font(.system(size: 15))
-                                .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
-                        }
+                        Text("Number")
+                            .font(.system(size: 15))
+                            .foregroundColor(self.colorScheme == .light ? Color.black : Color.white)
+                            .frame(width: geometry.size.width / self.widthScale, height: self.height)
                     }
                 }
                 Spacer()
