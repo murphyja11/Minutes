@@ -9,18 +9,32 @@
 import SwiftUI
 
 struct HorizontalBar: View {
-    var array: [(String, Double)]
-    var count: CGFloat
-    var colorArray: [Color]
     
-    init(day: [String: MetricsObject.Stats], key k: String) {
+    var array: [(String, Double)] = []
+    var count: CGFloat = 0
+    var colorArray: [Color] = []
+    
+    
+    init(day: MetricsObject.DailyMetric?, key k: String) {
+        var metrics = MetricsObject.DailyMetric()
+        if day != nil {
+            metrics = day!
+        }
         var tempArray: [(String, Double)] = []
         var count: Double = 0.0
-        for (key, value) in day {
-            let doubleValue = value.get(k) as? Double ?? 0.0
-            count = count + doubleValue
-            if key != "" {
-                tempArray.append((key, doubleValue))
+        for (key, value) in metrics.genres {
+            if k == "numberOfMeditations" {
+                let val = value.get(k) as? Int ?? 0
+                count = count + Double(val)
+                if key != "" {
+                    tempArray.append((key, Double(val)))
+                }
+            } else {
+                let val = value.get(k) as? Double ?? 0.0
+                count = count + val
+                if key != "" {
+                    tempArray.append((key, val))
+                }
             }
         }
         self.array = tempArray
@@ -38,21 +52,22 @@ struct HorizontalBar: View {
                     HStack(spacing: 0) {
                         ForEach(0..<self.array.count) { index in
                             RoundedRectangle(cornerRadius: 1)
-                                .frame(width: CGFloat(self.array[index].1) * geometry.size.width / self.count, height: self.height)
+                                .frame(width: CGFloat(self.array[index].1) / self.count * geometry.size.width, height: self.height)
                                 .foregroundColor(self.colorArray[index])
                         }
                     }
                 }
                 HStack {
                     ForEach(0..<self.array.count) {index in
-                        VStack {
+                        VStack(alignment: .leading) {
                             Text(self.array[index].0)
                                 .font(.system(size: 15))
                                 .foregroundColor(self.colorArray[index])
-                            //Text(self.toMinutes(self.array[index].1))
-                              //  .font(.system(size: 15))
+                            Text(self.toMinutes(self.array[index].1))
+                                .font(.system(size: 15))
                         }
                     }
+                    Spacer()
                 }
             }
         }

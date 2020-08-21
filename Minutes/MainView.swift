@@ -13,6 +13,7 @@ import FirebaseAuth
 struct MainView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
+    @EnvironmentObject var metricsViewModel: MetricsViewModel
     
     @State private var selection = 0
     @State var showAudioView: Bool = false
@@ -89,6 +90,7 @@ struct MainView: View {
                 break
             }
         }
+        self.metricsViewModel.getMetrics(uid: uid)
     }
 }
 

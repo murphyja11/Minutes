@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct DayViewButtons: View {
+    @EnvironmentObject var viewModel: GenreViewModel
     @Binding var state: MetricsDayView.MetricsStatus
     
     var body: some View {

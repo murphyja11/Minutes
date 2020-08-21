@@ -13,12 +13,6 @@ struct MeView: View {
     @EnvironmentObject var userInfo: UserInfo
     @Binding var showSettings: Bool
     
-    enum Status {
-        case undefined, failure, success
-    }
-    
-    @State var status: Status = .undefined
-    
 
     @State var errorString: String?
     @State var showAlert = false
@@ -49,46 +43,11 @@ struct MeView: View {
                 .padding(0)
                 Divider()
                     .padding(0)
-                if self.status == .undefined {
-                    Text("loading")
-                        .font(.system(size: 15))
-                } else if self.status == .failure {
-                    Text("request failed")
-                } else {
-                    MetricsView()
-                }
+                MetricsView(uid: self.userInfo.user.uid)
                 Spacer()
             }
         }
-        .onAppear {
-            //self.userInfo.configureMetricsSnapshotListener()
-            self.retrieveData { result in
-                switch result {
-                case .failure(let error):
-                    self.status = .failure
-                    self.errorString = error.localizedDescription
-                    self.showAlert = true
-                case .success( _):
-                    self.status = .success
-                }
-            }
-        }
-    }
-    
-    private func retrieveData(completion: @escaping (Result<Bool, Error>) -> ()) {
-        if self.userInfo.user.uid == "" { return }
-        print("retrieving Metrics COntentView")
-        // retrieve metrics
-        FBFirestore.retrieveMetrics(uid: self.userInfo.user.uid) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-                self.status = .failure
-            case .success(let metrics):
-                self.userInfo.metrics = metrics
-                completion(.success(true))
-            }
-        }
+        
     }
 }
 

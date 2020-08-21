@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MetricsDayView: View {
-    var day: MetricsObject.DailyMetric
+    @EnvironmentObject var viewModel: MetricsViewModel
     
     enum MetricsStatus {
         case number, seconds
@@ -18,7 +18,7 @@ struct MetricsDayView: View {
     @State var state: MetricsStatus = .seconds
     
     var body: some View {
-        GeometryReader { geometry in
+       GeometryReader { geometry in
             VStack(spacing: 0) {
                 if self.state == .seconds {
                     VStack {
@@ -28,13 +28,13 @@ struct MetricsDayView: View {
                                     .font(.system(size: 15))
                                     .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .padding(.top, 10)
-                                Text("\(self.toMinutes(self.day.secondsListened))")
+                                Text("\(self.toMinutes(self.viewModel.getDailyMetrics().secondsListened))")
                                     .font(.system(size: 25))
                             }
                             Spacer()
                         }
                         .padding(.leading, 15)
-                        HorizontalBar(day: self.day.genres, key: "secondsListened")
+                        HorizontalBar(day: self.viewModel.getDailyMetrics(), key: "secondsListened")
                             .padding(.horizontal, 30)
                     }
                     .frame(height: 200)
@@ -47,19 +47,20 @@ struct MetricsDayView: View {
                                    .font(.system(size: 15))
                                    .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .padding(.top, 10)
-                                Text("\(Int(self.day.numberOfMeditations)) meditations")
+                                Text("\(Int(self.viewModel.getDailyMetrics().numberOfMeditations)) meditations")
                                    .font(.system(size: 25))
                             }
                             Spacer()
                         }
                         .padding(.leading, 15)
-                        HorizontalBar(day: self.day.genres, key: "numberOfMeditations")
+                        HorizontalBar(day: self.viewModel.getDailyMetrics(), key: "numberOfMeditations")
                             .padding(.horizontal, 30)
                    }
                     .frame(height: 200)
                     .background(self.colorScheme == .light ? Color.white : Color.black)
                 }
                 DayViewButtons(state: self.$state)
+                    .environmentObject(self.viewModel)
             }
             .frame(height: 250)
         }
@@ -85,19 +86,25 @@ struct MetricsDayView: View {
 }
 
 
-struct MetricsDayView_Previews: PreviewProvider {
-    @ObservedObject static var userInfo = UserInfo()
-    
-    static let date = ISO8601DateFormatter.string(from: Date(), timeZone: TimeZone.current, formatOptions: [.withFullDate, .withDashSeparatorInDate])
-    static let day: MetricsObject.DailyMetric = userInfo.metrics.daily[date] ?? MetricsObject.DailyMetric()
-    
-    static var previews: some View {
-        MetricsDayView(day: day)
-        .environmentObject(userInfo)
-    }
-}
+//struct MetricsDayView_Previews: PreviewProvider {
+//    @ObservedObject static var userInfo = UserInfo()
+//    
+//    static let date = ISO8601DateFormatter.string(from: Date(), timeZone: TimeZone.current, formatOptions: [.withFullDate, .withDashSeparatorInDate])
+//    static let day: MetricsObject.DailyMetric = userInfo.metrics.daily[date] ?? MetricsObject.DailyMetric()
+//    
+//    static var previews: some View {
+//        MetricsDayView()
+//        .environmentObject(userInfo)
+//    }
+//}
 
-
+//struct MetricsDaySeconds: View {
+//    @EnvironmentObject var viewModel: GenreViewModel
+//
+//    var body: some View {
+//
+//    }
+//}
 
 
 
