@@ -11,13 +11,13 @@ struct MetricsObject {
     var numberOfMeditations: Int
     var secondsListened: Double
     var genres: [String: Stats] //genre to stats
-    var daily: [String: DailyMetric] // data to daily metrics
+    var timeData: [SingeItem]
     
     init(dictionary dict: [String : Any]) {
         self.numberOfMeditations = dict["numberOfMeditations"] as? Int ?? 0
         self.secondsListened = dict["secondsListened"] as? Double ?? 0.0
         self.genres = MetricsObject.getGenres(dict["genres"])
-        self.daily = MetricsObject.getDaily(dict["daily"])
+        self.timeData = dict["timeData"] as? [SingleItem] ?? []
     }
     
     init() {
@@ -45,66 +45,17 @@ struct MetricsObject {
         return Stats(numberOfMeditations: dict["numberOfMeditations"] as? Int ?? 0, secondsListened: dict["secondsListened"] as? Double ?? 0.0)
     }
     
-    private static func getDaily(_ dict: Any?) -> [String: DailyMetric] {
-        guard let dict = dict as? [String: Any] else {
-            return ["": DailyMetric()]
-        }
-        var dictionary: [String: DailyMetric] = [:]
-        for (key, value) in dict { // loop of date keys
-            dictionary[key] = self.getStatsAndGenre(value) // returns a daily metric
-        }
-        return dictionary
-    }
+    //private static func getSingleItems(_ array: Any?) ->
     
-    private static func getStatsAndGenre(_ dict: Any?) -> DailyMetric {
-        guard let dict = dict as? [String: Any] else {
-            return DailyMetric()
-        }
-        return DailyMetric(numberOfMeditations: dict["numberOfMeditations"] as? Int ?? 0, secondsListened: dict["secondsListened"] as? Double ?? 0.0, genres: self.getGenres(dict["genres"]))
-    }
-    
-    
-    
-    struct Stats: Codable {
-        var numberOfMeditations: Int
+    struct SingleItem: Codable {
+        var time: Date
         var secondsListened: Double
+        var genre: String
         
-        init() {
-            self.numberOfMeditations = 0
-            self.secondsListened = 0.0
-        }
-        
-        init(numberOfMeditations: Int, secondsListened: Double) {
-            self.numberOfMeditations = numberOfMeditations
+        init(time: Date, secondsListened: Double, genre: String) {
+            self.time = time
             self.secondsListened = secondsListened
-        }
-        
-        func get(_ key: String) -> Any {
-            if key == "numberOfMeditations" {
-                return self.numberOfMeditations
-            } else if key == "secondsListened" {
-                return self.secondsListened
-            } else {
-                return 0
-            }
-        }
-    }
-    
-    struct DailyMetric: Codable {
-        var numberOfMeditations: Int
-        var secondsListened: Double
-        var genres: [String: Stats]
-        
-        init() {
-            self.numberOfMeditations = 0
-            self.secondsListened = 0.0
-            self.genres = ["": Stats()]
-        }
-        
-        init(numberOfMeditations: Int, secondsListened: Double, genres: [String: Stats]) {
-            self.numberOfMeditations = numberOfMeditations
-            self.secondsListened = secondsListened
-            self.genres = genres
+            self.genre = genre
         }
     }
 }
