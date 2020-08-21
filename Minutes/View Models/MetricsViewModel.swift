@@ -33,45 +33,49 @@ class MetricsViewModel: ObservableObject {
     
     func getDataRange(days: Int) -> [MetricsObject.SingleItem] {
         var secondsFromGMT: Int { return TimeZone.current.secondsFromGMT() }
-        let dateInCurrentTimeZone = Date(timeIntervalSinceNow: secondsFromGMT)
+        let dateInCurrentTimeZone = Date(timeIntervalSinceNow: Double(secondsFromGMT))
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
-        let stringDate = formatter.string(Date())
+        let stringDate = formatter.string(from: Date())
         
         var year: String?
         var month: String?
         var day: String?
         
-        let regex = NSRegularExpression(pattern: "(?<year>\\d){4}-(?<month>\\d){2}-(?<day>\\d){2}", options: [])
-        if let match = regex.firstMatch(in: stringDate, options: [], range: NSRange(location: 0, length: stringDate.utf16.count)) {
-            if let yearRange = Range(match.range(withName: "year")) {
-                year = Int(stringDate[yearRange])
+        let regex = try? NSRegularExpression(pattern: "(?<year>\\d){4}-(?<month>\\d){2}-(?<day>\\d){2}", options: [])
+        guard let regx = regex else {
+            print("Regex matched no dates")
+            return []
+        }
+        if let match = regx.firstMatch(in: stringDate, options: [], range: NSRange(location: 0, length: stringDate.utf16.count)) {
+            if let yearRange = Range(match.range(at: 1), in: stringDate) {
+                year = String(stringDate[yearRange])
             }
-            if let monthRange = Range(match.range(withName: "month")) {
-                month = Int(stringDate[monthRange])
+            if let monthRange = Range(match.range(withName: "month"), in: stringDate) {
+                month = String(stringDate[monthRange])
             }
-            if let dayRange = Range(match.range(withName: "day")) {
-                let day = Int(stringDate[monthRange])
+            if let dayRange = Range(match.range(withName: "day"), in: stringDate) {
+                day = String(stringDate[dayRange])
             }
         }
-        var midnightInGMT = Date?
+        var midnightInGMT: Date?
         if year != nil, month != nil, day != nil {
             let midnightString = "\(year)-\(month)-\(day) 00:00:00 +0000"
             if let midnight = formatter.date(from: midnightString) {
                 let secondsInThisDay = Double(midnight.timeIntervalSince(dateInCurrentTimeZone))
                 let secondsInDay = Double(86400)
-                midnightInGMT = Date() - secondsInThisDay - secondsInDay * (days - 1)
+                midnightInGMT = Date() - secondsInThisDay - secondsInDay * Double(days - 1)
             }
         }
-        let array: [MetricsObject.SingleItem] = []
+        var array: [MetricsObject.SingleItem] = []
         if midnightInGMT != nil {
             let count = self.metrics.timeData.count
-            for 0..<count { int in
-                let index = count - 1 - int
+            for int in 0..<count {
+                let index = (count - 1 - int)
                 let item = self.metrics.timeData[index]
-                if item.time < midnightInGMT {
+                if item.time < midnightInGMT! {
                     array.append(item)
                 }
             }
@@ -79,20 +83,25 @@ class MetricsViewModel: ObservableObject {
         return array
     }
     
-    func getDataSum(days: Int, key: String, genre: String?) -> Double {
+    func getDataSum(days: Int, key: String) -> Double {
         var sum = 0.0
         let array = getDataRange(days: days)
         
         for item in array {
-            if let genre = genre {
-                if item.genre = genre {
-                    sum = sum + item.getKeysValue(key: key)
-                }
-            } else {
+            sum = sum + item.getKeysValue(key: key)
+        }
+        return sum
+    }
+    
+    func getDataSum(days: Int, key: String, genre: String) -> Double {
+        var sum = 0.0
+        let array = getDataRange(days: days)
+        
+        for item in array {
+            if item.genre == genre {
                 sum = sum + item.getKeysValue(key: key)
             }
         }
-        
         return sum
     }
 }

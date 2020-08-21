@@ -34,7 +34,7 @@ struct MetricsDayView: View {
                             Spacer()
                         }
                         .padding(.leading, 15)
-                        HorizontalBar(day: self.viewModel.getDataRange(), key: "secondsListened")
+                        HorizontalBar(day: self.viewModel.getDataRange(days: 1), key: "secondsListened")
                             .padding(.horizontal, 30)
                     }
                     .frame(height: 200)
@@ -47,13 +47,13 @@ struct MetricsDayView: View {
                                    .font(.system(size: 15))
                                    .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .padding(.top, 10)
-                                Text("\(Int(self.viewModel.getDailyMetrics().numberOfMeditations)) meditations")
+                                Text("\(Int(self.viewModel.getDataSum(days: 1, key: "numberOfMeditations"))) meditations")
                                    .font(.system(size: 25))
                             }
                             Spacer()
                         }
                         .padding(.leading, 15)
-                        HorizontalBar(day: self.viewModel.getDailyMetrics(), key: "numberOfMeditations")
+                        HorizontalBar(day: self.viewModel.getDataRange(days: 1), key: "numberOfMeditations")
                             .padding(.horizontal, 30)
                    }
                     .frame(height: 200)

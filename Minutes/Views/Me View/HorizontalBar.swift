@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct HorizontalBar: View {
-    var array: [MetricsObject.SingleItem]
+    var array: [(String, Double)]
     var count: CGFloat = 0
     var colorArray: [Color]
     
@@ -19,7 +19,7 @@ struct HorizontalBar: View {
         var tempArray: [(String, Double)] = []
         var count: Double = 0.0
         for item in day {
-            tempArray.append((item.time, item.getKeysValue(key: key)))
+            tempArray.append((item.genre, item.getKeysValue(key: key)))
             count = count + Double(item.getKeysValue(key: key))
         }
         self.array = tempArray

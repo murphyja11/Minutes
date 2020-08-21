@@ -49,8 +49,6 @@
 		D457CDB324EDBFB0007D2815 /* MetricsDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */; };
 		D457CDB524EDC210007D2815 /* MetricsSwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */; };
 		D457CDB924EDFE8E007D2815 /* HorizontalBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB824EDFE8E007D2815 /* HorizontalBar.swift */; };
-		D457CDBB24EE017E007D2815 /* MetricsWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDBA24EE017E007D2815 /* MetricsWeekView.swift */; };
-		D457CDBD24EE081D007D2815 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDBC24EE081D007D2815 /* BarChart.swift */; };
 		D457CDBF24EEBC11007D2815 /* DayViewButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDBE24EEBC11007D2815 /* DayViewButtons.swift */; };
 		D457CDC124EF25C8007D2815 /* MetricsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDC024EF25C8007D2815 /* MetricsViewModel.swift */; };
 		D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */; };
@@ -115,8 +113,6 @@
 		D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsDayView.swift; sourceTree = "<group>"; };
 		D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsSwitchBar.swift; sourceTree = "<group>"; };
 		D457CDB824EDFE8E007D2815 /* HorizontalBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalBar.swift; sourceTree = "<group>"; };
-		D457CDBA24EE017E007D2815 /* MetricsWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsWeekView.swift; sourceTree = "<group>"; };
-		D457CDBC24EE081D007D2815 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		D457CDBE24EEBC11007D2815 /* DayViewButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewButtons.swift; sourceTree = "<group>"; };
 		D457CDC024EF25C8007D2815 /* MetricsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsViewModel.swift; sourceTree = "<group>"; };
 		D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouView.swift; sourceTree = "<group>"; };
@@ -297,8 +293,6 @@
 				D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */,
 				D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */,
 				D457CDB824EDFE8E007D2815 /* HorizontalBar.swift */,
-				D457CDBA24EE017E007D2815 /* MetricsWeekView.swift */,
-				D457CDBC24EE081D007D2815 /* BarChart.swift */,
 				D457CDBE24EEBC11007D2815 /* DayViewButtons.swift */,
 			);
 			path = "Me View";
@@ -489,7 +483,6 @@
 				D430C77924E0D1F8003F85C6 /* MeView.swift in Sources */,
 				D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */,
 				D430C76A24E0D188003F85C6 /* ContinueWithApple.swift in Sources */,
-				D457CDBD24EE081D007D2815 /* BarChart.swift in Sources */,
 				D430C75A24E0D142003F85C6 /* AppDelegate.swift in Sources */,
 				D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */,
 				D430C76B24E0D188003F85C6 /* EscapeButton.swift in Sources */,
@@ -535,7 +528,6 @@
 				D430C79924E0D278003F85C6 /* UserInfo.swift in Sources */,
 				D457CDC124EF25C8007D2815 /* MetricsViewModel.swift in Sources */,
 				D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */,
-				D457CDBB24EE017E007D2815 /* MetricsWeekView.swift in Sources */,
 				D430C79224E0D245003F85C6 /* FBKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
