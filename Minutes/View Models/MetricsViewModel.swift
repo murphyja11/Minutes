@@ -5,7 +5,7 @@
 //  Created by Jack Murphy on 8/20/20.
 //  Copyright © 2020 Jack Murphy. All rights reserved.
 //
-
+import SwiftUI
 import Foundation
 import Combine
 
@@ -13,6 +13,8 @@ class MetricsViewModel: ObservableObject {
     //var objectWillChange = ObservableObjectPublisher()
     @Published var metrics: MetricsObject = .init() //{willSet {objectWillChange.send()}}
     @Published var status: MetricsStatus = .undefined
+    @Published var colorOfGenre: [String: Color] = ["Breathing": Color.blue, "Body Scan": Color(red: 0, green: 0.9, blue: 1)]
+    //[Color(red: 1.0, green: 0.6, blue: 0), Color(red: 0, green: 0.9, blue: 1), Color(red: 0, green: 0.5, blue: 1), Color(red: 1.0, green: 0.6, blue: 1.0)]
     
     enum MetricsStatus {
         case undefined, success, failure
@@ -104,5 +106,39 @@ class MetricsViewModel: ObservableObject {
             }
         }
         return sum
+    }
+    
+    func getHourlyData(days: Int, key: String, timeScale: Int) -> [[String : Double]] {
+        let array = self.getDataRange(days: days)
+        
+        var dictArray: [[String : Double]] = Array(repeating: [:], count: timeScale)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        formatter.timeZone = .current
+        
+        for item in array {
+            let stringDate = formatter.string(from: item.time)
+            if days == 1 {
+                let regex = try? NSRegularExpression(pattern: "(?<hour>\\d{2}):\\d{2}:\\d{2}", options: [])
+                guard let regx = regex else {
+                    print("Regex matched no dates")
+                    return []
+                }
+                if let match = regx.firstMatch(in: stringDate, options: [], range: NSRange(location: 0, length: stringDate.utf16.count)) {
+                    if let hourRange = Range(match.range(withName: "hour"), in: stringDate) {
+                        let hour = Int(stringDate[hourRange]) ?? 0
+                        let index = Int(floor(Double(hour) * Double(timeScale) / Double(24)))
+                        if let currentDictValue = dictArray[index][item.genre] {
+                            dictArray[index][item.genre] = currentDictValue + item.getKeysValue(key: key)
+                        } else {
+                            dictArray[index][item.genre] = item.getKeysValue(key: key)
+                        }
+                    }
+                }
+            } else if days == 7 { }
+        }
+        
+        return dictArray
     }
 }

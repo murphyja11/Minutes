@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct HorizontalBar: View {
+    @EnvironmentObject var viewModel: MetricsViewModel
     var array: [(String, Double)]
     var count: CGFloat = 0
-    var colorArray: [Color]
     
     
     init(data: [MetricsObject.SingleItem], key: String) {
@@ -24,7 +24,6 @@ struct HorizontalBar: View {
         }
         self.array = tempArray
         self.count = count == 0.0 ? CGFloat(1) : CGFloat(count)
-        self.colorArray = [Color.blue, Color(red: 1.0, green: 0.6, blue: 0), Color(red: 0, green: 0.9, blue: 1), Color(red: 0, green: 0.5, blue: 1), Color(red: 1.0, green: 0.6, blue: 1.0)]
     }
     
     
@@ -39,7 +38,7 @@ struct HorizontalBar: View {
                         ForEach(0..<self.array.count) { index in
                             RoundedRectangle(cornerRadius: 1)
                                 .frame(width: CGFloat(self.array[index].1) / self.count * geometry.size.width, height: self.height)
-                                .foregroundColor(self.colorArray[index])
+                                .foregroundColor(self.viewModel.colorOfGenre[self.array[index].0])
                         }
                     }
                 }
@@ -48,7 +47,7 @@ struct HorizontalBar: View {
                         VStack(alignment: .leading) {
                             Text(self.array[index].0)
                                 .font(.system(size: 15))
-                                .foregroundColor(self.colorArray[index])
+                                .foregroundColor(self.viewModel.colorOfGenre[self.array[index].0])
                             Text(self.toMinutes(self.array[index].1))
                                 .font(.system(size: 15))
                         }

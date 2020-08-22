@@ -9,33 +9,97 @@
 import SwiftUI
 
 struct Barchart: View {
+    @EnvironmentObject var viewModel: MetricsViewModel
     var data: [MetricsObject.SingleItem]
     var key: String
     
     var body: some View {
-        GeometryReader { geometry in
+        let array = self.viewModel.getHourlyData(days: 1, key: self.key, timeScale: self.timeScale)
+        let max = self.getMax(array)
+        
+        return GeometryReader { geometry in
             ZStack {
-                HorizontalGraphLines(num: 5)
-                VerticalGraphLines(num: 5)
+                HorizontalGraphLines(num: 3)
+                VStack(spacing: 0) {
+                    ForEach(0..<self.timeScale) { index in
+                        VerticalBar(array[index], max: max)
+                            .frame(height: geometry.size.height)
+                    }
+                }
             }
             .frame(width: geometry.size.width, height: self.height)
         }
     }
     
+    private func getMax(_ array: [[String: Double]]) -> Double {
+        var max = 0.0
+        for item in array {
+            var count = 0.0
+            for (_, value) in item {
+                count = count + Double(value)
+            }
+            if count > max {
+                max = count
+            }
+        }
+        return max
+    }
     
     @Environment(\.colorScheme) var colorScheme
-    private let height: CGFloat = 200
+    private let timeScale: Int = 12
+    private let height: CGFloat = 150
 }
+
+struct VerticalBar: View {
+    @EnvironmentObject var viewModel: MetricsViewModel
+    var arrayOfValues: [Double]
+    var arrayOfGenres: [String]
+    var count: Int
+    var max: Double
+    
+    init(_ dict: [String: Double], max: Double) {
+        var valuesArray: [Double] = []
+        var stringArray: [String] = []
+        
+        for (key, value) in dict {
+            valuesArray.append(Double(value))
+            stringArray.append(key)
+        }
+        
+        self.arrayOfValues = valuesArray
+        self.arrayOfGenres = stringArray
+        self.count = valuesArray.count
+        self.max = max
+    }
+    
+    var body: some View {
+        
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                Spacer()
+                ForEach(0..<self.count, id: \.self) { index in
+                    Rectangle()
+                        .foregroundColor(self.viewModel.colorOfGenre[self.arrayOfGenres[index]])
+                        .frame(width: self.width, height: CGFloat(self.arrayOfValues[index]) * geometry.size.height / CGFloat(self.max))
+                }
+            }
+            .frame(height: geometry.size.height)
+        }
+    }
+    
+    private let width: CGFloat = 20
+}
+
 
 struct HorizontalGraphLines: View {
     var num: Int
-    var array: [String] = ["20m", "", "10m", "", "0m"]
+    var array: [String] = ["20m", "10m", "0m"]
     
     var body: some View {
         GeometryReader { geometry in
-            VStack {
+            VStack(spacing: 0) {
                 ForEach(0..<self.num) { index in
-                    VStack {
+                    VStack(spacing: 0) {
                         HStack {
                             Rectangle()
                                 .frame(width: geometry.size.width - self.offset, height: self.lineHeight)
@@ -49,7 +113,8 @@ struct HorizontalGraphLines: View {
                     }
                 }
             }
-            .frame(width: geometry.size.width, height: geometry.size.height - self.offset)
+            .frame(width: geometry.size.width, height: 100)
+            .padding(0)
         }
     }
     
@@ -80,7 +145,7 @@ struct VerticalGraphLines: View {
                     }
                 }
             }
-            .frame(width: geometry.size.width - self.offset, height: geometry.size.height)
+            .frame(width: geometry.size.width - self.offset, height: 100 + self.offset)
         }
     }
     
