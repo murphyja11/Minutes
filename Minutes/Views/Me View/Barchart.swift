@@ -16,15 +16,21 @@ struct Barchart: View {
     var body: some View {
         let array = self.viewModel.getHourlyData(days: 1, key: self.key, timeScale: self.timeScale)
         let max = self.getMax(array)
+        let item1 = ["Breathing": 200.0]
         
         return GeometryReader { geometry in
             ZStack {
-                HorizontalGraphLines(num: 3)
+                //HorizontalGraphLines(num: 3)
                 VStack(spacing: 0) {
+//                    VerticalBar(item1, max: 200)
+//                    .frame(height: geometry.size.height)
                     ForEach(0..<self.timeScale) { index in
                         VerticalBar(array[index], max: max)
-                            .frame(height: geometry.size.height)
+                            .frame(height: geometry.size.height / CGFloat(1.5))
                     }
+                    BottomLabels()
+                        .frame(width: geometry.size.width)
+                    Divider()
                 }
             }
             .frame(width: geometry.size.width, height: self.height)
@@ -32,7 +38,7 @@ struct Barchart: View {
     }
     
     private func getMax(_ array: [[String: Double]]) -> Double {
-        var max = 0.0
+        var max = 1.0
         for item in array {
             var count = 0.0
             for (_, value) in item {
@@ -47,7 +53,19 @@ struct Barchart: View {
     
     @Environment(\.colorScheme) var colorScheme
     private let timeScale: Int = 12
-    private let height: CGFloat = 150
+    private let height: CGFloat = 80
+}
+
+struct Barchart_Previews: PreviewProvider {
+    static var viewModel = MetricsViewModel()
+    static let item1 = MetricsObject.SingleItem(time: Date(), secondsListened: 200, genre: "Breathing")
+    static let item2 = MetricsObject.SingleItem(time: Date(), secondsListened: 200, genre: "Breathing")
+    static let array = [item1, item2]
+    
+    static var previews: some View {
+        Barchart(data: array, key: "secondsListened")
+        .environmentObject(MetricsViewModel())
+    }
 }
 
 struct VerticalBar: View {
@@ -76,11 +94,11 @@ struct VerticalBar: View {
         
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                Spacer()
+                //Spacer()
                 ForEach(0..<self.count, id: \.self) { index in
                     Rectangle()
                         .foregroundColor(self.viewModel.colorOfGenre[self.arrayOfGenres[index]])
-                        .frame(width: self.width, height: CGFloat(self.arrayOfValues[index]) * geometry.size.height / CGFloat(self.max))
+                        .frame(width: self.width, height: CGFloat(self.arrayOfValues[index] / self.max * Double(geometry.size.height)))
                 }
             }
             .frame(height: geometry.size.height)
@@ -153,3 +171,26 @@ struct VerticalGraphLines: View {
     private let lineHeight: CGFloat = 2
     private let offset: CGFloat = 35
 }
+
+struct BottomLabels: View {
+    
+    var body: some View {
+        GeometryReader { geometry in
+            VStack {
+                Rectangle()
+                    .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
+                    .frame(width: geometry.size.width, height: 2)
+                HStack(spacing: 0) {
+                    Text("00")
+                    Spacer()
+                    Text("06")
+                    Spacer()
+                    Text("12")
+                    Spacer()
+                    Text("18")
+                }
+            }
+        }
+    }
+}
+

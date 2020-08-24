@@ -21,7 +21,7 @@ struct MetricsDayView: View {
        GeometryReader { geometry in
             VStack(spacing: 0) {
                 if self.state == .seconds {
-                    VStack {
+                    VStack(spacing: 0) {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("Today, \(self.getDate())")
@@ -33,12 +33,17 @@ struct MetricsDayView: View {
                             }
                             Spacer()
                         }
+                        .frame(height: 80)
                         .padding(.leading, 15)
+                        .padding(.trailing, 15)
                         HorizontalBar(data: self.viewModel.getDataRange(days: 1), key: "secondsListened")
+                            .frame(height: 120)
                             .padding(.horizontal, 30)
-                        Barchart(data: self.viewModel.getDataRange(days: 1), key: "secondsListened")
-                            .frame(height: 150)
+                            .padding(.bottom, 0)
+                        BarChartView(key: "secondsListened", height: 125)
+                            .frame(height: 200)
                             .padding(.horizontal, 30)
+                            .padding(.bottom, 5)
                     }
                     .frame(height: self.frameHeight - 50)
                     .background(self.colorScheme == .light ? Color.white : Color.black)
@@ -121,8 +126,5 @@ struct MetricsDayView: View {
 //
 //    }
 //}
-
-
-
 
 

@@ -16,11 +16,20 @@ struct HorizontalBar: View {
     
     init(data: [MetricsObject.SingleItem], key: String) {
         
+        var dict: [String: Double] = [:]
+        for item in data {
+            if let val = dict[item.genre] {
+                dict[item.genre] = val + item.getKeysValue(key: key)
+            } else {
+                dict[item.genre] = Double(item.getKeysValue(key: key))
+            }
+        }
+        
         var tempArray: [(String, Double)] = []
         var count: Double = 0.0
-        for item in data {
-            tempArray.append((item.genre, item.getKeysValue(key: key)))
-            count = count + Double(item.getKeysValue(key: key))
+        for (key, value) in dict {
+            tempArray.append((key, value))
+            count = count + value
         }
         self.array = tempArray
         self.count = count == 0.0 ? CGFloat(1) : CGFloat(count)
@@ -36,9 +45,17 @@ struct HorizontalBar: View {
                         .foregroundColor(self.colorScheme == .light ? Color(red: 0.9, green: 0.9, blue: 0.9) : Color(red: 0.1, green: 0.1, blue: 0.1))
                     HStack(spacing: 0) {
                         ForEach(0..<self.array.count) { index in
-                            RoundedRectangle(cornerRadius: 1)
-                                .frame(width: CGFloat(self.array[index].1) / self.count * geometry.size.width, height: self.height)
-                                .foregroundColor(self.viewModel.colorOfGenre[self.array[index].0])
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 1)
+                                    .frame(width: CGFloat(self.array[index].1) / self.count * geometry.size.width, height: self.height)
+                                    .foregroundColor(self.viewModel.colorOfGenre[self.array[index].0])
+                                HStack {
+                                    Text(self.toMinutes(self.array[index].1))
+                                    .font(.system(size: 15))
+                                        .padding(.leading, 5)
+                                    Spacer()
+                                }
+                            }
                         }
                     }
                 }
