@@ -10,8 +10,7 @@ import SwiftUI
 
 struct MetricsWeekView: View {
     @EnvironmentObject var viewModel: MetricsViewModel
-    
-    
+
     @State var state: MetricsDayView.MetricsStatus = .seconds
     
     var body: some View {
@@ -68,7 +67,7 @@ struct MetricsWeekView: View {
                                     .font(.system(size: 15))
                                     .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .padding(.top, 10)
-                                Text(self.numberOfMeditations(avg: true))
+                                Text(self.numberOfMeditations(true))
                                     .font(.system(size: 25))
                             }
                             Spacer()
@@ -120,14 +119,16 @@ struct MetricsWeekView: View {
             return "\(number) meditation"
         } else {
             return "\(number) meditations"
+        }
     }
         
-        private func avgMeditations(_ avg: Bool) -> String {
-            let number = Int(self.viewModel.getDataSum(days: 7, key: "numberOfMeditations"))
-            if avg {
-                return "\(number / 7)"
-            }
+    private func numberOfMeditations(_ avg: Bool) -> String {
+        let number = Int(self.viewModel.getDataSum(days: 7, key: "numberOfMeditations"))
+        if avg {
+            return "\(number / 7)"
         }
+        return ""
+    }
     
     @Environment(\.colorScheme) var colorScheme
     private let frameHeight: CGFloat = 450
