@@ -12,6 +12,7 @@ struct HorizontalBar: View {
     @EnvironmentObject var viewModel: MetricsViewModel
     var array: [(String, Double)]
     var count: CGFloat = 0
+    var key: String
     
     
     init(data: [MetricsObject.SingleItem], key: String) {
@@ -33,6 +34,7 @@ struct HorizontalBar: View {
         }
         self.array = tempArray
         self.count = count == 0.0 ? CGFloat(1) : CGFloat(count)
+        self.key = key
     }
     
     
@@ -50,9 +52,15 @@ struct HorizontalBar: View {
                                     .frame(width: CGFloat(self.array[index].1) / self.count * geometry.size.width, height: self.height)
                                     .foregroundColor(self.viewModel.colorOfGenre[self.array[index].0])
                                 HStack {
-                                    Text(self.toMinutes(self.array[index].1))
-                                    .font(.system(size: 15))
+                                    if self.key == "secondsListened" {
+                                        Text(self.toMinutes(self.array[index].1))
+                                        .font(.system(size: 15))
                                         .padding(.leading, 5)
+                                    } else {
+                                        Text(self.toNumber(self.array[index].1))
+                                        .font(.system(size: 15))
+                                        .padding(.leading, 5)
+                                    }
                                     Spacer()
                                 }
                             }
@@ -65,8 +73,13 @@ struct HorizontalBar: View {
                             Text(self.array[index].0)
                                 .font(.system(size: 15))
                                 .foregroundColor(self.viewModel.colorOfGenre[self.array[index].0])
-                            Text(self.toMinutes(self.array[index].1))
+                            if self.key == "secondsListened" {
+                                Text(self.toMinutes(self.array[index].1))
                                 .font(.system(size: 15))
+                            } else {
+                                Text(self.toNumber(self.array[index].1))
+                                .font(.system(size: 15))
+                            }
                         }
                     }
                     Spacer()
@@ -79,6 +92,10 @@ struct HorizontalBar: View {
         let int = Int(number)
         let minutes = "\((int % 3600) / 60)"
         return minutes + "m"
+    }
+    
+    private func toNumber(_ number: Double) -> String {
+        return "\(Int(number))"
     }
     
     @Environment(\.colorScheme) var colorScheme

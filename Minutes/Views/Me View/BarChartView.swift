@@ -12,10 +12,12 @@ struct BarChartView: View {
     @EnvironmentObject var viewModel: MetricsViewModel
     var key: String
     var height: CGFloat
+    var day: Int
     
     var body: some View {
-        let array = self.viewModel.getHourlyData(days: 1, key: self.key, timeScale: self.timeScale)
-        let max = self.getMax(array)
+        var timeScale: Int = 7
+        if self.day == 1 { timeScale = 12 }
+        let array = self.viewModel.getHourlyData(days: self.day, key: self.key, timeScale: timeScale)
         
         return GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -29,10 +31,10 @@ struct BarChartView: View {
                         Spacer()
                     }
                     HStack(spacing: 0) {
-                        ForEach(0..<self.timeScale) { index in
+                        ForEach(0..<timeScale) { index in
                             VerticalBarView(array[index], max: self.getMax(array))
                                 .padding(.trailing, 5)
-                                .frame(width: (geometry.size.width - self.trailingPadding) / CGFloat(self.timeScale), height: self.height)
+                                .frame(width: (geometry.size.width - self.trailingPadding) / CGFloat(timeScale), height: self.height)
                         }
                     }
                     .padding(.trailing, self.trailingPadding)
@@ -41,7 +43,7 @@ struct BarChartView: View {
                     .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
                     .frame(height: 2)
                     .padding(.trailing, self.trailingPadding)
-                BarLabelsView()
+                BarLabelsView(day: self.day)
             }
             .frame(width: geometry.size.width, height: self.height)
         }
@@ -62,14 +64,13 @@ struct BarChartView: View {
     }
     
     @Environment(\.colorScheme) var colorScheme
-    private let timeScale: Int = 12
     private let fontSize: CGFloat = 12
     private let trailingPadding: CGFloat = 0
 }
 
 struct BarChartView_Previews: PreviewProvider {
     static var previews: some View {
-        BarChartView(key: "secondsListened", height: 100)
+        BarChartView(key: "secondsListened", height: 100, day: 1)
         .environmentObject(MetricsViewModel())
     }
 }
@@ -117,21 +118,25 @@ struct VerticalBarView: View {
 }
 
 struct BarLabelsView: View {
+    var day: Int
     
     var body: some View {
-        HStack(spacing: 2) {
-            Text("00")
-                .font(.system(size: self.fontSize))
-            Spacer()
-            Text("06")
-                .font(.system(size: self.fontSize))
-            Spacer()
-            Text("12")
-                .font(.system(size: self.fontSize))
-            Spacer()
-            Text("18")
-                .font(.system(size: self.fontSize))
-            Spacer()
+        var array: [String] = []
+        if self.day == 1 {
+            array = ["00", "06", "12", "18"]
+        } else if self.day == 7 {
+            array = ["1", "2", "3", "4", "5", "6", "7"]
+        }
+        
+        return HStack(spacing: 2) {
+            if self.day == 7 {
+                Spacer()
+            }
+            ForEach(0..<array.count) { index in
+                Text(array[index])
+                    .font(.system(size: self.fontSize))
+                Spacer()
+            }
         }
     }
     

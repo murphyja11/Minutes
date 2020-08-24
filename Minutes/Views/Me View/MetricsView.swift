@@ -38,7 +38,7 @@ struct MetricsView: View {
                     }
                 } else if self.view == .week {
                     if self.viewModel.status == .success {
-                        Text("Week View")
+                        MetricsWeekView()
                     } else {
                         VStack {
                             Spacer()

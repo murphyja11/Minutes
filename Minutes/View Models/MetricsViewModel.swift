@@ -117,14 +117,16 @@ class MetricsViewModel: ObservableObject {
         formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         formatter.timeZone = .current
         
-        for item in array {
-            let stringDate = formatter.string(from: item.time)
-            if days == 1 {
-                let regex = try? NSRegularExpression(pattern: "(?<hour>\\d{2}):\\d{2}:\\d{2}", options: [])
-                guard let regx = regex else {
-                    print("Regex matched no dates")
-                    return []
-                }
+        if days == 1 {
+            let regex = try? NSRegularExpression(pattern: "(?<hour>\\d{2}):\\d{2}:\\d{2}", options: [])
+            guard let regx = regex else {
+                print("Regex matched no dates")
+                return []
+            }
+            
+            for item in array {
+                let stringDate = formatter.string(from: item.time)
+                
                 if let match = regx.firstMatch(in: stringDate, options: [], range: NSRange(location: 0, length: stringDate.utf16.count)) {
                     if let hourRange = Range(match.range(withName: "hour"), in: stringDate) {
                         let hour = Int(stringDate[hourRange]) ?? 0
@@ -136,7 +138,43 @@ class MetricsViewModel: ObservableObject {
                         }
                     }
                 }
-            } else if days == 7 { }
+            }
+        } else if days == 7 {
+            let regex = try? NSRegularExpression(pattern: "\\d{4}/\\d{2}/(?<day>\\d{2})", options: [])
+            guard let regx = regex else {
+                print("Regex matched no dates")
+                return []
+            }
+            let stringDate = formatter.string(from: array[0].time)
+            var max = 0
+            if let match = regx.firstMatch(in: stringDate, options: [], range: NSRange(location: 0, length: stringDate.utf16.count)) {
+                if let dayRange = Range(match.range(withName: "day"), in: stringDate) {
+                    max = Int(stringDate[dayRange]) ?? 0
+                }
+            }
+            var arrayOfBigDays: [Int] = []
+            
+            for item in array {
+                let stringDate = formatter.string(from: item.time)
+            
+                if let match = regx.firstMatch(in: stringDate, options: [], range: NSRange(location: 0, length: stringDate.utf16.count)) {
+                    if let dayRange = Range(match.range(withName: "day"), in: stringDate) {
+                        let day = Int(stringDate[dayRange]) ?? 0
+                        var index: Int = 0
+                        if max - day >= 0 {
+                            index = 6 - (max - day)
+                        } else {
+                            arrayOfBigDays.append(day)
+                            index = 6 - (max + (arrayOfBigDays[0] - day))
+                        }
+                        if let currentDictValue = dictArray[index][item.genre] {
+                            dictArray[index][item.genre] = currentDictValue + item.getKeysValue(key: key)
+                        } else {
+                            dictArray[index][item.genre] = item.getKeysValue(key: key)
+                        }
+                    }
+                }
+            }
         }
         
         return dictArray

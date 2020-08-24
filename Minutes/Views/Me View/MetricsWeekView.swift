@@ -1,21 +1,18 @@
 //
-//  MetricsDayView.swift
+//  MetricsWeekView.swift
 //  Minutes
 //
-//  Created by Jack Murphy on 8/19/20.
+//  Created by Jack Murphy on 8/24/20.
 //  Copyright © 2020 Jack Murphy. All rights reserved.
 //
 
 import SwiftUI
 
-struct MetricsDayView: View {
+struct MetricsWeekView: View {
     @EnvironmentObject var viewModel: MetricsViewModel
     
-    enum MetricsStatus {
-        case number, seconds
-    }
     
-    @State var state: MetricsStatus = .seconds
+    @State var state: MetricsDayView.MetricsStatus = .seconds
     
     var body: some View {
        GeometryReader { geometry in
@@ -24,11 +21,19 @@ struct MetricsDayView: View {
                     VStack(spacing: 0) {
                         HStack {
                             VStack(alignment: .leading) {
-                                Text("Today, \(self.getDate())")
+                                Text("Daily Average")
                                     .font(.system(size: 15))
                                     .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .padding(.top, 10)
-                                Text("\(self.toMinutes(self.viewModel.getDataSum(days: 1, key: "secondsListened")))")
+                                Text("\(self.toMinutes(self.viewModel.getDataSum(days: 7, key: "secondsListened") / 7))")
+                                    .font(.system(size: 25))
+                            }
+                            VStack(alignment: .leading) {
+                                Text("Total")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
+                                    .padding(.top, 10)
+                                Text("\(self.toMinutes(self.viewModel.getDataSum(days: 7, key: "secondsListened")))")
                                     .font(.system(size: 25))
                             }
                             Spacer()
@@ -36,11 +41,11 @@ struct MetricsDayView: View {
                         .frame(height: 80)
                         .padding(.leading, 15)
                         .padding(.trailing, 15)
-                        HorizontalBar(data: self.viewModel.getDataRange(days: 1), key: "secondsListened")
+                        HorizontalBar(data: self.viewModel.getDataRange(days: 7), key: "secondsListened")
                             .frame(height: 120)
                             .padding(.horizontal, 30)
                             .padding(.bottom, 0)
-                        BarChartView(key: "secondsListened", height: 125, day: 1)
+                        BarChartView(key: "secondsListened", height: 125, day: 7)
                             .frame(height: 200)
                             .padding(.horizontal, 30)
                             .padding(.bottom, 5)
@@ -51,11 +56,19 @@ struct MetricsDayView: View {
                     VStack(spacing: 0) {
                         HStack {
                             VStack(alignment: .leading) {
-                                Text("Today, \(self.getDate())")
+                                Text("Daily Average")
                                     .font(.system(size: 15))
                                     .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .padding(.top, 10)
-                                Text(self.numberOfMeditations())
+                                Text(self.numberOfMeditations(true))
+                                    .font(.system(size: 25))
+                            }
+                            VStack(alignment: .leading) {
+                                Text("Total")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(self.colorScheme == .light ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color(red: 0.8, green: 0.8, blue: 0.8))
+                                    .padding(.top, 10)
+                                Text(self.numberOfMeditations(avg: true))
                                     .font(.system(size: 25))
                             }
                             Spacer()
@@ -63,11 +76,11 @@ struct MetricsDayView: View {
                         .frame(height: 80)
                         .padding(.leading, 15)
                         .padding(.trailing, 15)
-                        HorizontalBar(data: self.viewModel.getDataRange(days: 1), key: "numberOfMeditations")
+                        HorizontalBar(data: self.viewModel.getDataRange(days: 7), key: "numberOfMeditations")
                             .frame(height: 120)
                             .padding(.horizontal, 30)
                             .padding(.bottom, 0)
-                        BarChartView(key: "numberOfMeditations", height: 125, day: 1)
+                        BarChartView(key: "numberOfMeditations", height: 125, day: 7)
                             .frame(height: 200)
                             .padding(.horizontal, 30)
                             .padding(.bottom, 5)
@@ -102,37 +115,21 @@ struct MetricsDayView: View {
     }
     
     private func numberOfMeditations() -> String {
-        let number = Int(self.viewModel.getDataSum(days: 1, key: "numberOfMeditations"))
+        let number = Int(self.viewModel.getDataSum(days: 7, key: "numberOfMeditations"))
         if number == 1 {
             return "\(number) meditation"
         } else {
             return "\(number) meditations"
-        }
     }
+        
+        private func avgMeditations(_ avg: Bool) -> String {
+            let number = Int(self.viewModel.getDataSum(days: 7, key: "numberOfMeditations"))
+            if avg {
+                return "\(number / 7)"
+            }
+        }
     
     @Environment(\.colorScheme) var colorScheme
     private let frameHeight: CGFloat = 450
 }
-
-
-//struct MetricsDayView_Previews: PreviewProvider {
-//    @ObservedObject static var userInfo = UserInfo()
-//    
-//    static let date = ISO8601DateFormatter.string(from: Date(), timeZone: TimeZone.current, formatOptions: [.withFullDate, .withDashSeparatorInDate])
-//    static let day: MetricsObject.DailyMetric = userInfo.metrics.daily[date] ?? MetricsObject.DailyMetric()
-//    
-//    static var previews: some View {
-//        MetricsDayView()
-//        .environmentObject(userInfo)
-//    }
-//}
-
-//struct MetricsDaySeconds: View {
-//    @EnvironmentObject var viewModel: GenreViewModel
-//
-//    var body: some View {
-//
-//    }
-//}
-
 
