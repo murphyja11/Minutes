@@ -46,6 +46,11 @@
 		D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */; };
 		D457CDAA24ECA191007D2815 /* GenreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDA924ECA191007D2815 /* GenreViewModel.swift */; };
 		D457CDAF24ED6FCD007D2815 /* GenreEscapeChevron.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDAE24ED6FCD007D2815 /* GenreEscapeChevron.swift */; };
+		D457CDB324EDBFB0007D2815 /* MetricsDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */; };
+		D457CDB524EDC210007D2815 /* MetricsSwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */; };
+		D457CDB924EDFE8E007D2815 /* HorizontalBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDB824EDFE8E007D2815 /* HorizontalBar.swift */; };
+		D457CDBF24EEBC11007D2815 /* DayViewButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDBE24EEBC11007D2815 /* DayViewButtons.swift */; };
+		D457CDC124EF25C8007D2815 /* MetricsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457CDC024EF25C8007D2815 /* MetricsViewModel.swift */; };
 		D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */; };
 		D47AA9F724EB622C0085C8C1 /* GenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47AA9F624EB622C0085C8C1 /* GenresView.swift */; };
 		D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4954B2A24EAC5970092B75C /* SwitchBar.swift */; };
@@ -54,7 +59,9 @@
 		D4C0220424EC48D30010E171 /* MetricsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0220324EC48D30010E171 /* MetricsObject.swift */; };
 		D4C0220624EC57B90010E171 /* FBGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0220524EC57B90010E171 /* FBGenre.swift */; };
 		D4C0220824EC5D370010E171 /* GenreItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0220724EC5D370010E171 /* GenreItemView.swift */; };
-		D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C5040724E6005D00E1D540 /* FBMetrics.swift */; };
+		D4D80C7F24F4301F00C3BD22 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D80C7E24F4301F00C3BD22 /* BarChartView.swift */; };
+		D4D80C8124F443A400C3BD22 /* MetricsWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D80C8024F443A400C3BD22 /* MetricsWeekView.swift */; };
+		D4D80C8524F5E1F600C3BD22 /* MetricsTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D80C8424F5E1F600C3BD22 /* MetricsTotalView.swift */; };
 		D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC524E8519C0000014D /* SigninView.swift */; };
 		D4DEAFC824E854840000014D /* EscapeChev.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC724E854840000014D /* EscapeChev.swift */; };
 		D4DEAFCA24E875080000014D /* FBRecommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC924E875080000014D /* FBRecommendations.swift */; };
@@ -106,6 +113,11 @@
 		D4324E5824E46CC000F490F3 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 		D457CDA924ECA191007D2815 /* GenreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewModel.swift; sourceTree = "<group>"; };
 		D457CDAE24ED6FCD007D2815 /* GenreEscapeChevron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEscapeChevron.swift; sourceTree = "<group>"; };
+		D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsDayView.swift; sourceTree = "<group>"; };
+		D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsSwitchBar.swift; sourceTree = "<group>"; };
+		D457CDB824EDFE8E007D2815 /* HorizontalBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalBar.swift; sourceTree = "<group>"; };
+		D457CDBE24EEBC11007D2815 /* DayViewButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewButtons.swift; sourceTree = "<group>"; };
+		D457CDC024EF25C8007D2815 /* MetricsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsViewModel.swift; sourceTree = "<group>"; };
 		D47AA9F424EB61BC0085C8C1 /* ForYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouView.swift; sourceTree = "<group>"; };
 		D47AA9F624EB622C0085C8C1 /* GenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresView.swift; sourceTree = "<group>"; };
 		D4954B2A24EAC5970092B75C /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
@@ -114,8 +126,10 @@
 		D4C0220324EC48D30010E171 /* MetricsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsObject.swift; sourceTree = "<group>"; };
 		D4C0220524EC57B90010E171 /* FBGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBGenre.swift; sourceTree = "<group>"; };
 		D4C0220724EC5D370010E171 /* GenreItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreItemView.swift; sourceTree = "<group>"; };
-		D4C5040724E6005D00E1D540 /* FBMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBMetrics.swift; sourceTree = "<group>"; };
 		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
+		D4D80C7E24F4301F00C3BD22 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
+		D4D80C8024F443A400C3BD22 /* MetricsWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsWeekView.swift; sourceTree = "<group>"; };
+		D4D80C8424F5E1F600C3BD22 /* MetricsTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsTotalView.swift; sourceTree = "<group>"; };
 		D4DEAFC524E8519C0000014D /* SigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninView.swift; sourceTree = "<group>"; };
 		D4DEAFC724E854840000014D /* EscapeChev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeChev.swift; sourceTree = "<group>"; };
 		D4DEAFC924E875080000014D /* FBRecommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBRecommendations.swift; sourceTree = "<group>"; };
@@ -229,7 +243,6 @@
 				D430C78924E0D244003F85C6 /* FBFirestoreError.swift */,
 				D430C78D24E0D245003F85C6 /* FBKeys.swift */,
 				D430C78C24E0D245003F85C6 /* FBUser.swift */,
-				D4C5040724E6005D00E1D540 /* FBMetrics.swift */,
 				D4C0220324EC48D30010E171 /* MetricsObject.swift */,
 				D4DEAFC924E875080000014D /* FBRecommendations.swift */,
 				D430C78B24E0D244003F85C6 /* FBAudioMetadata.swift */,
@@ -283,6 +296,13 @@
 				D430C77824E0D1F8003F85C6 /* MeView.swift */,
 				D4F7E6F024E6CB24009785B2 /* SettingsView.swift */,
 				D4954B2C24EAD6510092B75C /* MetricsView.swift */,
+				D457CDB224EDBFB0007D2815 /* MetricsDayView.swift */,
+				D457CDB424EDC210007D2815 /* MetricsSwitchBar.swift */,
+				D457CDB824EDFE8E007D2815 /* HorizontalBar.swift */,
+				D457CDBE24EEBC11007D2815 /* DayViewButtons.swift */,
+				D4D80C7E24F4301F00C3BD22 /* BarChartView.swift */,
+				D4D80C8024F443A400C3BD22 /* MetricsWeekView.swift */,
+				D4D80C8424F5E1F600C3BD22 /* MetricsTotalView.swift */,
 			);
 			path = "Me View";
 			sourceTree = "<group>";
@@ -318,6 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				D457CDA924ECA191007D2815 /* GenreViewModel.swift */,
+				D457CDC024EF25C8007D2815 /* MetricsViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -466,11 +487,12 @@
 			files = (
 				D4F7E6F124E6CB24009785B2 /* SettingsView.swift in Sources */,
 				D4F055CA24E9DE9800E2FA29 /* AudioEscapeButton.swift in Sources */,
+				D457CDB324EDBFB0007D2815 /* MetricsDayView.swift in Sources */,
 				D4F7E6F324E70025009785B2 /* MainView.swift in Sources */,
 				D430C77924E0D1F8003F85C6 /* MeView.swift in Sources */,
 				D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */,
 				D430C76A24E0D188003F85C6 /* ContinueWithApple.swift in Sources */,
-				D4C5040824E6005D00E1D540 /* FBMetrics.swift in Sources */,
+				D4D80C8524F5E1F600C3BD22 /* MetricsTotalView.swift in Sources */,
 				D430C75A24E0D142003F85C6 /* AppDelegate.swift in Sources */,
 				D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */,
 				D430C76B24E0D188003F85C6 /* EscapeButton.swift in Sources */,
@@ -492,17 +514,22 @@
 				D430C77324E0D1A6003F85C6 /* SignupView.swift in Sources */,
 				D430C77D24E0D203003F85C6 /* HomeView.swift in Sources */,
 				D430C77224E0D1A6003F85C6 /* SignupMethodsView.swift in Sources */,
+				D457CDBF24EEBC11007D2815 /* DayViewButtons.swift in Sources */,
 				D430C79124E0D245003F85C6 /* FBAudioMetadata.swift in Sources */,
 				D430C78124E0D210003F85C6 /* AudioView.swift in Sources */,
+				D4D80C7F24F4301F00C3BD22 /* BarChartView.swift in Sources */,
 				D430C78F24E0D245003F85C6 /* FBFirestore.swift in Sources */,
 				D4C0220424EC48D30010E171 /* MetricsObject.swift in Sources */,
 				D430C77C24E0D203003F85C6 /* AudioItemView.swift in Sources */,
 				D457CDAF24ED6FCD007D2815 /* GenreEscapeChevron.swift in Sources */,
+				D457CDB524EDC210007D2815 /* MetricsSwitchBar.swift in Sources */,
 				D457CDAA24ECA191007D2815 /* GenreViewModel.swift in Sources */,
 				D430C78824E0D23C003F85C6 /* AudioFile.swift in Sources */,
 				D430C79B24E0D278003F85C6 /* FBAuthError.swift in Sources */,
+				D457CDB924EDFE8E007D2815 /* HorizontalBar.swift in Sources */,
 				D4DEAFCA24E875080000014D /* FBRecommendations.swift in Sources */,
 				D4C0220624EC57B90010E171 /* FBGenre.swift in Sources */,
+				D4D80C8124F443A400C3BD22 /* MetricsWeekView.swift in Sources */,
 				D4954B2D24EAD6510092B75C /* MetricsView.swift in Sources */,
 				D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */,
 				D47AA9F724EB622C0085C8C1 /* GenresView.swift in Sources */,
@@ -511,6 +538,7 @@
 				D4954B2B24EAC5970092B75C /* SwitchBar.swift in Sources */,
 				D430C79C24E0D278003F85C6 /* FBAuth.swift in Sources */,
 				D430C79924E0D278003F85C6 /* UserInfo.swift in Sources */,
+				D457CDC124EF25C8007D2815 /* MetricsViewModel.swift in Sources */,
 				D47AA9F524EB61BC0085C8C1 /* ForYouView.swift in Sources */,
 				D430C79224E0D245003F85C6 /* FBKeys.swift in Sources */,
 			);

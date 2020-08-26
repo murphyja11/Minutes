@@ -9,30 +9,71 @@
 import SwiftUI
 
 struct MetricsView: View {
-    @EnvironmentObject var userInfo: UserInfo
+    @EnvironmentObject var viewModel: MetricsViewModel
+    var uid: String
+    
+    enum ViewStatus {
+        case day, week, total
+    }
+    
+    @State var view: ViewStatus = .day
+    
     
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Total Minutes Meditated: " + self.toMinutesSeconds(self.userInfo.metrics.secondsListened))
-                .font(.system(size: 20))
-            Text("Number of Meditations: \(self.userInfo.metrics.numberOfMeditations)")
-                .font(.system(size: 20))
-            Spacer()
+        GeometryReader { geometry in
+            VStack {
+                MetricsSwitchBar(view: self.$view)
+                .frame(height: 30)
+                    .padding(.top, 10)
+                    .padding(.bottom, 20)
+                if self.view == .day {
+                    if self.viewModel.status == .success {
+                        MetricsDayView()
+                    } else {
+                        VStack {
+                            Spacer()
+                            Text("loading")
+                            Spacer()
+                        }
+                    }
+                } else if self.view == .week {
+                    if self.viewModel.status == .success {
+                        MetricsWeekView()
+                    } else {
+                        VStack {
+                            Spacer()
+                            Text("loading")
+                            Spacer()
+                        }
+                    }
+                } else {
+                    if self.viewModel.status == .success {
+                        MetricsTotalView()
+                    } else {
+                        VStack {
+                            Spacer()
+                            Text("loading")
+                            Spacer()
+                        }
+                    }
+                }
+                Spacer()
+            }
+            .frame(height: geometry.size.height)
+            .background(self.colorScheme == .light ? Color(red: 0.95, green: 0.95, blue: 0.95) : Color(red: 0.05, green: 0.05, blue: 0.05))
+        }
+        .onAppear {
+            self.viewModel.getMetrics(uid: self.uid)
         }
     }
     
-    private func toMinutesSeconds (_ number: Double) -> String {
-        let int = Int(number)
-        let minutes = "\((int % 3600) / 60)"
-        let seconds = "\((int % 3600) % 60)"
-        return minutes + ":" + (seconds.count == 1 ? "0" + seconds : seconds)
-    }
+    @Environment(\.colorScheme) var colorScheme
 }
 
-struct MetricsView_Previews: PreviewProvider {
-    static var previews: some View {
-        MetricsView()
-            .environmentObject(UserInfo())
-    }
-}
+
+//struct MetricsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MetricsView()
+//            .environmentObject(UserInfo())
+//    }
+//}

@@ -11,14 +11,10 @@ import Foundation
 
 struct MeView: View {
     @EnvironmentObject var userInfo: UserInfo
+    var viewModel = MetricsViewModel()
     @Binding var showSettings: Bool
     
-    enum SubView {
-        case metrics, activity
-    }
-    
-    @State var subView: SubView = .metrics
-    
+
     @State var errorString: String?
     @State var showAlert = false
     
@@ -48,28 +44,13 @@ struct MeView: View {
                 .padding(0)
                 Divider()
                     .padding(0)
-                MetricsView()
+                MetricsView(uid: self.userInfo.user.uid)
+                    .environmentObject(self.viewModel)
+                Spacer()
             }
         }
-//        .onAppear {
-//            if self.userInfo.user.uid == nil || self.userInfo.user.uid == "" { return }
-//        }
+        
     }
-    
-//    private func retrieveMetrics(uid: String) {
-//        self.userInfo.configureMetricsSnapshotListener()
-//        print("retrieving Metrics COntentView")
-//        // retrieve metrics
-//        FBFirestore.retrieveMetrics(uid: uid) { result in
-//            switch result {
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            case .success(let metrics):
-//                self.userInfo.metrics.secondsListened = metrics.secondsListened
-//                self.userInfo.metrics.numberOfMeditations = metrics.numberOfMeditations
-//            }
-//        }
-//    }
 }
 
 

@@ -13,6 +13,7 @@ import FirebaseAuth
 struct MainView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
+    @EnvironmentObject var genreViewModel: GenreViewModel
     
     @State private var selection = 0
     @State var showAudioView: Bool = false
@@ -24,6 +25,7 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $selection){
             HomeView(showAudioView: self.$showAudioView)
+                .environmentObject(self.genreViewModel)
                 .font(.title)
                 .tabItem {
                     VStack {
@@ -82,6 +84,14 @@ struct MainView: View {
         }
         // retrieve recommendations, goes though userInfo method to initialize array of strings as AudioMetadata objects
         self.userInfo.getRecommendationsMetadata { result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success( _):
+                break
+            }
+        }
+        self.genreViewModel.setGenres { result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)

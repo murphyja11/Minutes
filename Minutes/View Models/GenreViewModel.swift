@@ -10,15 +10,14 @@ import Foundation
 import FirebaseFirestore
 
 class GenreViewModel: ObservableObject {
-    @Published var genres: [FBGenre] = []    
-    
+    @Published var genres: [FBGenre]?
     @Published var dictOfMetadataArrays: [String : [FBAudioMetadata]] = [:]
     
-    enum Status {
+    enum GenreStatus {
         case undefined, success, failure
     }
-    @Published var status: Status = .success
-    @Published var audioSubviewStatus: Status = .success
+    @Published var status: GenreStatus = .undefined
+    @Published var audioSubviewStatus: GenreStatus = .undefined
     
     enum SelectedGenreEnum {
         case none, breath, body_scan
@@ -30,6 +29,7 @@ class GenreViewModel: ObservableObject {
     @Published var reloading: Bool = false {
            didSet {
                if !oldValue && reloading {
+                   self.genres = []
                    self.setGenres { result in
                        switch result {
                        case .failure(let error):
@@ -44,7 +44,7 @@ class GenreViewModel: ObservableObject {
        }
     
     func setGenres(completion: @escaping (Result<Bool, Error>) -> ()) {
-        if genres.count == 0 {
+        if genres == nil || genres!.count == 0 {
             FBFirestore.retrieveGenres { result in
                 switch result {
                 case .failure(let error):
@@ -110,7 +110,14 @@ class GenreViewModel: ObservableObject {
         }
     }
     
-    func selectGenre(_ genre: String) {
+    func getMetadataArray () -> [FBAudioMetadata] {
+        guard let genre = self.selectedGenre else {
+            return []
+        }
+        return self.dictOfMetadataArrays[genre.genre] ?? []
+    }
+    
+    func selectGenre(for genre: String) {
         if genre == "breath" {
             self.selectedGenreEnum = .breath
         } else if genre == "body_scan" {
@@ -121,7 +128,7 @@ class GenreViewModel: ObservableObject {
             self.selectedGenre = nil
             return
         }
-        for fbgenre in self.genres {
+        for fbgenre in self.genres ?? [] {
             if fbgenre.genre == genre {
                 self.selectedGenre = fbgenre
                 return

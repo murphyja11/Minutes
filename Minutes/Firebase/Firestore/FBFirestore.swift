@@ -65,25 +65,7 @@ enum FBFirestore {
             }
         }
     }
-    
-//    static func retrieveMetrics(uid: String, completion: @escaping (Result<FBMetrics, Error>) -> ()) {
-//        let reference = Firestore
-//            .firestore()
-//            .collection(FBKeys.CollectionPath.metrics)
-//            .document(uid)
-//        getDocument(for: reference) { result in
-//            switch result {
-//            case .failure(let error):
-//                completion(.failure(error))
-//            case .success(let data):
-//                guard let metrics = FBMetrics(documentData: data) else {
-//                    completion(.failure(FirestoreError.noMetrics))
-//                    return
-//                }
-//                completion(.success(metrics))
-//            }
-//        }
-//    }
+
     
     static func retrieveGenres(completion: @escaping (Result<[FBGenre], Error>) -> ()){
         let reference = Firestore
@@ -107,6 +89,9 @@ enum FBFirestore {
     }
     
     static func retrieveMetrics(uid: String, completion: @escaping (Result<MetricsObject, Error>) -> ()) {
+        if uid == "" {
+            completion(.failure(FirestoreError.noUser))
+        }
         let reference = Firestore
                     .firestore()
                     .collection(FBKeys.CollectionPath.metrics)
@@ -166,7 +151,8 @@ enum FBFirestore {
                     "didRewind": data[2],
                     "didFastForward": data[3],
                     "didSeek": data[4],
-                    "time": Date(timeIntervalSinceNow: Double(TimeZone.current.secondsFromGMT()))
+                    "time": Date(),
+                    "usersCurrentTime": Date().description(with: .current)
             ]) { error in
                 if let error = error {
                     completion(.failure(error))
@@ -193,7 +179,7 @@ enum FBFirestore {
     }
     
     static func getDocument(for reference: DocumentReference, completion: @escaping (Result<[String : Any], Error>) -> ()) {
-        print("starting network call for \(reference)")
+        print("starting network call for \(reference.path)")
         reference.getDocument { (documentSnapshot, err) in
             if let err = err {
                 completion(.failure(err))

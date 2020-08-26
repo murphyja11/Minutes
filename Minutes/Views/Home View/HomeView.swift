@@ -11,7 +11,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var userInfo: UserInfo
     @EnvironmentObject var audioFile: AudioFile
-    var genreViewModel = GenreViewModel()
+    @EnvironmentObject var genreViewModel:GenreViewModel
     
     @Binding var showAudioView: Bool
     
