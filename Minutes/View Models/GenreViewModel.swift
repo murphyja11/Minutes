@@ -54,6 +54,7 @@ class GenreViewModel: ObservableObject {
                 case .success(let genres):
                     self.genres = genres
                     self.status = .success
+                    self.objectWillChange.send()
                     completion(.success(true))
                     return
                 }
@@ -62,6 +63,13 @@ class GenreViewModel: ObservableObject {
             completion(.success(true))
             return
         }
+    }
+    
+    func getMetadataArray() -> [FBAudioMetadata] {
+        if self.selectedGenre != nil {
+            return  self.dictOfMetadataArrays[self.selectedGenre!.genre] ?? []
+        }
+        return []
     }
     
     // add completion

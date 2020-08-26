@@ -25,7 +25,7 @@ struct GenresView: View {
                             .frame(width: geometry.size.width * 0.9, height: 100)
                             .padding(.horizontal, geometry.size.width * 0.1)
                     }
-                    
+
                     // So that the ScrollView doesn't initialize empty:
                     if genres.count == 0 {
                         HStack {
@@ -51,21 +51,6 @@ struct AudioSubView: View {
     @Binding var showAudioView: Bool
     
     var body: some View {
-//        if self.viewModel.audioSubviewStatus == .undefined {
-//            return VStack {
-//                GenreEscapeChevron(viewModel: self.viewModel)
-//                Spacer()
-//                Text("loading")
-//                Spacer()
-//            }
-//        } else if self.viewModel.audioSubviewStatus == .failure {
-//            return VStack {
-//                GenreEscapeChevron(viewModel: self.viewModel)
-//                Spacer()
-//                Text("failed.  Uh oh")
-//                Spacer()
-//            }
-//        } else {
         GeometryReader { geometry in
             VStack {
                 GenreEscapeChevron(viewModel: self.viewModel)
@@ -98,4 +83,3 @@ struct AudioSubView: View {
         }
     }
 }
-
