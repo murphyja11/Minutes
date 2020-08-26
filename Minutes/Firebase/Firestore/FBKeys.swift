@@ -24,6 +24,7 @@ enum FBKeys {
         static let email = "email"
         static let likes = "likes"
         static let recommendations = "recommendations"
+        static let accountCreated = "accountCreated"
     }
     
     enum Recommendations {

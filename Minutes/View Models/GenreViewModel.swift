@@ -102,6 +102,13 @@ class GenreViewModel: ObservableObject {
         }
     }
     
+    func getMetadataArray () -> [FBAudioMetadata] {
+        guard let genre = self.selectedGenre else {
+            return []
+        }
+        return self.dictOfMetadataArrays[genre.genre] ?? []
+    }
+    
     func selectGenre(for genre: String) {
         if genre == "breath" {
             self.selectedGenreEnum = .breath

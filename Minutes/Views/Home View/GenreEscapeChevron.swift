@@ -14,7 +14,7 @@ struct GenreEscapeChevron: View {
     var body: some View {
         Button(action: {
             withAnimation {
-                self.viewModel.selectedGenre = .none
+                self.viewModel.selectGenre(for: "")
             }
         }) {
             Image(systemName: "chevron.left").resizable()

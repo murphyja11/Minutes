@@ -106,9 +106,9 @@ struct MetricsObject {
             self.secondsListened = secondsListened
         }
         
-        func getKeysValue(_ key: String) -> Any {
+        func getKeysValue(_ key: String) -> Double {
             if key == "numberOfMeditations" {
-                return self.numberOfMeditations
+                return Double(self.numberOfMeditations)
             } else if key == "secondsListened" {
                 return self.secondsListened
             } else {

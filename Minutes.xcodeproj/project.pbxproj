@@ -61,6 +61,7 @@
 		D4C0220824EC5D370010E171 /* GenreItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0220724EC5D370010E171 /* GenreItemView.swift */; };
 		D4D80C7F24F4301F00C3BD22 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D80C7E24F4301F00C3BD22 /* BarChartView.swift */; };
 		D4D80C8124F443A400C3BD22 /* MetricsWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D80C8024F443A400C3BD22 /* MetricsWeekView.swift */; };
+		D4D80C8524F5E1F600C3BD22 /* MetricsTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D80C8424F5E1F600C3BD22 /* MetricsTotalView.swift */; };
 		D4DEAFC624E8519C0000014D /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC524E8519C0000014D /* SigninView.swift */; };
 		D4DEAFC824E854840000014D /* EscapeChev.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC724E854840000014D /* EscapeChev.swift */; };
 		D4DEAFCA24E875080000014D /* FBRecommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DEAFC924E875080000014D /* FBRecommendations.swift */; };
@@ -128,6 +129,7 @@
 		D4C5040B24E60AC600E1D540 /* Minutes beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Minutes beta.entitlements"; sourceTree = "<group>"; };
 		D4D80C7E24F4301F00C3BD22 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		D4D80C8024F443A400C3BD22 /* MetricsWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsWeekView.swift; sourceTree = "<group>"; };
+		D4D80C8424F5E1F600C3BD22 /* MetricsTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsTotalView.swift; sourceTree = "<group>"; };
 		D4DEAFC524E8519C0000014D /* SigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninView.swift; sourceTree = "<group>"; };
 		D4DEAFC724E854840000014D /* EscapeChev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeChev.swift; sourceTree = "<group>"; };
 		D4DEAFC924E875080000014D /* FBRecommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBRecommendations.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				D457CDBE24EEBC11007D2815 /* DayViewButtons.swift */,
 				D4D80C7E24F4301F00C3BD22 /* BarChartView.swift */,
 				D4D80C8024F443A400C3BD22 /* MetricsWeekView.swift */,
+				D4D80C8424F5E1F600C3BD22 /* MetricsTotalView.swift */,
 			);
 			path = "Me View";
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				D430C77924E0D1F8003F85C6 /* MeView.swift in Sources */,
 				D4B4CC2624E9F94100163C5B /* LoadingSpinner.swift in Sources */,
 				D430C76A24E0D188003F85C6 /* ContinueWithApple.swift in Sources */,
+				D4D80C8524F5E1F600C3BD22 /* MetricsTotalView.swift in Sources */,
 				D430C75A24E0D142003F85C6 /* AppDelegate.swift in Sources */,
 				D4324E5924E46CC000F490F3 /* RefreshableScrollView.swift in Sources */,
 				D430C76B24E0D188003F85C6 /* EscapeButton.swift in Sources */,

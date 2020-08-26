@@ -16,7 +16,6 @@ struct GenreItemView: View {
         GeometryReader { geometry in
             HStack {
                 Button(action: {
-                    self.viewModel.setMetadataArray(self.genre)
                     self.viewModel.selectGenre(for: self.genre.genre)
                 }) {
                     ZStack {

@@ -48,7 +48,7 @@ struct MetricsView: View {
                     }
                 } else {
                     if self.viewModel.status == .success {
-                        Text("Total View")
+                        MetricsTotalView()
                     } else {
                         VStack {
                             Spacer()

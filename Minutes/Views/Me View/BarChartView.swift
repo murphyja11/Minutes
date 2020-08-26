@@ -23,12 +23,11 @@ struct BarChartView: View {
             VStack(spacing: 0) {
                 ZStack {
                     VStack(spacing: 0) {
-                        Rectangle()
-                            .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5)).frame(height: 1)
-                        Spacer()
-                        Rectangle()
-                            .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5)).frame(height: 1)
-                        Spacer()
+                        ForEach(0..<2) { index in
+                            Rectangle()
+                                .foregroundColor(self.colorScheme == .light ? self.lightColor : self.darkColor).frame(height: 1)
+                            Spacer()
+                        }
                     }
                     HStack(spacing: 0) {
                         ForEach(0..<timeScale) { index in
@@ -40,7 +39,7 @@ struct BarChartView: View {
                     .padding(.trailing, self.trailingPadding)
                 }
                 Rectangle()
-                    .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
+                    .foregroundColor(self.colorScheme == .light ? self.lightColor : self.darkColor)
                     .frame(height: 2)
                     .padding(.trailing, self.trailingPadding)
                 BarLabelsView(day: self.day)
@@ -64,6 +63,8 @@ struct BarChartView: View {
     }
     
     @Environment(\.colorScheme) var colorScheme
+    private let lightColor: Color = Color(red: 0.8, green: 0.8, blue: 0.8)
+    private let darkColor: Color = Color(red: 0.2, green: 0.2, blue: 0.8)
     private let fontSize: CGFloat = 12
     private let trailingPadding: CGFloat = 0
 }
@@ -133,12 +134,17 @@ struct BarLabelsView: View {
                 Spacer()
             }
             ForEach(0..<array.count) { index in
+                Spacer()
                 Text(array[index])
                     .font(.system(size: self.fontSize))
+                    .foregroundColor(self.colorScheme == .light ? self.lightColor : self.darkColor)
                 Spacer()
             }
         }
     }
     
+    @Environment(\.colorScheme) var colorScheme
+    private let lightColor: Color = Color(red: 0.8, green: 0.8, blue: 0.8)
+    private let darkColor: Color = Color(red: 0.2, green: 0.2, blue: 0.8)
     private let fontSize: CGFloat = 12
 }
