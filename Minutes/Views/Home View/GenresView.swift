@@ -13,62 +13,34 @@ struct GenresView: View {
     @EnvironmentObject var viewModel: GenreViewModel
     @Binding var showAudioView: Bool
     
-    @ViewBuilder
     var body: some View {
-        Group {
-            if self.viewModel.status == .undefined {
-                VStack {
-                    Spacer()
-                    Text("loading")
-                    Spacer()
+        let genres = self.viewModel.genres ?? []
+        
+        return GeometryReader { geometry in
+            RefreshableScrollView(height: 100, refreshing: self.$viewModel.reloading) {
+                ForEach(genres, id: \.self) { genre in
+                    GenreItemView(genre: genre, viewModel: self.viewModel)
+                        .frame(width: geometry.size.width * 0.9, height: 100)
+                        .padding(.horizontal, geometry.size.width * 0.1)
                 }
-            } else if self.viewModel.status == .failure {
-                VStack {
-                    Spacer()
-                    Text("failed.  Uh oh")
-                    Spacer()
+                
+                // So that the ScrollView doesn't initialize empty:
+                if genres.count == 0 {
+                    HStack {
+                        Spacer()
+                    }
                 }
-            } else {
-                GenresSubView(showAudioView: self.$showAudioView)
-                    .environmentObject(self.viewModel)
+            }
+            
+            if self.viewModel.selectedGenreEnum != .none {
+                AudioSubView(showAudioView: self.$showAudioView)
             }
         }
         .onAppear {
-            self.viewModel.selectedGenre = .none
+            self.viewModel.selectedGenreEnum = .none
         }
     }
 }
-
-
-struct GenresSubView: View {
-    @EnvironmentObject var viewModel: GenreViewModel
-    @Binding var showAudioView: Bool
-    
-    @ViewBuilder
-    var body: some View {
-        if self.viewModel.selectedGenreEnum != .none {
-            AudioSubView(showAudioView: self.$showAudioView)
-        } else {
-            GeometryReader { geometry in
-                RefreshableScrollView(height: 100, refreshing: self.$viewModel.reloading) {
-                    ForEach(self.viewModel.genres, id: \.self) { genre in
-                        GenreItemView(genre: genre, viewModel: self.viewModel)
-                            .frame(width: geometry.size.width * 0.9, height: 100)
-                            .padding(.horizontal, geometry.size.width * 0.1)
-                    }
-                    
-                    // So that the ScrollView doesn't initialize empty:
-                    if self.viewModel.genres.count == 0 {
-                        HStack {
-                            Spacer()
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 
 
 

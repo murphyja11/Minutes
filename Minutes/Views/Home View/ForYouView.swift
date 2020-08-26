@@ -10,7 +10,6 @@ import SwiftUI
 
 struct ForYouView: View {
     @EnvironmentObject var userInfo: UserInfo
-    
     @Binding var showAudioView: Bool
     
     var body: some View {
